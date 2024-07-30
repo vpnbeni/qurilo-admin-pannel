@@ -22,11 +22,12 @@ export async function getServerSideProps() {
     
 }
 
+
 const ServicesList = ({ initialData }) => {
     const [data, setData] = useState(initialData);
     const pagePush = useRouter()
     const refreshData = async () => {
-        const res = await fetch(`${API_URL}auth/v1/business/category`);
+        const res = await fetch(`${API_URL}auth/v1/business/business-solution`);
         const newData = await res.json();
         setData(newData.data);
     };
@@ -66,7 +67,7 @@ const UpdateModel = ({ service, refreshData }) => {
 
     const handleUpdate = async () => {
         const res = await fetch(`${API_URL}auth/v1/service/${service._id}`, {
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -115,18 +116,21 @@ const UpdateModel = ({ service, refreshData }) => {
 
 // // Meta UPdate // //
 
-
 const MetauppdateModel = ({ service, refreshData }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [updateData, setUpdateData] = useState(service.servicesName);
+    const [metaTag, setMetaTag] = useState('');
+    const [metaDescription, setMetaDescription] = useState('');
 
     const handleUpdate = async () => {
-        const res = await fetch(`${API_URL}auth/v1/service/${service._id}`, {
-            method: 'PUT',
+        const res = await fetch(`${API_URL}auth/v1/business/meta-tag/business-solution`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ servicesName: updateData }),
+            body: JSON.stringify({
+                metaTag: metaTag,
+                metaDescription: metaDescription
+            }),
         });
 
         if (res.status === 200) {
@@ -134,7 +138,7 @@ const MetauppdateModel = ({ service, refreshData }) => {
             refreshData();
         } else {
             // Handle error
-            console.error('Failed to update service');
+            console.error('Failed to update meta data');
         }
     };
 
@@ -145,25 +149,26 @@ const MetauppdateModel = ({ service, refreshData }) => {
             </p>
             {isOpen && (
                 <div className='fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.66)] flex items-center justify-center'>
-                    <div className='bg-white p-4 translate-x-30 rounded-md  w-1/2   h-80  relative'>
+                    <div className='bg-white p-4 translate-x-30 rounded-md w-[300px] h-[240px] relative'>
                         <button onClick={() => setIsOpen(false)} className='absolute !z-50 -top-7 -right-4 p-1 text-black'>
                             <AiOutlineClose size={25} />
                         </button>
-                        <p className='text-base text-black pt-4'>
+                        <div className='text-base text-black pt-4'>
                             <input
-                                value={updateData}
-                                onChange={(e) => setUpdateData(e.target.value)}
+                                value={metaTag}
+                                onChange={(e) => setMetaTag(e.target.value)}
+                                placeholder='Meta Tag'
                                 className='border-2 outline-red-200 p-1 w-[100%]'
                             />
-                        </p>
-
-                        <p className='text-base text-black pt-4'>
+                        </div>
+                        <div className='text-base text-black pt-4'>
                             <input
-                                value={updateData}
-                                onChange={(e) => setUpdateData(e.target.value)}
+                                value={metaDescription}
+                                onChange={(e) => setMetaDescription(e.target.value)}
+                                placeholder='Meta Description'
                                 className='border-2 outline-red-200 p-1 w-[100%]'
                             />
-                        </p>
+                        </div>
                         <button
                             onClick={handleUpdate}
                             className='bg-slate-400 py-1 px-2 mt-4 rounded-md text-white'>
@@ -174,4 +179,4 @@ const MetauppdateModel = ({ service, refreshData }) => {
             )}
         </>
     );
-}
+};

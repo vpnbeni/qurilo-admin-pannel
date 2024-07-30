@@ -202,18 +202,21 @@ const UpdateModel = ({ service, refreshData }) => {
 
 
 // // Meta Update // //
-
 const MetaupdateModel = ({ service, refreshData }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [updateData, setUpdateData] = useState(service.mainServicesName);
+  const [metaTag, setMetaTag] = useState('');
+  const [metaDescription, setMetaDescription] = useState('');
 
   const handleUpdate = async () => {
-    const res = await fetch(`${API_URL}auth/v1/mainservice/${service._id}`, {
-      method: "PUT",
+    const res = await fetch(`${API_URL}auth/v1/it/meta-tag/it-solution`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ mainServicesName: updateData }),
+      body: JSON.stringify({
+        metaTag: metaTag,
+        metaDescription: metaDescription
+      }),
     });
 
     if (res.status === 200) {
@@ -221,41 +224,38 @@ const MetaupdateModel = ({ service, refreshData }) => {
       refreshData();
     } else {
       // Handle error
-      console.error("Failed to update service");
+      console.error('Failed to update meta data');
     }
   };
 
   return (
     <>
-      <p className="cursor-pointer" onClick={() => setIsOpen(true)}>
-        <FaMeta />
-      </p>
+      <p className='cursor-pointer' onClick={() => setIsOpen(true)}><FaMeta /></p>
       {isOpen && (
-        <div className="fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.66)] flex items-center justify-center">
-          <div className="bg-white p-4 rounded-md w-1/2 h-80 relative">
-            <div className="flex items-center justify-between">
-            <h2 className="teext-black font-medium text-lg  ">Edit Slug Name  & Category</h2>
-              <button
-              onClick={() => setIsOpen(false)}
-              className=" text-black"
-            >   
-              <AiOutlineClose className="" size={25} />
+        <div className='fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.66)] flex items-center justify-center'>
+          <div className='bg-white p-4 translate-x-30 rounded-md w-[300px] h-[240px] relative'>
+            <button onClick={() => setIsOpen(false)} className='absolute !z-50 -top-7 -right-4 p-1 text-black'>
+              <AiOutlineClose size={25} />
             </button>
-           </div>
-    
-            <input type="text" placeholder="Enter new slug name" className="border-2 outline-red-200 p-1 w-full rounded-sm  my-4"/>
-            
+            <div className='text-base text-black pt-4'>
               <input
-                value={updateData}
-                onChange={(e) => setUpdateData(e.target.value)}
-                className="border-2 outline-red-200 rounded-sm p-1 w-full"
-                placeholder="Enter new category name"
+                value={metaTag}
+                onChange={(e) => setMetaTag(e.target.value)}
+                placeholder='Meta Tag'
+                className='border-2 outline-red-200 p-1 w-[100%]'
               />
-            
+            </div>
+            <div className='text-base text-black pt-4'>
+              <input
+                value={metaDescription}
+                onChange={(e) => setMetaDescription(e.target.value)}
+                placeholder='Meta Description'
+                className='border-2 outline-red-200 p-1 w-[100%]'
+              />
+            </div>
             <button
               onClick={handleUpdate}
-              className="bg-green-600 py-1 px-2 mt-4 rounded-md text-white"
-            >
+              className='bg-slate-400 py-1 px-2 mt-4 rounded-md text-white'>
               Update
             </button>
           </div>
