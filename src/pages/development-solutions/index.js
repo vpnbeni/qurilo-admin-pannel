@@ -148,7 +148,7 @@ const MetaupdateModel = ({ service, refreshData }) => {
             <p className='cursor-pointer' onClick={() => setIsOpen(true)}><FaMeta /></p>
             {isOpen && (
                 <div className='fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.66)] flex items-center justify-center'>
-                    <div className='bg-white p-4 translate-x-30 rounded-md w-[300px] h-[240px] relative'>
+                    <div className='bg-white p-4 translate-x-30 rounded-md w-1/2 h-[240px] relative'>
                         <button onClick={() => setIsOpen(false)} className='absolute !z-50 -top-7 -right-4 p-1 text-black'>
                             <AiOutlineClose size={25} />
                         </button>
@@ -161,7 +161,7 @@ const MetaupdateModel = ({ service, refreshData }) => {
                             />
                         </div>
                         <div className='text-base text-black pt-4'>
-                            <input
+                            <textarea
                                 value={metaDescription}
                                 onChange={(e) => setMetaDescription(e.target.value)}
                                 placeholder='Meta Description'
