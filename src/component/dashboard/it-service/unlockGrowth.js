@@ -42,7 +42,10 @@ const UnlockGrowth = ({ midBannerData, type, id }) => {
       fetchCloudExpertise();
     }
   }, [id]);
-
+  const handleCancelEdit=()=>{
+    setEdit(false);
+    fetchCloudExpertise();
+  }
   const handleEditData = async (id) => {
     setUpdateLoading(true);
     const formData = new FormData();
@@ -129,7 +132,12 @@ const UnlockGrowth = ({ midBannerData, type, id }) => {
         </div>
         <div className="hidden absolute right-0 group-hover:flex justify-end mt-4 me-5">
           {edit ? (
-            updateLoading ? <LoadingButton /> : <button onClick={() => handleEditData(cloudExpertise?._id)} className="bg-green-600 text-white px-4 py-2 rounded-md font-semibold">Save</button>
+            updateLoading ? <LoadingButton /> : 
+            <div className="flex gap-2">
+              <button onClick={() => handleCancelEdit()} className="bg-red-600 text-white px-4 py-2 rounded-md font-semibold">Cancel</button>
+
+              <button onClick={() => handleEditData(cloudExpertise?._id)} className="bg-green-600 text-white px-4 py-2 rounded-md font-semibold">Save</button>
+            </div>
           ) : (
             <MdModeEditOutline
               onClick={() => setEdit(!edit)}

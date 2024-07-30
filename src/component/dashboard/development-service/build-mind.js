@@ -38,7 +38,10 @@ const BuildMind = ({ data, type, id }) => {
     setNewImage(file);
     setContactImage(URL.createObjectURL(file));
   };
-
+  const handleCancel=()=>{
+    setEdit(false); // Exit edit mode
+        setNewImage(null); // Reset newImage state
+  }
   const handleSave = async (idd) => {
     setLoading(true); // Start loading state
     const formData = new FormData();
@@ -109,9 +112,14 @@ const BuildMind = ({ data, type, id }) => {
           loading ? (
             <LoadingButton />
           ) : (
+           <div className="flex gap-2">
+             <button onClick={() => handleCancel()} className="text-white font-bold bg-red-600 my-4 px-4 py-2 rounded-md">
+              Cancel
+            </button>
             <button onClick={() => handleSave(fetchedData?.project?._id)} className="text-white font-bold bg-green-600 my-4 px-4 py-2 rounded-md">
               Save
             </button>
+           </div>
           )
         ) : (
           <MdEdit onClick={() => setEdit(true)} size={26} className="text-white cursor-pointer" />

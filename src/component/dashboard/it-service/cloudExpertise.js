@@ -45,7 +45,12 @@ const CloudExpertise = ({ midBannerData, type, id }) => {
       fetchCloudExpertise();
     }
   }, [id]);
+  const handleCancelData =()=>{
+    fetchCloudExpertise();
 
+    setEdit(false);
+
+  }
   const handleEditData = async (id) => {
     setUpdateLoading(true);
     // console.log(id)
@@ -167,12 +172,20 @@ const CloudExpertise = ({ midBannerData, type, id }) => {
               updateLoading ? (
                 <LoadingButton />
               ) : (
+               <div className="flex gap-2">
+                 <button
+                  onClick={() => handleCancelData()}
+                  className="bg-red-600 text-white px-4 py-2 rounded-md font-semibold"
+                >
+                  Cancel
+                </button>
                 <button
                   onClick={() => handleEditData(cloudExpertise?._id)}
                   className="bg-green-600 text-white px-4 py-2 rounded-md font-semibold"
                 >
                   Save
                 </button>
+               </div>
               )
             ) : (
               <MdModeEditOutline

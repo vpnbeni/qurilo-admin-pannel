@@ -90,7 +90,11 @@ const Developmentprocess = ({ id }) => {
   const handleMainEditClick = () => {
     setIsEditingMain(true);
   };
+  const handleMainCancelClick=()=>{
+    fetchData();
+    setIsEditingMain(!isEditingMain);
 
+  }
   const handleMainSaveClick = async () => {
     setButtonLoading(true);
     try {
@@ -110,7 +114,7 @@ const Developmentprocess = ({ id }) => {
       if (!res.ok) {
         throw new Error('Failed to update main heading and description');
       }
-      await fetchData();
+       fetchData();
       setIsEditingMain(false);
     } catch (error) {
       setError(error);
@@ -119,9 +123,7 @@ const Developmentprocess = ({ id }) => {
     }
   };
 
-  const handleMainCancelClick = () => {
-    setIsEditingMain(false);
-  };
+  
 
   const handleAddClick = () => {
     setShowModal(true);
@@ -213,9 +215,14 @@ const Developmentprocess = ({ id }) => {
                 {buttonLoading ? (
                   <LoadingButton />
                 ) : (
+                  <div className="flex gap-2">
+                    <button onClick={handleMainCancelClick} className="bg-red-500 text-white p-2 rounded mx-3">
+                    Cancel
+                  </button>
                   <button onClick={handleMainSaveClick} className="bg-green-500 text-white p-2 rounded mx-3">
                     Save
                   </button>
+                  </div>
                 )}
               </div>
             </div>

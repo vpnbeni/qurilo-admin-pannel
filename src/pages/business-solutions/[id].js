@@ -25,7 +25,7 @@ export default function Page() {
     <ManagementService id={id} />
     <TechnologyWeUse id={id} />
     <Projectbanner id={id} />
-    <Partner id={id} />
+    <Partner id={id} /> 
     <ProjectMind id={id} />
     {/* <Faq faqData={faqData} id={id} /> */}
     {/* <Review Testimaonials={Testimaonials} id={id} /> */}

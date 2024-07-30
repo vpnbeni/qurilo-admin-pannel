@@ -43,7 +43,10 @@ const Projectbanner = ({id}) => {
       fetchProjectBanner();
     }
   }, [id , successfullyEdited]);
-
+  const handleCancelEdit=()=>{
+    setSuccessfullyEdited(!successfullyEdited);
+    setEdit(!edit)
+  }
 const handleEditData = async (id) => {
   // console.log(id)
   setEditLoading(true) 
@@ -72,7 +75,7 @@ const handleEditData = async (id) => {
     fetchProjectBanner();
     setEdit(false);
     setEditLoading(false);
-    setSuccessfullyEdited(true);
+    setSuccessfullyEdited(!successfullyEdited);
     
   } catch (error) {
     console.error('Error updating project banner:', error);
@@ -125,7 +128,12 @@ const handleEditData = async (id) => {
         </div>
         <div className="hidden group-hover:flex justify-end mt-4 me-5">
           {edit ? (
-           editLoading ? <LoadingButton/> : <button onClick={() => handleEditData(dataGet?.project?._id)} className="bg-green-600 text-white px-4 py-2 rounded-md font-semibold">Save</button>
+           editLoading ? <LoadingButton/> : 
+            <div className="flex gap-2">
+           <button onClick={() => handleCancelEdit()} className="bg-red-600 text-white px-4 py-2 rounded-md font-semibold">Cancel</button>
+           <button onClick={() => handleEditData(dataGet?.project?._id)} className="bg-green-600 text-white px-4 py-2 rounded-md font-semibold">Save</button>
+
+            </div>
           ) : (
             <MdModeEditOutline
             onClick={() => setEdit(!edit)}

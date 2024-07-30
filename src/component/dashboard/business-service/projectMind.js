@@ -49,7 +49,10 @@ const ProjectMind = ({id}) => {
   }, [id , successfullyEdited]);
 
 
-
+  const handleCancelEdit=()=>{
+    fetchProjectMind();
+    setEdit(!edit)
+  }
   const handleEditData = async (id) => {
     // console.log(id)
     setEditLoading(true)
@@ -84,7 +87,7 @@ const ProjectMind = ({id}) => {
       
     }
     
-   setEdit(false)
+   setEdit(!edit)
   }
 
   return (
@@ -145,7 +148,11 @@ const ProjectMind = ({id}) => {
       <div className="hidden group-hover:flex justify-end mt-4 me-5">
           {edit ? (
             editLoading ? <LoadingButton/> :
-            <button onClick={() => handleEditData(dataGet?.project?._id)} className="bg-green-600 text-white px-4 py-2 rounded-md font-semibold">Save</button>
+            <div className="flex gap-2">
+              <button onClick={() => handleCancelEdit()} className="bg-red-600 text-white px-4 py-2 rounded-md font-semibold">Cancel</button>
+              <button onClick={() => handleEditData(dataGet?.project?._id)} className="bg-green-600 text-white px-4 py-2 rounded-md font-semibold">Save</button>
+
+            </div>
           ) : (
             <MdModeEditOutline
             onClick={() => setEdit(!edit)}

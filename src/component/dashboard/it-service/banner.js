@@ -47,7 +47,11 @@ const Banner = ({ id }) => {
     setEditHeading(bannerData?.h1);
     setEditDes(bannerData?.description);
   }, [bannerData]);
-
+  const handleCancelClick=()=>{
+    fetchBannerData();
+    setEdit(false);
+    
+  }
   const handleSaveClick = async (idd) => {
     setUpdateLoading(true);
     const formData = new FormData();
@@ -139,12 +143,20 @@ const Banner = ({ id }) => {
               <div className="flex justify-end"><LoadingButton /></div>
               
             ) : (
+              <div className="flex gap-2 absolute bottom-8  right-24">
+                <button
+                onClick={() => handleCancelClick()}
+                className="bg-red-600 rounded-sm text-white px-4 py-2 font-semibold "
+              >
+                Cancel
+              </button>
               <button
                 onClick={() => handleSaveClick(bannerData?._id)}
-                className="bg-green-600 rounded-sm text-white px-4 py-2 font-semibold absolute bottom-8 right-24"
+                className="bg-green-600 rounded-sm text-white px-4 py-2 font-semibold "
               >
                 Save
               </button>
+              </div>
             )
           ) : (
             <MdEdit
