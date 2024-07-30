@@ -41,7 +41,7 @@ const IndustriesPage = ({ initialData }) => {
           <ul>
             {data.map(service => (
               <li key={service._id} className='mb-2 p-2 bg-white shadow-lg rounded-sm mt-2 flex justify-between items-end  gap-1 '>
-                <button className='capitalize font-semibold p-1 px-10' onClick={()=>pagePush.push(`e-commerce-service/${service.slugName}`)}> {service.servicesName}</button>
+                <button className='capitalize font-semibold p-1 px-10' onClick={()=>pagePush.push(`industrie/${service.slugName}`)}> {service.servicesName}</button>
                 <button>
                   <UpdateModel service={service} refreshData={refreshData} />
                 </button>

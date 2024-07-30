@@ -8,16 +8,8 @@ import Projectbanner from '@/component/dashboard/business-service/projectbanner'
 import ProjectMind from '@/component/dashboard/business-service/projectMind'
 import ServicesCard from '@/component/dashboard/business-service/servicesCard'
 import TechnologyWeUse from '@/component/dashboard/business-service/technologyWeUse'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { MdEdit } from 'react-icons/md'
-import { faqData, Testimaonials } from '@/component/assets/business'
-import HealthCare from '@/component/dashboard/business-service/HealthCare'
-import BannerIndustries from '@/component/dashboard/business-service/BannerIndustries'
-import IndustriesDiscuss from '@/component/dashboard/business-service/IndustriesDiscuss'
-import ProjectMindIndustries from '@/component/dashboard/business-service/ProjectMindIndustries'
-import DigitalSolutionIndustries from '@/component/dashboard/business-service/DigitalSolutionIndustries'
 
 
 export default function Page() {
@@ -27,14 +19,7 @@ export default function Page() {
     <>
     <div className='border-2 p-4 mr-4'>
 
-{/* industrie page */}
-    <BannerIndustries/>
-<HealthCare/>
-<IndustriesDiscuss/>
-<ProjectMindIndustries/>
-<DigitalSolutionIndustries/>
 
-<h2>Businesspage</h2>
     <Bannersection id={id} /> 
     <ServicesCard id={id} />
     <ManagementService id={id} />
