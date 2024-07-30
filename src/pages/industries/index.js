@@ -48,7 +48,7 @@ const IndustriesPage = ({ initialData }) => {
         servicesName: newServiceName,
         slugName: newSlugName,
       }),
-    }); 
+    });
     if (res.status === 200) {
       setIsAddModalOpen(false);
       setNewServiceName("");
@@ -71,33 +71,37 @@ const IndustriesPage = ({ initialData }) => {
         </button>
       </div>
       <div className="flex gap-2">
-        <div className="bg-red-100 p-2 rounded-sm">
+        <div className="bg-red-100 p-2 rounded-sm w-full min-h-[300px]">
           <h1 className="font-bold">Services Name :-</h1>
-          {data && data.length > 0 ? (
-            <ul>
-              {data.map((service) => (
-                <li
-                  key={service._id}
-                  className="mb-2 p-2 bg-white shadow-lg rounded-sm mt-2 flex justify-between items-end gap-2"
-                >
-                  <button
-                    className="capitalize font-semibold p-1 px-10"
-                    onClick={() => pagePush.push(`industrie/${service.slugName}`)}
+          <div className="flex w-full ">
+            {data && data.length > 0 ? (
+              <div className="w-full">
+                {data.map((service) => (
+                  <div
+                    key={service._id}
+                    className="mb-2 p-2   bg-white shadow-lg rounded-sm mt-2 flex justify-between items-end gap-2"
                   >
-                    {service.servicesName}
-                  </button>
-                  <button>
-                    <UpdateModel service={service} refreshData={refreshData} />
-                  </button>
-                  <button>
-                    <MetaupdateModel service={service} refreshData={refreshData} />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No services available.</p>
-          )}
+                    <button
+                      className="capitalize font-semibold p-1 px-10"
+                      onClick={() => pagePush.push(`industrie/${service.slugName}`)}
+                    >
+                      {service.servicesName}
+                    </button>
+                    <div className="flex gap-2 items-center justify-center">
+                      <button>
+                        <UpdateModel service={service} refreshData={refreshData} />
+                      </button>
+                      <button>
+                        <MetaupdateModel service={service} refreshData={refreshData} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No services available.</p>
+            )}
+          </div>
         </div>
       </div>
       {isAddModalOpen && (
