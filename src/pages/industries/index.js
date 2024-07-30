@@ -75,11 +75,11 @@ const IndustriesPage = ({ initialData }) => {
           <h1 className="font-bold">Services Name :-</h1>
           <div className="flex w-full ">
             {data && data.length > 0 ? (
-              <div className="w-full">
+              <div className="w-full flex gap-5 m-4">
                 {data.map((service) => (
                   <div
                     key={service._id}
-                    className="mb-2 p-2   bg-white shadow-lg rounded-sm mt-2 flex justify-between items-end gap-2"
+                    className=" p-2  w-1/2 bg-white shadow-lg rounded-sm mt-2 flex justify-between items-end gap-2"
                   >
                     <button
                       className="capitalize font-semibold p-1 px-10"
