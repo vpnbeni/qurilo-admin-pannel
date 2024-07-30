@@ -78,18 +78,18 @@ const Partner = ({ id }) => {
           <div className="flex flex-col gap-5 lg:w-1/2">
             {edit ? (
               <>
-                <input
+                <textarea
                   type="text"
                   value={editMainHeading}
                   onChange={(e) => setEditMainHeading(e.target.value)}
-                  className="w-full text-2xl font-[600] text-black border-[1px] border-gray-600 text-center lg:text-start"
+                  className="w-full text-2xl font-[600] text-black border-[1px] border-gray-600 text-center lg:text-start p-2"
                 />
 
                 <textarea
                   value={editDescription}
                   onChange={(e) => setEditDescription(e.target.value)}
                   rows={5}
-                  className="w-full text-[18px] font-[400] text-black border-[1px] border-gray-600 text-center lg:text-start"
+                  className="w-full text-[18px] font-[400] text-black border-[1px] border-gray-600 text-center lg:text-start p-2"
                 />
               </>
             ) : (

@@ -82,12 +82,12 @@ const WhyChooseUsCard = ({ card, editId, id, setEditId, fetchBenefits }) => {
               type="text"
               value={editTitle}
               onChange={(e) => setEditTitle(e.target.value)}
-              className="w-full text-2xl font-[600] text-black border-[1px] border-gray-600 text-center lg:text-start"
+              className="w-full text-2xl font-[600] text-black border-[1px] border-gray-600 text-center lg:text-start p-2"
             />
             <textarea
               value={editDes}
               onChange={(e) => setEditDes(e.target.value)}
-              className="w-full text-lg font-normal text-black border-[1px] border-gray-600 text-center lg:text-start"
+              className="w-full text-lg font-normal text-black border-[1px] border-gray-600 text-center lg:text-start p-2"
             />
             <input
               type="file"

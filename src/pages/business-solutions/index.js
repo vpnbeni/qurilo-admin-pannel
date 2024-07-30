@@ -5,7 +5,6 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { FaMeta } from "react-icons/fa6";
 
-
 // Fetch data on the server side
 export async function getServerSideProps() {
     try {
@@ -19,30 +18,81 @@ export async function getServerSideProps() {
     } catch (error) {
        console.log(error) 
     }
-    
 }
-
 
 const ServicesList = ({ initialData }) => {
     const [data, setData] = useState(initialData);
-    const pagePush = useRouter()
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [newServiceName, setNewServiceName] = useState("");
+    const [newSlugName, setNewSlugName] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const pagePush = useRouter();
+
     const refreshData = async () => {
-        const res = await fetch(`${API_URL}auth/v1/business/business-solution`);
-        const newData = await res.json();
-        setData(newData.data);
+        try {
+            const res = await fetch(`${API_URL}auth/v1/business/business-solution`);
+            const newData = await res.json();
+            setData(newData.data);
+        } catch (err) {
+            console.error('Failed to refresh data', err);
+        }
+    };
+
+    const handleAddService = async () => {
+        if (!newServiceName || !newSlugName) {
+            setError("Both fields are required.");
+            return;
+        }
+
+        setLoading(true);
+        setError("");
+
+        try {
+            const res = await fetch(`${API_URL}auth/v1/business/category`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    servicesName: newServiceName,
+                    slugName: newSlugName,
+                }),
+            });
+
+            if (res.status === 200) {
+                setIsAddModalOpen(false);
+                setNewServiceName("");
+                setNewSlugName("");
+                refreshData();
+            } else {
+                console.error("Failed to add service");
+                setError("Failed to add service. Please try again.");
+            }
+        } catch (err) {
+            console.error("Failed to add service", err);
+            setError("Failed to add service. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <>
-            <div className='font-semibold text-2xl py-5'>
-                Business solution :-
+            <div className='font-semibold text-2xl py-5 flex justify-between'>
+                <span>Business solution :-</span>
+                <button
+                    onClick={() => setIsAddModalOpen(true)}
+                    className="bg-blue text-white px-4 text-lg py-2 font-semibold rounded-md"
+                >
+                    ADD
+                </button>
             </div>
             <div className='flex gap-2'>
-
                 {data && data.length > 0 ? (
                     data.map(service => (
                         <div key={service._id} className='mb-2 p-2 px-6 py-5 bg-[#f5f1f1] shadow-lg shadow-[#6E0854]-500/50 rounded-sm mt-2 flex justify-between items-end gap-2' >
-                            <p className='capitalize font-semibold p-1 px-10 cursor-pointer' onClick={()=>pagePush.push(`/business-solutions/${service.slugName}`)}>{service.servicesName}</p>
+                            <p className='capitalize font-semibold p-1 px-10 cursor-pointer' onClick={() => pagePush.push(`/business-solutions/${service.slugName}`)}>{service.servicesName}</p>
                             <button className=''>
                                 <UpdateModel service={service} refreshData={refreshData} />
                             </button>
@@ -55,6 +105,41 @@ const ServicesList = ({ initialData }) => {
                     <p>No services available.</p>
                 )}
             </div>
+            {isAddModalOpen && (
+                <div className="fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.66)] flex items-center justify-center">
+                    <div className="bg-white p-4 rounded-md w-[300px] relative">
+                        <button
+                            onClick={() => setIsAddModalOpen(false)}
+                            className="absolute top-2 right-2 text-black"
+                        >
+                            <AiOutlineClose size={25} />
+                        </button>
+                        <h2 className="text-lg font-bold my-4">Add Service</h2>
+                        <input
+                            type="text"
+                            value={newServiceName}
+                            onChange={(e) => setNewServiceName(e.target.value)}
+                            className="border-2 p-2 w-full mb-4"
+                            placeholder="Enter service name"
+                        />
+                        <input
+                            type="text"
+                            value={newSlugName}
+                            onChange={(e) => setNewSlugName(e.target.value)}
+                            className="border-2 p-2 w-full mb-4"
+                            placeholder="Enter slug name"
+                        />
+                        {error && <p className="text-red-500">{error}</p>}
+                        <button
+                            onClick={handleAddService}
+                            className={`bg-blue text-white px-4 py-2 rounded-md ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                            disabled={loading}
+                        >
+                            {loading ? "Adding..." : "Add"}
+                        </button>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
@@ -66,20 +151,23 @@ const UpdateModel = ({ service, refreshData }) => {
     const [updateData, setUpdateData] = useState(service.servicesName);
 
     const handleUpdate = async () => {
-        const res = await fetch(`${API_URL}auth/v1/service/${service._id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ servicesName: updateData }),
-        });
+        try {
+            const res = await fetch(`${API_URL}auth/v1/service/${service._id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ servicesName: updateData }),
+            });
 
-        if (res.status === 200) {
-            setIsOpen(false);
-            refreshData();
-        } else {
-            // Handle error
-            console.error('Failed to update service');
+            if (res.status === 200) {
+                setIsOpen(false);
+                refreshData();
+            } else {
+                console.error('Failed to update service');
+            }
+        } catch (err) {
+            console.error('Failed to update service', err);
         }
     };
 
@@ -113,32 +201,32 @@ const UpdateModel = ({ service, refreshData }) => {
     );
 }
 
-
-// // Meta UPdate // //
-
 const MetauppdateModel = ({ service, refreshData }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [metaTag, setMetaTag] = useState('');
     const [metaDescription, setMetaDescription] = useState('');
 
     const handleUpdate = async () => {
-        const res = await fetch(`${API_URL}auth/v1/business/meta-tag/business-solution`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                metaTag: metaTag,
-                metaDescription: metaDescription
-            }),
-        });
+        try {
+            const res = await fetch(`${API_URL}auth/v1/business/meta-tag/business-solution`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    metaTag: metaTag,
+                    metaDescription: metaDescription
+                }),
+            });
 
-        if (res.status === 200) {
-            setIsOpen(false);
-            refreshData();
-        } else {
-            // Handle error
-            console.error('Failed to update meta data');
+            if (res.status === 200) {
+                setIsOpen(false);
+                refreshData();
+            } else {
+                console.error('Failed to update meta data');
+            }
+        } catch (err) {
+            console.error('Failed to update meta data', err);
         }
     };
 

@@ -123,7 +123,6 @@ const Developmentprocess = ({ id }) => {
     }
   };
 
-  
 
   const handleAddClick = () => {
     setShowModal(true);
