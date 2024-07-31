@@ -115,22 +115,22 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               </Link>
             </li>
             <li>
-              <Link href="/business-solutions/" className="text-sm flex gap-2 items-center">
+              <Link href="/business-solutions/business-main" className="text-sm flex gap-2 items-center">
                 {isOpen && <span>Business-services</span>}
               </Link>
             </li>
             <li>
-              <Link href="/development-solutions/" className="text-sm flex gap-2 items-center mb-4">
+              <Link href="/development-solutions/development-main" className="text-sm flex gap-2 items-center mb-4">
                 {isOpen && <span>Development-services</span>}
               </Link>
             </li>
             <li>
-              <Link href="/industries/" className="text-sm flex gap-2 items-center mb-4">
+              <Link href="/industries/industries-main" className="text-sm flex gap-2 items-center mb-4">
                 {isOpen && <span>Industries</span>}
               </Link>
             </li>
             <li>
-              <Link href="/e-commerce-service/" className="text-sm flex gap-2 items-center mb-4">
+              <Link href="/e-commerce-service/e-commerce-main" className="text-sm flex gap-2 items-center mb-4">
                 {isOpen && <span>E-Commerce</span>}
               </Link>
             </li>
