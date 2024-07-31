@@ -6,6 +6,7 @@ import { API_URL } from '@/api/commonApi';
 const DevelopmentBanner = ({ id }) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [data, setData] = useState(null);
+  console.log(data,'slugname')
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);

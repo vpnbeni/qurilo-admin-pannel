@@ -74,7 +74,7 @@ const ItMain = () => {
     }
     formData.append('slugName', id);
     try {
-      const response = await fetch(`${API_URL}auth/v1/it/main-service/${editData._id}`, {
+      const response = await fetch(`${API_URL}auth/v1/industrie/main-service/${editData._id}`, {
         method: 'PUT',
         body: formData,
       });
@@ -102,7 +102,7 @@ const ItMain = () => {
     }
     formData.append('slugName', id);
     try {
-      const response = await fetch(`${API_URL}auth/v1/it/main-service`, {
+      const response = await fetch(`${API_URL}auth/v1/industrie/main-service`, {
         method: 'POST',
         body: formData,
       });

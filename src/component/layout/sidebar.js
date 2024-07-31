@@ -35,115 +35,115 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     setIsOpen(!isOpen);
   };
   return (
-    <div className={`z-50 bg-black h-screen p-5 text-white flex flex-col fixed top-0 left-0 transition-width duration-300 ease-in-out ${isOpen ? "w-[16%]" : "w-[4%] pt-10"}`}>
+    <div className={`z-50 bg-[#521950] rounded-r-[15px] h-screen p-5 text-white flex flex-col fixed top-0 left-0 transition-width duration-300 ease-in-out ${isOpen ? "w-[16%]" : "w-[4%] pt-10"}`}>
       <div className={`mb-8`}>
         {isClient && (
           isOpen ? (
-            <Image src='/qurilologo.png' width={100} height={100} alt="Logo" />
+            <Image src='/qurilo.png' width={100} height={100} alt="Logo" className="ml-5" />
           ) : (
-            <Image src='/logo1.png' width={120} height={120} alt="Logo" />
+            <Image src='/qurilo.png' width={120} height={120} alt="Logo" />
           )
         )}
       </div>
       <ul className="space-y-4">
         <li>
-          <Link href="/dashboard" className="text-lg flex gap-2 items-center">
+          <Link href="/dashboard" className="text-lg flex gap-2 items-center  hover:bg-[#b275f5] rounded-md p-1 ">
             <LuLayoutDashboard />
             {isOpen && <span>Dashboard</span>}
           </Link>
         </li>
         <li>
-          <Link href="/dashboard" className="text-lg flex gap-2 items-center">
+          <Link href="/dashboard" className="text-lg flex gap-2 items-center  hover:bg-[#b275f5] rounded-md p-1  ">
           <CiHome />
             {isOpen && <span>Home Page</span>}
           </Link>
         </li>
         <li>
-          <Link href="/customers" className="text-lg flex gap-2 items-center">
+          <Link href="/customers" className="text-lg flex gap-2 items-center  hover:bg-[#b275f5] rounded-md p-1 ">
             <RiCustomerService2Fill />
             {isOpen && <span>Customers</span>}
           </Link>
         </li>
         <li>
-          <button onClick={toggleProjectsDropdown} className={`text-lg w-full text-left flex items-center gap-2`}>
-            <span className="flex items-center gap-2">
+          <button onClick={toggleProjectsDropdown} className={`text-lg w-full text-left flex items-center  hover:bg-[#b275f5] rounded-md  gap-2`}>
+            <span className="flex items-center  hover:bg-[#b275f5] rounded-md p-1 gap-2">
               <MdHomeRepairService />
               {isOpen && <span>Services</span>}
             </span>
             {isProjectsOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           </button>
-          <ul className={`ml-4 mt-2 space-y-2 overflow-hidden transition-max-height duration-300 ease-in-out ${isProjectsOpen ? 'max-h-40' : 'max-h-0'}`}>
+          <ul className={`ml-4 mt-2 space-y-2 overflow-hidden transition-max-height duration-300 ease-in-out  ${isProjectsOpen ? 'min-h-34' : 'max-h-0'}` }>
             <li>
-              <Link href="/it-solutions" className="text-sm flex gap-2 items-center">
+              <Link href="/it-solutions" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md  p-1">
                 {isOpen && <span>IT-services</span>}
               </Link>
             </li>
             <li>
-              <Link href="/business-solutions/" className="text-sm flex gap-2 items-center">
+              <Link href="/business-solutions/" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md  p-1">
                 {isOpen && <span>Business-services</span>}
               </Link>
             </li>
             <li>
-              <Link href="/development-solutions/" className="text-sm flex gap-2 items-center mb-4">
+              <Link href="/development-solutions/" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md  p-1 ">
                 {isOpen && <span>Development-services</span>}
               </Link>
             </li>
             <li>
-              <Link href="/industries/" className="text-sm flex gap-2 items-center mb-4">
+              <Link href="/industries/" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md  p-1 ">
                 {isOpen && <span>Industries</span>}
               </Link>
             </li>
             <li>
-              <Link href="/e-commerce-service/" className="text-sm flex gap-2 items-center mb-4">
+              <Link href="/e-commerce-service/" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md  p-1 ">
                 {isOpen && <span>E-Commerce</span>}
               </Link>
             </li>
           </ul>
         </li>
         <li>
-          <button onClick={toggleMainPageDropdown} className={`text-lg w-full text-left flex items-center gap-2`}>
-            <span className="flex items-center gap-2">
+          <button onClick={toggleMainPageDropdown} className={`text-lg w-full text-left flex items-center  hover:bg-[#b275f5] rounded-md  gap-2`}>
+            <span className="flex items-center  hover:bg-[#b275f5] rounded-md p-1 gap-2">
               <MdHomeRepairService />
               {isOpen && <span>Main page</span>}
             </span>
             {isMainPageOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           </button>
-          <ul className={`ml-4 mt-2 space-y-2 overflow-hidden transition-max-height duration-300 ease-in-out ${isMainPageOpen ? 'max-h-40' : 'max-h-0'}`}>
+          <ul className={`ml-4 mt-2 space-y-2 overflow-hidden transition-max-height duration-300 ease-in-out ${isMainPageOpen ? 'min-h-40' : 'max-h-0'}`}>
             <li>
-              <Link href="/it-solutions/it-main" className="text-sm flex gap-2 items-center">
+              <Link href="/it-solutions/it-main" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md p-1 ">
                 {isOpen && <span>IT-services</span>}
               </Link>
             </li>
             <li>
-              <Link href="/business-solutions/business-main" className="text-sm flex gap-2 items-center">
+              <Link href="/business-solutions/business-main" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md p-1 ">
                 {isOpen && <span>Business-services</span>}
               </Link>
             </li>
             <li>
-              <Link href="/development-solutions/development-main" className="text-sm flex gap-2 items-center mb-4">
+              <Link href="/development-solutions/development-main" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md p-1  ">
                 {isOpen && <span>Development-services</span>}
               </Link>
             </li>
             <li>
-              <Link href="/industries/industries-main" className="text-sm flex gap-2 items-center mb-4">
+              <Link href="/industries/industries-main" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md p-1  ">
                 {isOpen && <span>Industries</span>}
               </Link>
             </li>
             <li>
-              <Link href="/e-commerce-service/e-commerce-main" className="text-sm flex gap-2 items-center mb-4">
+              <Link href="/e-commerce-service/e-commerce-main" className="text-sm flex gap-2 items-center  hover:bg-[#b275f5] rounded-md p-1  ">
                 {isOpen && <span>E-Commerce</span>}
               </Link>
             </li>
           </ul>
         </li>
         <li>
-          <Link href="/pages" className="text-lg flex gap-2 items-center -mt-2">
+          <Link href="/pages" className="text-lg flex gap-2 items-center  hover:bg-[#b275f5] p-1 rounded-md  -mt-2">
             <MdOutlineContactPage />
             {isOpen && <span>Page</span>}
           </Link>
         </li>
         <li>
-          <Link href="/dashboard" className="text-lg flex gap-2 items-center">
+          <Link href="/dashboard" className="text-lg flex gap-2 items-center  hover:bg-[#b275f5] p-1 rounded-md ">
             <SiCreativecommons />
             {isOpen && <span>Common Page</span>}
           </Link>

@@ -145,7 +145,7 @@ const TechnologyCard = ({ tech, type, slug, successfullyEdited , setSuccessfully
         />
        <div className="flex justify-between items-center w-full">   <h1 className="text-xl font-[600]">{tech.cardTitle}</h1>   <RxCross2 onClick={() => deleteTechnology(tech._id)} className="text-red-500 hidden group-hover:block cursor-pointer" size={25} /></div>
        
-      </div>
+      </div>``
         <div className="relative  h-[2px] bg-bgColor-100 rounded-md">
           <div className="absolute left-[20%] top-[50%] -translate-y-[50%] inset-0 rounded-full w-[12px] h-[12px] bg-bgColor-100 "> </div>
         </div>

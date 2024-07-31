@@ -130,7 +130,7 @@ const ItMain = () => {
 
   return (
     <div className="  ">
-      <ItBanner />
+      <ItBanner pageName={'it'} slugName={id}/>
       
       <div className=" flex flex-col items-end">
       <button

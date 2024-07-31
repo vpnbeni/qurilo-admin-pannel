@@ -7,7 +7,7 @@ import { RiLoader4Fill } from "react-icons/ri";
 import { API_URL } from '@/api/commonApi';
 import LoadingButton from '../../buttons/LoadingButton'; 
 
-const Banner = () => {
+const Banner = ({pageName , slugName}) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [data, setData] = useState(null);
   
@@ -17,10 +17,10 @@ const Banner = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [editData, setEditData] = useState({ h1: '', description: '', image: '' });
 const [temp,setTemp]=useState(true);  
-const id="cloud-server"
+
   const fetchData = async (id) => {
     try {
-      const res = await fetch(`${API_URL}auth/v1/it/main-banner/${id}`);
+      const res = await fetch(`${API_URL}auth/v1/${pageName}/main-banner/${slugName}`);
       const result = await res.json();
       if (result.status) {
         setData(result.banner.bannerSection);
@@ -41,10 +41,10 @@ const id="cloud-server"
   };
 
   useEffect(() => {
-    if (id) {
-      fetchData(id);
+    if (slugName) {
+      fetchData(slugName);
     }
-  }, [id]);  
+  }, [slugName]);  
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -60,16 +60,16 @@ const id="cloud-server"
     if (editData.image instanceof File) {
       formData.append('image', editData.image);
     }
-    formData.append('slugName', id);
+    formData.append('slugName', slugName);
     try {
-      const res = await fetch(`${API_URL}auth/v1/it/main-banner/${idd}`, {
+      const res = await fetch(`${API_URL}auth/v1/${pageName}/main-banner/${idd}`, {
         method: 'PUT',
         body: formData,
       });
       if (!res.ok) {
         throw new Error('Failed to update banner');
       }
-      await fetchData(id);
+      fetchData(slugName);
       setIsEditing(false);
       setIsSaving(false);
     } catch (error) {

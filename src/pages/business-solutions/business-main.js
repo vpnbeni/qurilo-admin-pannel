@@ -74,7 +74,7 @@ const ItMain = () => {
     }
     formData.append('slugName', id);
     try {
-      const response = await fetch(`${API_URL}auth/v1/it/main-service/${editData._id}`, {
+      const response = await fetch(`${API_URL}auth/v1/business/main-service/${editData._id}`, {
         method: 'PUT',
         body: formData,
       });
@@ -102,7 +102,7 @@ const ItMain = () => {
     }
     formData.append('slugName', id);
     try {
-      const response = await fetch(`${API_URL}auth/v1/it/main-service`, {
+      const response = await fetch(`${API_URL}auth/v1/business/main-service`, {
         method: 'POST',
         body: formData,
       });
@@ -130,7 +130,7 @@ const ItMain = () => {
 
   return (
     <div className="  ">
-      <ItBanner />
+      <ItBanner pageName={'business'} slugName={'business-solution'} />
       
       <div className=" flex flex-col items-end">
       <button

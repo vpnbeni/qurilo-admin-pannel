@@ -215,7 +215,7 @@ const MetaupdateModel = ({ service, refreshData }) => {
 
     if (res.status === 200) {
       setIsOpen(false);
-      refreshData();
+      refreshData();  
     } else {
       console.error("Failed to update meta data");
     }
