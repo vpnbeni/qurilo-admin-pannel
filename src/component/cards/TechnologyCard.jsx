@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { MdModeEditOutline, MdDeleteForever } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import { IoIosCheckmark } from "react-icons/io";
+
 import { API_URL } from "@/api/commonApi";
 import LoadingButton from "../buttons/LoadingButton";
 const TechnologyEditModal = ({ tech, setShowModal, slug, type ,successfullyEdited , setSuccessfullyEdited }) => {
@@ -132,17 +134,32 @@ const TechnologyCard = ({ tech, type, slug, successfullyEdited , setSuccessfully
   };
   return (
     <>
-      <div className="h-full relative group flex flex-col gap-5 py-10 border-b-[1px] border-zinc-400">
-       <div className="flex justify-between items-center">   <h1 className="text-xl font-[600]">{tech.cardTitle}</h1>   <RxCross2 onClick={() => deleteTechnology(tech._id)} className="text-red-500 hidden group-hover:block cursor-pointer" size={25} /></div>
-        <div className="w-full h-[4px] bg-bgColor-100 rounded-md"></div>
+      <div className="h-full relative group flex bg-[#f9fafb] rounded-xl p-4  flex-col gap-5 py-10 border-b-[1px] border-zinc-400">
+      <div className="flex items-center gap-5">
+      <img
+          src={tech.icon}
+          alt="image"
+          // className="h-10 w-10"
+          width={50}
+          height={50}
+        />
+       <div className="flex justify-between items-center w-full">   <h1 className="text-xl font-[600]">{tech.cardTitle}</h1>   <RxCross2 onClick={() => deleteTechnology(tech._id)} className="text-red-500 hidden group-hover:block cursor-pointer" size={25} /></div>
+       
+      </div>
+        <div className="relative  h-[2px] bg-bgColor-100 rounded-md">
+          <div className="absolute left-[20%] top-[50%] -translate-y-[50%] inset-0 rounded-full w-[12px] h-[12px] bg-bgColor-100 "> </div>
+        </div>
         <div className="flex gap-5 flex-wrap">
           {tech.cardDescription?.map((techUsed, i) => (
-            <p
+            <ul key={i} className="text-base mt-2 flex  gap-4 text-gray-500 ">
+            <li
               key={i}
-              className="border-2 border-bgColor-100 hover:bg-bgColor-100 transition-all ease-in-out duration-200 hover:text-white py-2 px-4 rounded-md cursor-pointer h-fit"
+              className="flex items-center gap-2  text-base text-desc text-body-color font-sans"
             >
+              <IoIosCheckmark className="h-4 w-4  text-gray-600 bg-gray-200 font-bold rounded-xl" />
               {techUsed}
-            </p>
+            </li>
+          </ul>
           ))}
         </div>
         <div className="hidden absolute bottom-2 -right-5  group-hover:flex justify-end me-5 gap-x-1">

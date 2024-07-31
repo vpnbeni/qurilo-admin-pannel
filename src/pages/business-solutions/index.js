@@ -31,7 +31,7 @@ const ServicesList = ({ initialData }) => {
 
     const refreshData = async () => {
         try {
-            const res = await fetch(`${API_URL}auth/v1/business/business-solution`);
+            const res = await fetch(`${API_URL}auth/v1/business/category`);
             const newData = await res.json();
             setData(newData.data);
         } catch (err) {

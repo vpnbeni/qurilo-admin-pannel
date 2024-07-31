@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'hero-pattern': "url('/assets/bgImg.jpg')",
+      },
       fontFamily: {
         'sans': ['Nunito Sans', 'ui-sans-serif', 'system-ui'],
       },

@@ -64,7 +64,7 @@ const DevelopmentPage = ({ initialData }) => {
   return (
     <>
       <div className="flex justify-between mb-9">
-        <h2 className="text-2xl font-bold ">Development Services</h2>
+        <h2 className="text-2xl font-bold ">E-Commerce </h2>
         <button
           onClick={() => setIsAddModalOpen(true)}
           className="bg-blue text-white px-6 py-2 h-auto font-semibold rounded-md"
