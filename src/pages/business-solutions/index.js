@@ -88,11 +88,15 @@ const ServicesList = ({ initialData }) => {
                     ADD
                 </button>
             </div>
-            <div className='flex gap-2'>
+         
+            <div className='flex gap-5 '>
                 {data && data.length > 0 ? (
                     data.map(service => (
-                        <div key={service._id} className='mb-2 p-2 px-6 py-5 bg-[#f5f1f1] shadow-lg shadow-[#6E0854]-500/50 rounded-sm mt-2 flex justify-between items-end gap-2' >
-                            <p className='capitalize font-semibold p-1 px-10 cursor-pointer' onClick={() => pagePush.push(`/business-solutions/${service.slugName}`)}>{service.servicesName}</p>
+                        <div key={service._id} className='mb-2 rounded-xl p-2 px-4 py-5 bg-gray-200 shadow-lg shadow-[#6E0854]-500/50  mt-2 flex justify-between items-end gap-2' >
+                            <p className='capitalize font-semibold p-1 px-10 cursor-pointer' onClick={() => pagePush.push(`/business-solutions/${service.slugName}`)}>
+                                {service.slugName} <br/>
+                                {service.servicesName}
+                                </p>
                             <button className=''>
                                 <UpdateModel service={service} refreshData={refreshData} />
                             </button>

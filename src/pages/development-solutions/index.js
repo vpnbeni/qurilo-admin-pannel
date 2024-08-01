@@ -73,30 +73,36 @@ const DevelopmentPage = ({ initialData }) => {
         </button>
       </div>
       <div className="flex gap-2">
-        <div className="bg-red-100 p-2 rounded-sm">
-          <h1 className="font-bold">Services Name :-</h1>
+        <div className=" p-2 rounded-sm flex">
           {data && data.length > 0 ? (
-            <ul>
+            <div className="flex gap-5 flex-wrap">
               {data.map((service) => (
-                <li
+                <div  
                   key={service._id}
-                  className="mb-2 p-2 bg-white shadow-lg rounded-sm mt-2 flex justify-between items-end gap-2"
+                  className="mb-2 p-2 bg-white  shadow-lg min-w-[300px] rounded-xl mt-2 flex justify-between items-end gap-2"
                 >
-                  <button
-                    className="capitalize font-semibold p-1 px-10"
+                  <div
+                    className="capitalize font-semibold p-1 px-4 cursor-pointer"
                     onClick={() => pagePush.push(`development-solutions/${service.slugName}`)}
                   >
+                    <div >
+                    {service.slugName}
+
+                    </div>
+                    <div className="flex justify-start font-normal">
                     {service.servicesName}
-                  </button>
+
+                    </div>
+                  </div>
                   <button>
                     <UpdateModel service={service} refreshData={refreshData} />
                   </button>
                   <button>
                     <MetaupdateModel service={service} refreshData={refreshData} />
                   </button>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           ) : (
             <p>No services available.</p>
           )}

@@ -71,21 +71,27 @@ const IndustriesPage = ({ initialData }) => {
         </button>
       </div>
       <div className="flex gap-2">
-        <div className="bg-red-100 p-2 rounded-sm w-full min-h-[300px]">
-          <h1 className="font-bold">Services Name :-</h1>
+        <div className=" p-2 rounded-sm w-full min-h-[300px]">
           <div className="flex w-full ">
             {data && data.length > 0 ? (
-              <div className="w-full flex gap-5 m-4">
+              <div className="w-full flex flex-wrap gap-5 m-4">
                 {data.map((service) => (
                   <div
                     key={service._id}
-                    className=" p-2  w-1/2 bg-white shadow-lg rounded-sm mt-2 flex justify-between items-end gap-2"
+                    className=" p-2   bg-white shadow-lg rounded-xl w-[400px] mt-2 flex justify-between items-end gap-2 overflow-hidden"
                   >
                     <button
-                      className="capitalize font-semibold p-1 px-10"
+                      className="capitalize font-semibold p-1 max-w-[80%]"
                       onClick={() => pagePush.push(`industrie/${service.slugName}`)}
                     >
+                      <div className="flex justify-start text-nowrap overflow-x-hidden ">
                       {service.servicesName}
+
+                      </div>
+                      <div className="font-normal flex justify-start">
+                      {service.slugName}
+
+                      </div>
                     </button>
                     <div className="flex gap-2 items-center justify-center">
                       <button>
