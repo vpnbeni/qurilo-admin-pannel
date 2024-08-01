@@ -75,11 +75,11 @@ const ServicesList = ({ initialData }) => {
             <div className='font-semibold text-2xl py-5 flex justify-between'>
                 <span>Business solution :-</span>
                 <button
-                    onClick={() => setIsAddModalOpen(true)}
-                    className="bg-blue text-white px-4 text-lg py-2 font-semibold rounded-md"
-                >
-                    ADD
-                </button>
+          onClick={() => setIsAddModalOpen(true)}
+          className="bg-[#521950] text-white  font-bold x px-6 py-2 h-auto   rounded-md"
+        >
+          ADD
+        </button>
             </div>
          
             <div className='flex gap-5 '>

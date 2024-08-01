@@ -61,7 +61,7 @@ const IndustriesPage = ({ initialData }) => {
         <h2 className="text-2xl font-bold">Industries Services</h2>
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="bg-white text-black border border-black px-6 py-2 h-auto font-semibold rounded-md"
+          className="bg-[#521950] text-white  font-bold x px-6 py-2 h-auto   rounded-md"
         >
           ADD
         </button>
