@@ -4,6 +4,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { FaMeta } from "react-icons/fa6";
+import DashboardCard from "@/component/cards/DashboardCard";
 
 // Fetch data on the server side
 export async function getServerSideProps() {
@@ -33,11 +34,7 @@ const DevelopmentPage = ({ initialData }) => {
   const [newSlugName, setNewSlugName] = useState("");
   const pagePush = useRouter();
 
-  const refreshData = async () => {
-    const res = await fetch(`${API_URL}auth/v1/ecommerce/category`);
-    const newData = await res.json();
-    setData(newData.data || []);
-  };
+  const pageName="ecommerce"
 
   const handleAddService = async () => {
     const res = await fetch(`${API_URL}auth/v1/ecommerce/category`, {
@@ -77,27 +74,7 @@ const DevelopmentPage = ({ initialData }) => {
           {data && data.length > 0 ? (
             <div className="flex flex-wrap gap-5">
               {data.map((service) => (
-                <div
-                  key={service._id}
-                  className="mb-2 p-2 cursor-pointer bg-white w-[300px] overflow-hidden shadow-lg rounded-xl  mt-2 flex justify-between items-end gap-2"
-                >
-                  <div
-                    className="capitalize font-semibold p-1  max-w-[80%]"
-                    onClick={() => pagePush.push(`e-commerce-service/${service.slugName}`)}
-                  >
-                    <div className="flex justify-start flex-nowrap overflow-x-hidden">{service.slugName}</div>
-                    <span className="flex justify-start flex-nowrap overflow-x-hidden pl-0 text-nowrap">{service.servicesName}</span>
-                      
-                  </div>
-                  <div>
-                  <button>
-                    <UpdateModel service={service} refreshData={refreshData} />
-                  </button>
-                  <button>
-                    <MetaupdateModel service={service} refreshData={refreshData} />
-                  </button>
-                  </div>
-                </div>
+                <DashboardCard service={service} pageName={pageName} setData={setData}/>
               ))}
             </div>
           ) : (

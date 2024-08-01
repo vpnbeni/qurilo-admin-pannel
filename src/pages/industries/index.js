@@ -1,9 +1,9 @@
 import { API_URL } from '@/api/commonApi';
 import React, { useState } from 'react';
-import { MdModeEditOutline } from 'react-icons/md';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaMeta } from "react-icons/fa6";
 import { useRouter } from 'next/router';
+import DashboardCard from '@/component/cards/DashboardCard';
 
 // Fetch data on the server side
 export async function getServerSideProps() {
@@ -32,12 +32,8 @@ const IndustriesPage = ({ initialData }) => {
   const [newSlugName, setNewSlugName] = useState("");
   const pagePush = useRouter();
 
-  const refreshData = async () => {
-    const res = await fetch(`${API_URL}auth/v1/industrie/category`);
-    const newData = await res.json();
-    setData(newData.data || []);
-  };
-
+  
+  const pageName ="industrie"
   const handleAddService = async () => {
     const res = await fetch(`${API_URL}auth/v1/industrie/category`, {
       method: "POST",
@@ -65,7 +61,7 @@ const IndustriesPage = ({ initialData }) => {
         <h2 className="text-2xl font-bold">Industries Services</h2>
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="bg-blue text-white px-6 py-2 h-auto font-semibold rounded-md"
+          className="bg-white text-black border border-black px-6 py-2 h-auto font-semibold rounded-md"
         >
           ADD
         </button>
@@ -76,32 +72,7 @@ const IndustriesPage = ({ initialData }) => {
             {data && data.length > 0 ? (
               <div className="w-full flex flex-wrap gap-5 m-4">
                 {data.map((service) => (
-                  <div
-                    key={service._id}
-                    className=" p-2   bg-white shadow-lg rounded-xl w-[400px] mt-2 flex justify-between items-end gap-2 overflow-hidden"
-                  >
-                    <button
-                      className="capitalize font-semibold p-1 max-w-[80%]"
-                      onClick={() => pagePush.push(`industrie/${service.slugName}`)}
-                    >
-                      <div className="flex justify-start text-nowrap overflow-x-hidden ">
-                      {service.servicesName}
-
-                      </div>
-                      <div className="font-normal flex justify-start">
-                      {service.slugName}
-
-                      </div>
-                    </button>
-                    <div className="flex gap-2 items-center justify-center">
-                      <button>
-                        <UpdateModel service={service} refreshData={refreshData} />
-                      </button>
-                      <button>
-                        <MetaupdateModel service={service} refreshData={refreshData} />
-                      </button>
-                    </div>
-                  </div>
+                  <DashboardCard service={service} pageName={pageName} setData={setData}/>
                 ))}
               </div>
             ) : (
@@ -149,119 +120,4 @@ const IndustriesPage = ({ initialData }) => {
 
 export default IndustriesPage;
 
-const UpdateModel = ({ service, refreshData }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [updateData, setUpdateData] = useState(service.servicesName);
 
-  const handleUpdate = async () => {
-    const res = await fetch(`${API_URL}auth/v1/service/${service._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ servicesName: updateData }),
-    });
-
-    if (res.status === 200) {
-      setIsOpen(false);
-      refreshData();
-    } else {
-      console.error("Failed to update service");
-    }
-  };
-
-  return (
-    <>
-      <p className="cursor-pointer" onClick={() => setIsOpen(true)}>
-        <MdModeEditOutline />
-      </p>
-      {isOpen && (
-        <div className="fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.66)] flex items-center justify-center">
-          <div className="bg-white p-4 rounded-md w-[300px] h-[140px] relative">
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-2 right-2 p-1 text-black"
-            >
-              <AiOutlineClose size={25} />
-            </button>
-            <input
-              value={updateData}
-              onChange={(e) => setUpdateData(e.target.value)}
-              className="border-2 p-1 w-full mb-4"
-            />
-            <button
-              onClick={handleUpdate}
-              className="bg-slate-400 py-1 px-2 mt-4 rounded-md text-white"
-            >
-              Update
-            </button>
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
-
-const MetaupdateModel = ({ service, refreshData }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [metaTag, setMetaTag] = useState("");
-  const [metaDescription, setMetaDescription] = useState("");
-
-  const handleUpdate = async () => {
-    const res = await fetch(`${API_URL}auth/v1/industrie/meta-tag/industrie-solution`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        metaTag: metaTag,
-        metaDescription: metaDescription,
-      }),
-    });
-
-    if (res.status === 200) {
-      setIsOpen(false);
-      refreshData();  
-    } else {
-      console.error("Failed to update meta data");
-    }
-  };
-
-  return (
-    <>
-      <p className="cursor-pointer" onClick={() => setIsOpen(true)}>
-        <FaMeta />
-      </p>
-      {isOpen && (
-        <div className="fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.66)] flex items-center justify-center">
-          <div className="bg-white p-4 rounded-md w-1/2 h-[240px] relative">
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-2 right-2 p-1 text-black"
-            >
-              <AiOutlineClose size={25} />
-            </button>
-            <input
-              value={metaTag}
-              onChange={(e) => setMetaTag(e.target.value)}
-              placeholder="Meta Tag"
-              className="border-2 p-1 w-full mb-4"
-            />
-            <textarea
-              value={metaDescription}
-              onChange={(e) => setMetaDescription(e.target.value)}
-              placeholder="Meta Description"
-              className="border-2 p-1 w-full mb-4"
-            />
-            <button
-              onClick={handleUpdate}
-              className="bg-slate-400 py-1 px-2 mt-4 rounded-md text-white"
-            >
-              Update
-            </button>
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
