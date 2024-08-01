@@ -28,6 +28,7 @@ export async function getServerSideProps() {
 const ItPage = ({ initialData }) => {
   const pageName='it'
   const [data, setData] = useState(initialData);
+  console.log(data,"data")
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newServiceName, setNewServiceName] = useState("");
   const [newSlugName, setNewSlugName] = useState("");
@@ -58,7 +59,7 @@ const ItPage = ({ initialData }) => {
   return (
     <>
       <div className="flex justify-between mb-9">
-        <h2 className="text-2xl font-bold">Industries Services</h2>
+        <h2 className="text-2xl font-bold">It Services</h2>
         <button
           onClick={() => setIsAddModalOpen(true)}
           className="bg-[#521950] text-white  font-bold x px-6 py-2 h-auto   rounded-md"
@@ -66,54 +67,18 @@ const ItPage = ({ initialData }) => {
           ADD
         </button>
       </div>
-      <div className="flex gap-2">
-        <div className=" p-2 rounded-sm w-full min-h-[300px]">
-          <div className="flex w-full ">
-            {data && data.length > 0 ? (
-              <div className="w-full flex flex-wrap gap-5 m-4">
-                {data.map((service) => (
-                  <DashboardCard service={service} pageName={pageName}/>
-                ))}
-              </div>
-            ) : (
-              <p>No services available.</p>
+      <div className='flex gap-5 flex-wrap justify-center '>
+                {data && data.length > 0 ? (
+                    data.map(service => (
+                        <DashboardCard key={service._id} service={service} pageName={pageName} setData={setData} />
+                    ))
+                ) : (
+                    <p>No services available.</p>
+                )}
+            </div>
+            {isAddModalOpen && (
+                <AddSlugModal setIsAddModalOpen={setIsAddModalOpen} pageName={pageName} setData={setData} />
             )}
-          </div>
-        </div>
-      </div>
-      {isAddModalOpen && (
-        <div className="fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.66)] flex items-center justify-center">
-          <div className="bg-white p-4 rounded-md w-[300px] relative">
-            <button
-              onClick={() => setIsAddModalOpen(false)}
-              className="absolute top-2 right-2 text-black"
-            >
-              <AiOutlineClose size={25} />
-            </button>
-            <h2 className="text-lg font-bold my-4">Add Service</h2>
-            <input
-              type="text"
-              value={newServiceName}
-              onChange={(e) => setNewServiceName(e.target.value)}
-              className="border-2 p-2 w-full mb-4"
-              placeholder="Enter service name"
-            />
-            <input
-              type="text"
-              value={newSlugName}
-              onChange={(e) => setNewSlugName(e.target.value)}
-              className="border-2 p-2 w-full mb-4"
-              placeholder="Enter slug name"
-            />
-            <button
-              onClick={handleAddService}
-              className="bg-blue text-white px-4 py-2 rounded-md"
-            >
-              Add
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 };

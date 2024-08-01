@@ -146,13 +146,13 @@ const Banner = ({ id }) => {
               <div className="flex gap-2 absolute bottom-8  right-24">
                 <button
                 onClick={() => handleCancelClick()}
-                className="bg-red-600 rounded-sm text-white px-4 py-2 font-semibold "
+                className="bg-red-600 rounded-xl text-white px-4 py-2 font-semibold "
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleSaveClick(bannerData?._id)}
-                className="bg-green-600 rounded-sm text-white px-4 py-2 font-semibold "
+                className="bg-green-600 rounded-xl text-white px-4 py-2 font-semibold "
               >
                 Save
               </button>

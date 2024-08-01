@@ -1,7 +1,7 @@
 // components/Modal.js
 import React from 'react';
 
-const Modal = ({ isVisible, onClose, onSave, title, setTitle, description, setDescription }) => {
+const Modal = ({ isVisible, onClose, onSave, title, setTitle, description, setDescription ,setNewImage}) => {
   if (!isVisible) return null;
 
   return (
@@ -22,6 +22,7 @@ const Modal = ({ isVisible, onClose, onSave, title, setTitle, description, setDe
           className="w-full mb-4 p-2 border rounded-md"
           placeholder="Card Description"
         />
+        <input type="file" onChange={(e) => setNewImage(e.target.files[0])} className="mb-2" />
         <div className="flex justify-end gap-2">
           <button onClick={onClose} className="bg-gray-500 text-white px-4 py-2 rounded-md">
             Cancel

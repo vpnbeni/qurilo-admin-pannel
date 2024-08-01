@@ -9,6 +9,8 @@ import { RiCustomerService2Fill } from "react-icons/ri";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { usePathname } from 'next/navigation';
 import { CiHome } from "react-icons/ci";
+import { useRouter } from "next/router";
+
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const [isProjectsOpen, setIsProjectsOpen] = useState(false);
   const [isMainPageOpen, setIsMainPageOpen] = useState(false);
@@ -16,6 +18,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   useEffect(() => {
     setIsClient(true);
   }, []);
+  const pagePush = useRouter();
+
   const pathname = usePathname();
   const toggleProjectsDropdown = () => {
     setIsOpen(true);
@@ -32,16 +36,16 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     }
   };
   const handleCloseSidebar = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(!isOpen); 
   };
   return (
     <div className={`z-50 bg-[#521950] rounded-r-[15px] h-screen p-5 text-white flex flex-col fixed top-0 left-0 transition-width duration-300 ease-in-out ${isOpen ? "w-[16%]" : "w-[4%] pt-10"}`}>
       <div className={`mb-8`}>
         {isClient && (
           isOpen ? (
-            <Image src='/qurilo.png' width={100} height={100} alt="Logo" className="ml-5" />
+            <Image src='/qurilo.png' width={100} height={100} alt="Logo" className="ml-5 cursor-pointer" onClick={() => pagePush.push(`/`)} />
           ) : (
-            <Image src='/qurilo.png' width={120} height={120} alt="Logo" />
+            <Image src='/qurilo.png' width={120} height={120} alt="Logo" className="cursor-pointer" onClick={() => pagePush.push(`/`)} />
           )
         )}
       </div>

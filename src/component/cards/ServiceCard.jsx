@@ -6,6 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 
 const ServiceCard = ({
   type,
+  category,
   icon,
   name,
   des,
@@ -14,10 +15,10 @@ const ServiceCard = ({
   setSuccessfullyEdited,
   successfullyEdited,
   editingId,
-  setEditingId
+  setEditingId,
+  newImage,
+  setNewImage
 }) => {
-  console.log * id, "id"
-  // const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState("");
   const [editDes, setEditDes] = useState("");
   const [updateLoading, setUpdateLoading] = useState(false);
@@ -37,24 +38,25 @@ const ServiceCard = ({
   };
 
   const handleCancelClick = () => {
-
     setEditingId(!id);
     setSuccessfullyEdited(!successfullyEdited);
   }
+
   const handleSaveClick = async (idd) => {
     setUpdateLoading(true);
-    const dataSend = {
-      cardTitle: editName,
-      cardDescription: editDes,
-      slugName: slugName,
-    };
+    
+    const formData = new FormData();
+    formData.append('cardTitle', editName);
+    formData.append('cardDescription', editDes);
+    formData.append('slugName', slugName);
+    if (newImage) {
+      formData.append('icon', newImage);
+    }
     try {
-      const response = await fetch(`${API_URL}auth/v1/industrie/service-card/${idd}`, {
+      const response = await fetch(`${API_URL}auth/v1/${category}/service-card/${idd}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataSend),
+        
+        body: formData,
       });
 
       if (!response.ok) {
@@ -73,7 +75,7 @@ const ServiceCard = ({
 
   const deleteCard = async (idd) => {
     try {
-      const response = await fetch(`${API_URL}auth/v1/industrie/service-card/${idd}`, {
+      const response = await fetch(`${API_URL}auth/v1/${category}/service-card/${idd}`, {
         method: "DELETE",
       });
 
@@ -85,6 +87,13 @@ const ServiceCard = ({
       setSuccessfullyEdited(!successfullyEdited);
     } catch (error) {
       console.error("Error deleting banner:", error);
+    }
+  };
+
+  const handleDeleteClick = (idd) => {
+    const confirmed = window.confirm("Are you sure you want to delete this card?");
+    if (confirmed) {
+      deleteCard(idd);
     }
   };
 
@@ -106,6 +115,7 @@ const ServiceCard = ({
               className="w-full mb-4 p-2 border rounded-md"
               placeholder="Edit Description"
             />
+            <input type="file" onChange={(e) => setNewImage(e.target.files[0])} className="mb-2" />
           </>
         ) : (
           <>
@@ -114,7 +124,7 @@ const ServiceCard = ({
                 <img
                   src={icon}
                   alt={name}
-                  className="w-16 h-16 object-cover mb-5"
+                  className="w-16 h-16 object-cover mb-5" 
                 />
               )}
               <h3 className="md:text-xl text-black font-bold font-sans mb-7">
@@ -147,7 +157,7 @@ const ServiceCard = ({
             ) : (
               <div className="flex gap-4" >
                 <button
-                  onClick={() => handleCancelClick()}
+                  onClick={handleCancelClick}
                   className="bg-red-600 text-white px-4 py-2  hidden group-hover:block bottom-4 rounded-md"
                 >
                   Cancel
@@ -167,7 +177,11 @@ const ServiceCard = ({
               size={27}
             />
           )}
-          <RxCross2 className="cursor-pointer hidden group-hover:block text-red-600 absolute right-1 top-2" onClick={() => deleteCard(id)} size={27} />
+          <RxCross2
+            className="cursor-pointer hidden group-hover:block text-red-600 absolute right-1 top-2"
+            onClick={() => handleDeleteClick(id)}
+            size={27}
+          />
         </div>
       </div>
     </div>
