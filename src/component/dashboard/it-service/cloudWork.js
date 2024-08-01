@@ -160,7 +160,12 @@ const CloudWork = ({ data, id }) => {
     setVisibleCount(3);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
+  const handleDeleteClick = (idd) => {
+    const confirmed = window.confirm("Are you sure you want to delete this card?");
+    if (confirmed) {
+      deleteCard(idd);
+    }
+  };
   const deleteCard = async (idd) => {
     try {
       const response = await fetch(`${API_URL}auth/v1/it/cloud-work/${idd}`, {
@@ -302,7 +307,7 @@ const CloudWork = ({ data, id }) => {
                 />
                 
               )}
-             <RxCross2 className="cursor-pointer text-red-600 absolute top-2 right-3 hidden group-hover:block" onClick={() => deleteCard(card?._id)} size={27} /> 
+             <RxCross2 className="cursor-pointer text-red-600 absolute top-2 right-3 hidden group-hover:block" onClick={() => handleDeleteClick(card?._id)} size={27} /> 
               <div className={`absolute ${editingId === card?._id ? "hidden" : "block"}  bottom-2  md:bottom-5 right-10 cursor-pointer flex items-center text-blue underline justify-end font-normal rounded-md bg-white transition-all duration-500`}>
                 Know More
                 <svg

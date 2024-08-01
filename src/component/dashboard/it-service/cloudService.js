@@ -22,6 +22,9 @@ const CloudService = ({ id }) => {
   const [newImage, setNewImage] = useState(null);
   const [editingId, setEditingId] = useState(null);
 
+  const [updateLoading, setUpdateLoading] = useState(false);
+
+
   const [visibleCards, setVisibleCards] = useState(3);
   const [showAllCards, setShowAllCards] = useState(false);
 
@@ -38,13 +41,9 @@ const CloudService = ({ id }) => {
     }
   }
 
-  useEffect(() => {
-    if (id) {
-      fetchServiceCardData();
-    }
-  }, [id, successfullyEdited])
-
+  
   const handleEditData = async (idd) => {
+    setUpdateLoading(true)
     const dataSend = {
       mainHeading: editHeading,
       description: editContent,
@@ -68,6 +67,8 @@ const CloudService = ({ id }) => {
       setEdit(false);
     } catch (error) {
       console.error(error);
+    }finally {
+      setUpdateLoading(false);
     }
   }
 
@@ -77,7 +78,7 @@ const CloudService = ({ id }) => {
   };
 
   const handleSaveNewCard = async () => {
-    
+    setUpdateLoading(true)
     const formData = new FormData();
     formData.append('cardTitle', newCardTitle);
     formData.append('cardDescription', newCardDescription);
@@ -96,13 +97,17 @@ const CloudService = ({ id }) => {
         throw new Error('Network response was not ok');
       }
 
-      const data = await response.json();
+      await response.json();
+      // fetchServiceCardData();
       setSuccessfullyEdited(!successfullyEdited);
-      setIsModalVisible(false);
       setNewCardTitle('');
       setNewCardDescription('');
+      setIsModalVisible(false);
+
     } catch (error) {
       console.error(error);
+    }finally {
+      setUpdateLoading(false);
     }
   };
 
@@ -126,12 +131,17 @@ const CloudService = ({ id }) => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      setEdit(false);
       fetchServiceCardData();
+      setEdit(false);
     } catch (error) {
       console.error(error);
     }
   }
+  useEffect(() => {
+    if (id) {
+      fetchServiceCardData();
+    }
+  }, [id, successfullyEdited])
 
   return (
     <section className='group'>
@@ -167,7 +177,7 @@ const CloudService = ({ id }) => {
             <HiOutlinePlus />
           </button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-14 relative">
           {serviceCardData?.managementServiceData?.slice(0, visibleCards).map((card, i) => (
             <ServiceCard
               key={i} 
@@ -197,6 +207,7 @@ const CloudService = ({ id }) => {
         </div>
       </div>
 
+      <div className="relative">
       <Modal
         isVisible={isModalVisible}
         setNewImage={setNewImage}
@@ -206,7 +217,9 @@ const CloudService = ({ id }) => {
         setTitle={setNewCardTitle}
         description={newCardDescription}
         setDescription={setNewCardDescription}
+        updateLoading={updateLoading}
       />
+      </div>
     </section>
   );
 };

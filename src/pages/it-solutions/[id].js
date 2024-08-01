@@ -34,7 +34,7 @@ const Page = () => {
 
       <CloudExpertise midBannerData={midBannerData1} type="img" id={id} />
       <CloudWork data={cloudTechnologeisData} id={id} />
-      <UnlockGrowth midBannerData={midBannerData1} type="noImg" id={id} />
+      {/* <UnlockGrowth midBannerData={midBannerData1} type="noImg" id={id} /> */}
       <Faq faqData={faqData} id={id} />
       <Review Testimaonials={Testimaonials} id={id} />
     </>

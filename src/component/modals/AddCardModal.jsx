@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RxCross1 } from "react-icons/rx";
+import LoadingButton from "@/component/buttons/LoadingButton";
 
 const AddCardModal = ({ isOpen, onClose, onSave }) => {
   const [newCardTitle, setNewCardTitle] = useState('');
@@ -29,7 +30,7 @@ const AddCardModal = ({ isOpen, onClose, onSave }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={onClose}>
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50" onClick={onClose}>
       <div className="bg-white h-max p-6 w-[30rem] rounded-lg" onClick={(e) => e.stopPropagation()}>
         <div className='flex justify-between'>
           <h2 className="text-xl mb-4">Add New Card</h2>
@@ -55,18 +56,21 @@ const AddCardModal = ({ isOpen, onClose, onSave }) => {
             className="mb-4 p-2 border"
           />
         </div>
-        <button
-          onClick={handleSave}
-          className="bg-green-600 text-white px-4 py-2 rounded-md mr-2"
-        >
-          Save
-        </button>
+        <div className="flex gap-2">
         <button
           onClick={onClose}
           className="bg-red-600 text-white px-4 py-2 rounded-md"
         >
           Cancel
         </button>
+        <button
+          onClick={handleSave}
+          className="bg-green-600 text-white px-4 py-2 rounded-md "
+        >
+          Save
+        </button>
+        </div>
+        
       </div>
     </div>
   );
