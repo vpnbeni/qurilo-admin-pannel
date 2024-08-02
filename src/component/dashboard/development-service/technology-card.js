@@ -77,13 +77,13 @@ const Technologycard = ({ id }) => {
               <>
                 <input
                   type="text"
-                  className="border-[1px] text-3xl rounded-sm font-medium text-center p-2 border-gray-900 w-3/4"
+                  className="border-2 text-2xl font-medium border-gray-700 rounded-md px-2 py-3 w-2/3"
                   value={headingValue}
                   onChange={(e) => setHeadingValue(e.target.value)}
                 />
                 <textarea
                   type="text"
-                  className="border-[1px] rounded-sm  text-center p-2  border-gray-900 w-3/4"
+                  className="border-2 h-[200px]  border-gray-700 rounded-md px-2 py-3 mt-2 w-2/3"
                   value={subHeadingValue}
                   onChange={(e) => setSubHeadingValue(e.target.value)}
                 />
@@ -96,25 +96,27 @@ const Technologycard = ({ id }) => {
                 <p>{technologyCards?.description}</p>
               </>
             )}
-            <div className="hidden  absolute right-0 bottom-8 group-hover:flex justify-end me-5 gap-x-1">
+            <div className="hidden   group-hover:flex justify-end me-5 gap-x-1">
               {headingChange ? (
                 headingLoading ? (
                   <LoadingButton />
                 ) : (
-                  <div>
-                    <div
-                    onClick={handleHeading}
-                    className="cursor-pointer border-green-800 text-lg font-normal hover:bg-green-800 hover:text-white text-green-600 border-[1px] rounded-md px-3 py-1"
-                  >
-                    Cancel
-                  </div>
-                  <div
-                    onClick={handleHeading}
-                    className="cursor-pointer border-green-800 text-lg font-normal hover:bg-green-800 hover:text-white text-green-600 border-[1px] rounded-md px-3 py-1"
-                  >
-                    Save
-                  </div>
-                  </div>
+                    
+                 
+                  <div className="flex gap-2">
+              <button
+              onClick={() => handleHeading()}
+              className="text-white font-bold bg-red-600 my-4 px-4 py-2 rounded-md"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => handleHeading()}
+              className="text-white font-bold bg-green-600 my-4 px-4 py-2 rounded-md"
+            >
+              Save
+            </button>
+            </div>
                 )
               ) : (
                 <MdModeEditOutline

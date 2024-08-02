@@ -34,7 +34,7 @@ const DevelopmentPage = ({ initialData }) => {
   const [newSlugName, setNewSlugName] = useState("");
   const pagePush = useRouter();
 
-  const pageName="development"
+  const pageName="development-solutions"
 
   const handleAddService = async () => {
     const res = await fetch(`${API_URL}auth/v1/development/category`, {

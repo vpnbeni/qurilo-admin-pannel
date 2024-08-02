@@ -25,7 +25,7 @@ const Banner = ({ id }) => {
       setBannerData(data.banner);
       setLoading(false);
 
-      console.log(data,'data from banner')
+      // console.log(data,'data from banner')
     } catch (error) {}
   };
 

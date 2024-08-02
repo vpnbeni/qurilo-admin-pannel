@@ -26,7 +26,7 @@ export async function getServerSideProps() {
 }
 
 const ItPage = ({ initialData }) => {
-  const pageName='it'
+  const pageName='it-solutions'
   const [data, setData] = useState(initialData);
   console.log(data,"data")
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

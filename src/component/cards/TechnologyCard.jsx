@@ -37,9 +37,9 @@ const TechnologyEditModal = ({ tech, setShowModal, slug, type ,successfullyEdite
     formData.append('cardTitle', title);
     formData.append('cardDescription', JSON.stringify(techList));
     formData.append('slugName', slug);
-    // if (editImage) {
-    //   formData.append('icon', editImage);
-    // }
+    if (editImage) {
+      formData.append('icon', editImage);
+    }
     console.log(techList,"list")
     try {
       const response = await fetch(`${API_URL}auth/v1/${type}/technology-card/${tech._id}`, {
@@ -127,6 +127,12 @@ const TechnologyCard = ({ tech, type, slug, successfullyEdited , setSuccessfully
       document.body.style.overflow = "auto";
     };
   }, [showModal]);
+  const handleDeleteClick = (idd) => {
+    const confirmed = window.confirm("Are you sure you want to delete this card?");
+    if (confirmed) {
+      deleteTechnology(idd);
+    }
+  };
   const deleteTechnology = async (id) => {
     const slugName = slug;
     try {
@@ -153,7 +159,7 @@ const TechnologyCard = ({ tech, type, slug, successfullyEdited , setSuccessfully
           width={50}
           height={50}
         />
-       <div className="flex justify-between items-center w-full">   <h1 className="text-xl font-[600]">{tech.cardTitle}</h1>   <RxCross2 onClick={() => deleteTechnology(tech._id)} className="text-red-500 hidden group-hover:block cursor-pointer" size={25} /></div>
+       <div className="flex justify-between items-center w-full">   <h1 className="text-xl font-[600]">{tech.cardTitle}</h1>   <RxCross2 onClick={() => handleDeleteClick(tech._id)} className="text-red-500 hidden group-hover:block cursor-pointer" size={25} /></div>
        
       </div>
         <div className="relative  h-[2px] bg-bgColor-100 rounded-md">

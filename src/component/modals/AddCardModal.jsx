@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { RxCross1 } from "react-icons/rx";
 import LoadingButton from "@/component/buttons/LoadingButton";
 
-const AddCardModal = ({ isOpen, onClose, onSave }) => {
+const AddCardModal = ({ isOpen, onClose, onSave, addLoading }) => {
   const [newCardTitle, setNewCardTitle] = useState('');
   const [newCardDescription, setNewCardDescription] = useState('');
   const [newCardIcon, setNewCardIcon] = useState(null);
@@ -31,53 +31,51 @@ const AddCardModal = ({ isOpen, onClose, onSave }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50" onClick={onClose}>
-      <div className="bg-white h-max p-6 w-[30rem] rounded-lg" onClick={(e) => e.stopPropagation()}>
-        <div className='flex justify-between'>
-          <h2 className="text-xl mb-4">Add New Card</h2>
+      <div className="bg-white p-6 rounded-md" onClick={(e) => e.stopPropagation()}>
+        <div className='flex justify-between mb-4'>
+          <h2 className="text-2xl font-bold">Add Card</h2>
           <RxCross1 size={26} onClick={onClose} className='cursor-pointer' />
         </div>
-        <div className='flex flex-col'>
-          <input
-            type="file"
-            onChange={(e) => setNewCardIcon(e.target.files[0])}
-            className="mb-4"
-          />
-          <input
-            type="text"
-            placeholder="Card Title"
-            value={newCardTitle}
-            onChange={(e) => setNewCardTitle(e.target.value)}
-            className="mb-4 p-2 border"
-          />
-          <textarea
-            placeholder="Card Description"
-            value={newCardDescription}
-            onChange={(e) => setNewCardDescription(e.target.value)}
-            className="mb-4 p-2 border"
-          />
+        <input
+          type="text"
+          placeholder="Card Title"
+          value={newCardTitle}
+          onChange={(e) => setNewCardTitle(e.target.value)}
+          className="border-2 w-full border-gray-700 rounded-md px-2 py-3 mb-4"
+        />
+        <textarea
+          placeholder="Card Description"
+          value={newCardDescription}
+          onChange={(e) => setNewCardDescription(e.target.value)}
+          className="border-2 w-full border-gray-700 rounded-md px-2 py-3 mb-4"
+          rows="4"
+        />
+        <input
+          type="file"
+          onChange={(e) => setNewCardIcon(e.target.files[0])}
+          className="mb-4"
+        />
+        <div className="flex justify-end">
+          <button
+            onClick={onClose}
+            className="bg-gray-600 text-white px-4 py-2 rounded-md mr-2"
+          >
+            Cancel
+          </button>
+          {addLoading ? (
+            <LoadingButton />
+          ) : (
+            <button
+              onClick={handleSave}
+              className="bg-green-600 text-white px-4 py-2 rounded-md"
+            >
+              Save
+            </button>
+          )}
         </div>
-        <div className="flex gap-2">
-        <button
-          onClick={onClose}
-          className="bg-red-600 text-white px-4 py-2 rounded-md"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={handleSave}
-          className="bg-green-600 text-white px-4 py-2 rounded-md "
-        >
-          Save
-        </button>
-        </div>
-        
       </div>
     </div>
   );
 };
 
 export default AddCardModal;
-
-
-
-

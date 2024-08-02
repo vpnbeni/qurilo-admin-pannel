@@ -3,10 +3,10 @@ import Heading2 from '@/component/headings/Heading2';
 import { MdEdit, MdSave, MdCancel } from 'react-icons/md';
 import { IoTrashBin } from 'react-icons/io5';
 import { API_URL } from '@/api/commonApi';
-import { FaTimes } from "react-icons/fa"; 
+import { FaTimes } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 import LoadingButton from '../../buttons/LoadingButton';
-
+import { RxCross1 } from "react-icons/rx";
 const Developmentprocess = ({ id }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ const Developmentprocess = ({ id }) => {
       setData(result.data);
       setMainHeadingEdit(result.data.mainHeading);
       setMainDescEdit(result.data.description);
-      setLoading(false);  
+      setLoading(false);
     } catch (error) {
       setError(error);
       setLoading(false);
@@ -90,7 +90,7 @@ const Developmentprocess = ({ id }) => {
   const handleMainEditClick = () => {
     setIsEditingMain(true);
   };
-  const handleMainCancelClick=()=>{
+  const handleMainCancelClick = () => {
     fetchData();
     setIsEditingMain(!isEditingMain);
 
@@ -114,7 +114,7 @@ const Developmentprocess = ({ id }) => {
       if (!res.ok) {
         throw new Error('Failed to update main heading and description');
       }
-       fetchData();
+      fetchData();
       setIsEditingMain(false);
     } catch (error) {
       setError(error);
@@ -165,7 +165,12 @@ const Developmentprocess = ({ id }) => {
     const { name, value } = e.target;
     setNewCardData((prevState) => ({ ...prevState, [name]: value }));
   };
-
+  const handleDeleteConfirm = (idd) => {
+    const confirmed = window.confirm("Are you sure you want to delete this card?");
+    if (confirmed) {
+      handleDeleteClick(idd);
+    }
+  };
   const handleDeleteClick = async (cardId) => {
     try {
       const deleteUrl = `${API_URL}auth/v1/development/process-card/${cardId}`;
@@ -215,12 +220,10 @@ const Developmentprocess = ({ id }) => {
                   <LoadingButton />
                 ) : (
                   <div className="flex gap-2">
-                    <button onClick={handleMainCancelClick} className="bg-red-500 text-white p-2 rounded mx-3">
-                    Cancel
-                  </button>
-                  <button onClick={handleMainSaveClick} className="bg-green-500 text-white p-2 rounded mx-3">
-                    Save
-                  </button>
+                   
+                    <button onClick={handleMainSaveClick} className="bg-green-500 text-white p-2 rounded mx-3">
+                      Save
+                    </button>
                   </div>
                 )}
               </div>
@@ -254,7 +257,7 @@ const Developmentprocess = ({ id }) => {
               className={`relative mx-2 ${bgColor} w-full md:my-4 my-2 text-center z-10 py-6 px-6 shadow-md rounded-xl group`}
             >
               <div className="absolute top-4 right-4  items-center group-hover:flex hidden">
-                <button onClick={() => handleDeleteClick(devdata._id)} className="text-white">
+                <button onClick={() => handleDeleteConfirm(devdata._id)} className="text-white">
                   <FaTimes className="h-4 w-4 text-red-500 cursor-pointer" />
                 </button>
               </div>
@@ -316,39 +319,44 @@ const Developmentprocess = ({ id }) => {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 z-40 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg w-1/2">
-            <h2 className="text-2xl mb-4">Add Card</h2>
-            <input
-              type="text"
-              name="cardTitle"
-              value={newCardData.cardTitle}
-              onChange={handleNewCardChange}
-              placeholder="Card Title"
-              className="w-full mb-4 p-2 border border-gray-300 rounded"
-            />
-            <textarea
-              name="cardDescription"
-              value={newCardData.cardDescription}
-              onChange={handleNewCardChange}
-              placeholder="Card Description"
-              className="w-full mb-4 p-2 border border-gray-300 rounded"
-            />
-            <div className="flex justify-end gap-2">
-              <button onClick={handleModalCancelClick} className="bg-red-500 text-white p-2 rounded">
-                Cancel
-              </button>
-              {modalLoading ? (
-                <LoadingButton />
-              ) : (
-                <button onClick={handleModalSaveClick} className="bg-green-500 text-white p-2 rounded mr-2">
-                  Save
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0 z-40 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="bg-white p-6 rounded-md w-1/2">
+      <div className="flex justify-between mb-4">
+        <h2 className="text-2xl font-bold">Add Card</h2>
+        <RxCross1 size={26} onClick={handleModalCancelClick} className="cursor-pointer" />
+      </div>
+      <input
+        type="text"
+        name="cardTitle"
+        value={newCardData.cardTitle}
+        onChange={handleNewCardChange}
+        placeholder="Card Title"
+        className="border-2 w-full border-gray-700 rounded-md px-2 py-3 mb-4"
+      />
+      <textarea
+        name="cardDescription"
+        value={newCardData.cardDescription}
+        onChange={handleNewCardChange}
+        placeholder="Card Description"
+        className="border-2 w-full border-gray-700 rounded-md px-2 py-3 mb-4"
+        rows="4"
+      />
+      <div className="flex justify-end gap-2">
+        <button onClick={handleModalCancelClick} className="bg-gray-600 text-white px-4 py-2 rounded-md">
+          Cancel
+        </button>
+        {modalLoading ? (
+          <LoadingButton />
+        ) : (
+          <button onClick={handleModalSaveClick} className="bg-green-600 text-white px-4 py-2 rounded-md">
+            Save
+          </button>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
     </section>
   );
 };

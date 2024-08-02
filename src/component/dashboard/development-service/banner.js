@@ -105,18 +105,18 @@ const DevelopmentBanner = ({ id }) => {
             <div className="md:mx-20">
               {isEditing ? (
                 <div>
-                  <input
+                  <textarea
                     type="text"
                     name="h1"
                     value={editData.h1}
                     onChange={handleChange}
-                    className="text-3xl w-full font-bold mb-6 bg-transparent border-b-2 border-white focus:outline-none"
+                    className="text-2xl w-full font-bold mb-6 bg-transparent border-b-2 border-white focus:outline-none p-2 "
                   />
                   <textarea
                     name="description"
                     value={editData.description}
                     onChange={handleChange}
-                    className="text-xl font-sans mb-12 h-[200px] overflow-y-auto w-full bg-transparent border-b-2 border-white focus:outline-none"
+                    className="text-base font-sans mb-12 h-[200px] overflow-y-auto w-full bg-transparent border-b-2 border-white focus:outline-none"
                   />
                   <div className="mb-4">
                     <input type="file" accept="image/*" onChange={handleImageChange} />
@@ -138,10 +138,10 @@ const DevelopmentBanner = ({ id }) => {
               ) : (
                 data && (
                   <div>
-                    <h1 className="md:text-6xl font-sans xl:w-1/2 w-full leading-10 text-3xl font-bold mb-6">
+                    <h1 className="md:text-6xl font-sans xl:w-2/3 w-full leading-10 text-3xl font-bold mb-6">
                       {data.h1}
                     </h1>
-                    <p className="text-xl font-sans mb-12 lg:w-1/2 w-full">
+                    <p className="text-xl font-sans mb-12 lg:w-2/3 w-full">
                       {data.description}
                     </p>
                     <Button text={"Get Free Consultation"} />

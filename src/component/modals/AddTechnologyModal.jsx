@@ -3,12 +3,12 @@ import { RxCross2 } from "react-icons/rx";
 import { API_URL } from "@/api/commonApi";
 import { MdDeleteForever } from "react-icons/md";
 import LoadingButton from "../buttons/LoadingButton";
-const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug, successfullyEdited ,headingValue,setHeadingValue,subHeadingValue,setSubHeadingValue}) => {
+const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug, successfullyEdited, headingValue, setHeadingValue, subHeadingValue, setSubHeadingValue }) => {
   const [title, setTitle] = useState("");
   const [techList, setTechList] = useState([""]);
   const [inputCount, setInputCount] = useState(1);
-  const [addLoading , setAddLoading] = useState(false)
-  const [updateImage,setUpdateImage] = useState(null)
+  const [addLoading, setAddLoading] = useState(false)
+  const [updateImage, setUpdateImage] = useState(null)
   const handleAddInput = () => {
     setInputCount((prev) => prev + 1);
     setTechList((prev) => [...prev, ""]);
@@ -25,7 +25,7 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
   };
   const handleSave = async () => {
     setAddLoading(true)
-    
+
     const formData = new FormData();
     formData.append('cardTitle', title);
     formData.append('cardDescription', JSON.stringify(techList));
@@ -45,7 +45,7 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
     try {
       const response = await fetch(`${API_URL}auth/v1/${type}/technology-card`, {
         method: "POST",
-        
+
         body: formData,
       });
       if (!response.ok) {
@@ -62,14 +62,14 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
   return (
     <>
       <div className="fixed inset-0 bg-gray-800 bg-opacity-50 z-40"></div>
-      <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-white p-5 w-[34rem] h-[25rem] overflow-y-scroll rounded">
+      <div className="fixed inset-0 flex items-center justify-center z-50 w-full">
+        <div className="bg-white p-5 w-2/3 h-[25rem] overflow-y-auto rounded">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl mb-4">Add Technology</h2>
+            <h2 className="text-2xl mb-4 font-semibold">Add Technology</h2>
             <RxCross2 size={28} onClick={() => setShowAddModal(false)} className="cursor-pointer" />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Card Title</label>
+            <label className="block text-sm font-bold text-gray-700">Card Title</label>
             <input
               type="text"
               value={title}
@@ -130,7 +130,7 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
             <button onClick={() => setShowAddModal(false)} className="px-4 py-2 bg-gray-300 rounded">
               Cancel
             </button>
-           {addLoading ? <LoadingButton/> :  <button onClick={handleSave} className="px-4 py-2 bg-blue text-white rounded">
+            {addLoading ? <LoadingButton /> : <button onClick={handleSave} className="px-4 py-2 bg-blue text-white rounded">
               Save
             </button>}
           </div>

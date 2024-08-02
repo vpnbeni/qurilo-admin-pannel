@@ -87,7 +87,7 @@ const UnlockGrowth = ({ midBannerData, type, id }) => {
                 type="text"
                 value={editHeading}
                 onChange={(e) => setEditHeading(e.target.value)}
-                className="w-full text-2xl md:text-4xl font-[600] text-black text-center lg:text-start"
+                className="w-full text-lg md:text-2xl p-2 font-[600] text-black text-center lg:text-start"
               />
             ) : (
               <h1 className="text-4xl text-center lg:text-start">
@@ -98,7 +98,7 @@ const UnlockGrowth = ({ midBannerData, type, id }) => {
               <textarea
                 value={editDes}
                 onChange={(e) => setEditDes(e.target.value)}
-                className="w-full text-lg font-[400] text-black text-center lg:text-start"
+                className="w-full text-base font-[400] text-black text-center lg:text-start p-2"
               />
             ) : (
               <p className="text-lg text-gray-300 text-center lg:text-start">

@@ -75,6 +75,7 @@ export default function ServicesSection({ id }) {
       console.log(error);
     }
   };
+  
   const handleAddCard = async () => {
     setAddLoading(true);
     const formData = new FormData();
@@ -237,12 +238,15 @@ export default function ServicesSection({ id }) {
               {addLoading ? (
                 <LoadingButton/>
               ):(
-                <button
+                <div>
+                 
+              <button
                 onClick={handleAddCard}
                 className="bg-green-600 text-white px-4 py-2 rounded-md"
               >
                 Save
               </button>
+                </div>
               )}
             </div>
           </div>

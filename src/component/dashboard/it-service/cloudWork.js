@@ -188,8 +188,8 @@ const CloudWork = ({ data, id }) => {
       <div className="flex relative flex-col gap-6">
         {editHeading ? (
           <div className="flex flex-col items-center gap-y-4">
-            <input value={editMainHeading} onChange={(e) => setEditMainHeading(e.target.value)} className="border-[1px] px-2 py-1 font-medium text-3xl rounded-sm w-3/4 text-center border-gray-900"></input>
-            <textarea rows={3} value={editContent} onChange={(e) => setEditContent(e.target.value)} className="border-[1px] px-2 py-1 rounded-sm w-3/4 text-center border-gray-900"/>
+            <input value={editMainHeading} onChange={(e) => setEditMainHeading(e.target.value)} className="border-2 text-2xl font-medium border-gray-700 rounded-md px-2 py-3 w-2/3"></input>
+            <textarea rows={3} value={editContent} onChange={(e) => setEditContent(e.target.value)} className="border-2 h-[200px]  border-gray-700 rounded-md px-2 py-3 mt-2 w-2/3"/>
           </div>
         ) : (
           <>
@@ -222,14 +222,23 @@ const CloudWork = ({ data, id }) => {
         )}
         
       </div>
-      <div className="flex justify-end relative me-4">
+      {/* <div className="flex justify-end relative me-4">
         <button
           className="bg-blue hidden group-hover:block absolute top-6 right-[-3.75rem] text-white px-4 py-2 rounded-md"
           onClick={() => setIsModalOpen(true)}
         >
           <FiPlus />
         </button>
-      </div>
+        
+      </div> */}
+      <div className="absolute  justify-end right-0 hidden group-hover:flex">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-green-600 font-medium  rounded-md text-white"
+          >
+            <FiPlus size={20} className="mx-6 my-2" />
+          </button>
+        </div>
       <div className="flex flex-wrap justify-center gap-8 md:mt-4 mx-0 mb-20">
         {cloudWorkData?.cloudWork?.slice(0, visibleCount).map((card, index) => (
           <div

@@ -1,230 +1,243 @@
-
-import React, { useEffect, useState } from 'react';
-import ServiceCard from '@/component/cards/ServiceCard';
-import { API_URL } from '@/api/commonApi';
-import { MdModeEditOutline } from "react-icons/md";
-import Modal from '@/component/modals/Modal';
-import LoadingButton from '@/component/buttons/LoadingButton';
-import { HiOutlinePlus } from "react-icons/hi";
-
-const CloudService = ({ id }) => {
+import React, { useState, useEffect } from "react";
+import ItCloutServiceCard from "../../cards/ItCloutServiceCard";
+import { MdEdit } from "react-icons/md";
+import { API_URL } from "@/api/commonApi";
+import { FiPlus } from "react-icons/fi";
+import LoadingButton from "@/component/buttons/LoadingButton";
+export default function ServicesSection({ id }) {
+  const [edit, setEdit] = useState(false);
   const [serviceCardData, setServiceCardData] = useState(null);
   const [successfullyEdited, setSuccessfullyEdited] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [editHeading, setEditHeading] = useState('');
-  const [editContent, setEditContent] = useState('');
-  const [headingLoading , setHeadingLoading] = useState(false);
-
-  // Modal state
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [newCardTitle, setNewCardTitle] = useState('');
-  const [newCardDescription, setNewCardDescription] = useState('');
-  const [newImage, setNewImage] = useState(null);
-  const [editingId, setEditingId] = useState(null);
-
-  const [updateLoading, setUpdateLoading] = useState(false);
-
-
-  const [visibleCards, setVisibleCards] = useState(3);
-  const [showAllCards, setShowAllCards] = useState(false);
-
-  const fetchServiceCardData = async () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [mainDescEdit, setMainDescEdit] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [newCardTitle, setNewCardTitle] = useState("");
+  const [newCardDescription, setNewCardDescription] = useState("");
+  const [newCardIcon, setNewCardIcon] = useState(null);
+  const [headingLoading, setHeadingLoading] = useState(false);
+  const [showAllCards, setShowAllCards] = useState(false); // State for view mode
+  const [addLoading, setAddLoading] = useState(false);
+  const fetchData = async (id) => {
     try {
-      const response = await fetch(`${API_URL}auth/v1/it/service-card/${id}`);
-      const data = await response.json();
-      setServiceCardData(data?.data);
-      setEditHeading(data?.data?.mainHeading);
-      setEditContent(data?.data?.description);
-      setHeadingLoading(false);
+      setLoading(true);
+      const res = await fetch(
+        `${API_URL}auth/v1/it/service-card/${id}`
+      );
+      const result = await res.json();
+      console.log(result, 'result')
+      setServiceCardData(result?.data);
+      setMainDescEdit(result.data.description);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (id) {
+      fetchData(id);
+    }
+  }, [id, successfullyEdited]);
+  const handleCancel = () => {
+    setSuccessfullyEdited((prev) => !prev);
+    setEdit(false);
+    setHeadingLoading(false);
+  }
+  const handleSave = async (idd) => {
+    setHeadingLoading(true);
+    const updatedData = {
+      mainHeading: serviceCardData.mainHeading,
+      description: mainDescEdit,
+      slugName: id,
+    };
+    try {
+      const res = await fetch(`${API_URL}auth/v1/it/service-card/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+      if (res.ok) {
+        setSuccessfullyEdited((prev) => !prev);
+        setEdit(false);
+        setHeadingLoading(false);
+      } else {
+        console.log("Error updating data");
+      }
     } catch (error) {
       console.log(error);
     }
-  }
-
-  
-  const handleEditData = async (idd) => {
-    setUpdateLoading(true)
-    const dataSend = {
-      mainHeading: editHeading,
-      description: editContent,
-      slugName: id
-    }
-
-    try {
-      const response = await fetch(`${API_URL}auth/v1/it/service-card/${idd}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataSend)
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      setEdit(false);
-    } catch (error) {
-      console.error(error);
-    }finally {
-      setUpdateLoading(false);
-    }
-  }
-
-  const handleToggleCards = () => {
-    setShowAllCards(!showAllCards);
-    setVisibleCards(showAllCards ? 3 : serviceCardData?.managementServiceData?.length);
   };
-
-  const handleSaveNewCard = async () => {
-    setUpdateLoading(true)
+  const handleAddCard = async () => {
+    setAddLoading(true);
     const formData = new FormData();
-    formData.append('cardTitle', newCardTitle);
-    formData.append('cardDescription', newCardDescription);
-    formData.append('slugName', id);
-    if (newImage) {
-      formData.append('icon', newImage);
+    formData.append("cardTitle", newCardTitle);
+    formData.append("cardDescription", newCardDescription);
+    formData.append("slugName", id);
+    if (newCardIcon) {
+      formData.append("icon", newCardIcon);
     }
     try {
-      const response = await fetch(`${API_URL}auth/v1/it/service-card`, {
-        method: 'POST',
-       
-        body: formData
+      const res = await fetch(`${API_URL}auth/v1/it/service-card/`, {
+        method: "POST",
+        body: formData,
       });
+      if (res.ok) {
+        setSuccessfullyEdited((prev) => !prev);
+        setShowModal(false);
+        // Clear the input fields after successful addition
+        setNewCardTitle("");
+        setNewCardDescription("");
+        setNewCardIcon(null);
+        setAddLoading(false);
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      } else {
+        console.log("Failed to add new card");
       }
-
-      await response.json();
-      // fetchServiceCardData();
-      setSuccessfullyEdited(!successfullyEdited);
-      setNewCardTitle('');
-      setNewCardDescription('');
-      setIsModalVisible(false);
-
     } catch (error) {
-      console.error(error);
-    }finally {
-      setUpdateLoading(false);
+      console.error("Error:", error);
     }
   };
-
-  const handleHeading = async () => {
-    setHeadingLoading(true);
-    const dataSend = {
-      mainHeading: editHeading,
-      description: editContent,
-      slugName: id
-    }
-
-    try {
-      const response = await fetch(`${API_URL}auth/v1/it/service-card`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataSend)
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      fetchServiceCardData();
-      setEdit(false);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  useEffect(() => {
-    if (id) {
-      fetchServiceCardData();
-    }
-  }, [id, successfullyEdited])
-
   return (
-    <section className='group'>
-      <div className="px-6 lg:px-20 py-16 grid grid-cols-1 gap-8 bg-white text-black">
-        {/* Headings */}
-        <div className="relative flex flex-col gap-6">
-          {edit ? (
-            <>
-              <input value={editHeading} onChange={(e) => setEditHeading(e.target.value)} className='w-3/4 p-2 mx-auto rounded-sm text-2xl font-[600] text-black border-[1px] border-gray-600 text-center' />
-              <textarea rows={3} value={editContent} onChange={(e) => setEditContent(e.target.value)} className='w-3/4 p-2 rounded-sm mx-auto text-xl text-black border-[1px] border-gray-600 text-center' />
-            </>
-          ) : (
-            <>
-              <div className="text-black text-2xl lg:text-4xl capitalize font-[600] text-center">
-                {serviceCardData?.mainHeading}
-              </div>
-              <p className="text-center text-[18px] font-[400] mt-2">
+    <section className="relative group my-10">
+      <div className="relative md:mt-10 flex flex-col items-center mt-6 lg:ml-10 mx-8 md:mx-16">
+        {edit ? (
+          <>
+            <input
+              value={serviceCardData?.mainHeading || ""}
+              onChange={(e) =>
+                setServiceCardData((prev) => ({
+                  ...prev,
+                  mainHeading: e.target.value,
+                }))
+              }
+              className="border-2 text-2xl font-medium border-gray-700 rounded-md px-2 py-3 w-2/3"
+            />
+            <textarea
+              value={mainDescEdit}
+              onChange={(e) => setMainDescEdit(e.target.value)}
+              className="border-2 h-[200px]  border-gray-700 rounded-md px-2 py-3 mt-2 w-2/3"
+            />
+          </>
+        ) : (
+          <>
+            <h2 className="font-semibold text-2xl font-sans md:text-3xl text-black mb-4 md:mt-0 mt-8">
+              {serviceCardData?.mainHeading}
+            </h2>
+            <div className="mt-5">
+              <p className="text-base text-center text-desc text-body-color font-sans mx-auto md:w-3/4">
                 {serviceCardData?.description}
               </p>
-            </>
-          )}
-          {edit ? (
-            headingLoading ? <div className='flex justify-center absolute -right-5 bottom-5'> <LoadingButton /> </div> : <button className='bg-green-600 absolute -right-5 bottom-5 rounded-md px-3 py-2 w-max mx-auto text-white' onClick={handleHeading}>Save</button>
+            </div>
+          </>
+        )}
+        {edit ? (
+          headingLoading ? (
+            <LoadingButton />
           ) : (
-            <MdModeEditOutline onClick={() => setEdit(!edit)} size={26} className='absolute -right-5 bottom-5 cursor-pointer mx-auto hidden group-hover:block' />
-          )}
-        </div>
-        <div className='flex justify-end relative'>
+            <div className="flex gap-2 ">
+              <button
+                onClick={() => handleCancel(serviceCardData._id)}
+                className="text-white font-bold bg-red-600 my-4 px-4 py-2 rounded-md"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleSave(serviceCardData._id)}
+                className="text-white font-bold bg-green-600 my-4 px-4 py-2 rounded-md"
+              >
+                Save
+              </button>
+            </div>
+          )
+        ) : (
+          <MdEdit
+            size={26}
+            onClick={() => setEdit(true)}
+            className="absolute right-2 bottom-0 hidden cursor-pointer my-2 group-hover:block"
+          />
+        )}
+        <div className="absolute flex justify-end -right-20 -bottom-6">
           <button
-            className='bg-blue absolute hidden group-hover:block right-[-6rem] top-12 text-white py-2 px-4 text-lg rounded-lg'
-            onClick={() => setIsModalVisible(true)}
+            onClick={() => setShowModal(true)}
+            className="bg-green-600 font-medium  rounded-md text-white"
           >
-            <HiOutlinePlus />
+            <FiPlus size={20} className="mx-6 my-2" />
           </button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-14 relative">
-          {serviceCardData?.managementServiceData?.slice(0, visibleCards).map((card, i) => (
-            <ServiceCard
-              key={i} 
-              category={"it"}
-              setNewImage={setNewImage}
-              newImage={newImage}
-              id={card?._id}
-              icon={card.icon}
-              name={card.cardTitle}
-              des={card.cardDescription}
-              slugName={id}
-              
+      </div>
+      <div className="grid grid-cols-1 gap-8 mt-8 md:mt-6 md:grid-cols-2 lg:grid-cols-3 md:mx-16 mx-8">
+        {serviceCardData?.managementServiceData
+          ?.slice(0, showAllCards ? serviceCardData.managementServiceData.length : 3)
+          .map((data, index) => (
+            <ItCloutServiceCard
+              cardId={data._id}
+              key={index}
+              image={data.icon}
+              title={data.cardTitle}
+              des={data.cardDescription}
               setSuccessfullyEdited={setSuccessfullyEdited}
               successfullyEdited={successfullyEdited}
-              editingId={editingId}
-              setEditingId={setEditingId}
+              id={id}
             />
           ))}
-        </div>
-        <div className="text-center mt-2">
+      </div>
+      {serviceCardData?.managementServiceData?.length > 3 && (
+        <div className="flex justify-center mt-6">
           <button
-            className="bg-blue text-white py-2 px-4 text-lg rounded-lg"
-            onClick={handleToggleCards}
+            onClick={() => setShowAllCards(!showAllCards)}
+            className="bg-blue text-white px-4 py-2 rounded-md"
           >
-            {showAllCards ? 'View Less' : 'Load More'}
+            {showAllCards ? "View Less" : "View More"}
           </button>
         </div>
-      </div>
-
-      <div className="relative">
-      <Modal
-        isVisible={isModalVisible}
-        setNewImage={setNewImage}
-        onClose={() => setIsModalVisible(false)}
-        onSave={handleSaveNewCard}
-        title={newCardTitle}
-        setTitle={setNewCardTitle}
-        description={newCardDescription}
-        setDescription={setNewCardDescription}
-        updateLoading={updateLoading}
-      />
-      </div>
+      )}
+      {showModal && (
+        <div className="fixed z-40 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-md">
+            <h2 className="text-2xl font-bold mb-4">Add Card</h2>
+            <input
+              type="text"
+              placeholder="Card Title"
+              value={newCardTitle}
+              onChange={(e) => setNewCardTitle(e.target.value)}
+              className="border-2 w-full border-gray-700 rounded-md px-2 py-3 mb-4"
+            />
+            <textarea
+              placeholder="Card Description"
+              value={newCardDescription}
+              onChange={(e) => setNewCardDescription(e.target.value)}
+              className="border-2 w-full border-gray-700 rounded-md px-2 py-3 mb-4"
+              rows="4"
+            />
+            <input
+              type="file"
+              onChange={(e) => setNewCardIcon(e.target.files[0])}
+              className="mb-4"
+            />
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-gray-600 text-white px-4 py-2 rounded-md mr-2"
+              >
+                Cancel
+              </button>
+              {addLoading ? (
+                <LoadingButton />
+              ) : (
+                <button
+                  onClick={handleAddCard}
+                  className="bg-green-600 text-white px-4 py-2 rounded-md"
+                >
+                  Save
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
-};
-
-export default CloudService;
-
-
-
+}

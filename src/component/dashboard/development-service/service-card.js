@@ -38,6 +38,11 @@ export default function ServicesSection({ id }) {
       fetchData(id);
     }
   }, [id, successfullyEdited]);
+  const handleCancel =()=>{
+    setSuccessfullyEdited((prev) => !prev);
+        setEdit(false);
+        setHeadingLoading(false);
+  }
   const handleSave = async (idd) => {
     setHeadingLoading(true);
     const updatedData = {
@@ -107,12 +112,12 @@ export default function ServicesSection({ id }) {
                   mainHeading: e.target.value,
                 }))
               }
-              className="border-2 text-2xl font-medium border-gray-700 rounded-md px-2 py-3"
+              className="border-2 text-2xl font-medium border-gray-700 rounded-md px-2 py-3 w-2/3"
             />
             <textarea
               value={mainDescEdit}
               onChange={(e) => setMainDescEdit(e.target.value)}
-              className="border-2 w-full h-[200px]  border-gray-700 rounded-md px-2 py-3 mt-2"
+              className="border-2 h-[200px]  border-gray-700 rounded-md px-2 py-3 mt-2 w-2/3"
             />
           </>
         ) : (
@@ -131,12 +136,20 @@ export default function ServicesSection({ id }) {
           headingLoading ? (
             <LoadingButton />
           ) : (
+            <div className="flex gap-2">
+              <button
+              onClick={() => handleCancel(serviceCardData._id)}
+              className="text-white font-bold bg-red-600 my-4 px-4 py-2 rounded-md"
+            >
+              Cancel
+            </button>
             <button
               onClick={() => handleSave(serviceCardData._id)}
               className="text-white font-bold bg-green-600 my-4 px-4 py-2 rounded-md"
             >
               Save
             </button>
+            </div>
           )
         ) : (
           <MdEdit

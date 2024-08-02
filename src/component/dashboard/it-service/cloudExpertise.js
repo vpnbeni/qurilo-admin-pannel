@@ -95,10 +95,10 @@ const CloudExpertise = ({ midBannerData, type, id }) => {
                   type="text"
                   value={editHeading}
                   onChange={(e) => setEditHeading(e.target.value)}
-                  className="w-full text-2xl md:text-4xl font-[600] text-black text-center lg:text-start"
+                  className="w-full text-base md:text-2xl font-[600] text-black text-center lg:text-start p-2"
                 />
               ) : (
-                <h1 className="text-4xl text-center lg:text-start">
+                <h1 className="text-4xl text-center  lg:text-start">
                   {editHeading}
                 </h1>
               )}
@@ -107,7 +107,7 @@ const CloudExpertise = ({ midBannerData, type, id }) => {
                 rows={2}
                   value={editDes}
                   onChange={(e) => setEditDes(e.target.value)}
-                  className="w-full text-lg font-[400] text-black text-center lg:text-start"
+                  className="w-full text-base p-2 font-[400] text-black text-center lg:text-start "
                 />
               ) : (
                 <p className="text-lg text-gray-300 text-center lg:text-start">

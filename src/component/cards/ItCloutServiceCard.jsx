@@ -4,7 +4,7 @@ import { IoTrashBin } from 'react-icons/io5';
 import { API_URL } from '@/api/commonApi';
 import { FaTimes } from "react-icons/fa";
 import LoadingButton from '../buttons/LoadingButton';
-export default function DevelopmentSubcategoryCard({
+export default function ItCloutServiceCard({
   image,
   title,
   des,
@@ -12,16 +12,12 @@ export default function DevelopmentSubcategoryCard({
   setSuccessfullyEdited,
   successfullyEdited,id
 }) {
+    console.log(title)
   const [editId, setEditId] = useState(null);
   const [editTitle, setEditTitle] = useState(title);
   const [editDes, setEditDes] = useState(des);
   const [editImage, setEditImage] = useState(null);
   const [updateLoading , setUpadateLoading] = useState(false);
-  const handleCancel=()=>{
-    setEditId(null); // Exit edit mode
-        setUpadateLoading(false);
-        setSuccessfullyEdited(!successfullyEdited);
-  }
   const handleSave = async (idd) => {
     setUpadateLoading(true);
     const formData = new FormData();
@@ -32,7 +28,7 @@ export default function DevelopmentSubcategoryCard({
       formData.append('icon', editImage);
     }
     try {
-      const response = await fetch(`${API_URL}auth/v1/development/service-card/${idd}`, {
+      const response = await fetch(`${API_URL}auth/v1/it/service-card/${idd}`, {
         method: 'PUT',
         body: formData,
       });
@@ -49,7 +45,7 @@ export default function DevelopmentSubcategoryCard({
   };
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${API_URL}auth/v1/development/service-card/${cardId}`, {
+      const response = await fetch(`${API_URL}auth/v1/it/service-card/${cardId}`, {
         method: 'DELETE',
       });
       if (response.ok) {
@@ -88,15 +84,9 @@ export default function DevelopmentSubcategoryCard({
         </>
       )}
       {editId === cardId ? (
-        updateLoading ? <LoadingButton/> : 
-        <div className="flex gap-2">
-          <button onClick={() => handleCancel(cardId)} className="text-white bg-red-600 px-4 py-2 rounded-md">
-          Cancel
-        </button>
-        <button onClick={() => handleSave(cardId)} className="text-white bg-green-600 px-4 py-2 rounded-md">
+        updateLoading ? <LoadingButton/> : <button onClick={() => handleSave(cardId)} className="text-white bg-green-600 px-4 py-2 rounded-md">
           Save
         </button>
-        </div>
       ) : (
         <MdEdit
           onClick={() => setEditId(cardId)}

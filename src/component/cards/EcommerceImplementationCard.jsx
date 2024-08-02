@@ -17,6 +17,11 @@ export default function EcommerceImplementationCard({
   const [editDes, setEditDes] = useState(des);
   const [editImage, setEditImage] = useState(null);
   const [updateLoading , setUpadateLoading] = useState(false);
+  const handleCancel = ()=>{
+    setEditId(null); // Exit edit mode
+        setUpadateLoading(false);
+        setSuccessfullyEdited(!successfullyEdited);
+  }
   const handleSave = async (idd) => {
     setUpadateLoading(true);
     const formData = new FormData();
@@ -56,6 +61,12 @@ export default function EcommerceImplementationCard({
       console.error('Error:', error);
     }
   };
+  const handleDeleteConfirm = (idd) => {
+    const confirmed = window.confirm("Are you sure you want to delete this card?");
+    if (confirmed) {
+      handleDelete(idd);
+    }
+  };
   return (
     <div className="relative p-7 rounded-xl bg-white hover:border-blue border-[1px] shadow-sm group">
       {editId === cardId ? (
@@ -77,9 +88,15 @@ export default function EcommerceImplementationCard({
         </>
       )}
       {editId === cardId ? (
-        updateLoading ? <LoadingButton/> : <button onClick={() => handleSave(cardId)} className="text-white bg-green-600 px-4 py-2 rounded-md">
+        updateLoading ? <LoadingButton/> : 
+        <div className="flex gap-2">
+          <button onClick={() => handleCancel(cardId)} className="text-white bg-red-600 px-4 py-2 rounded-md">
+          Cancel
+        </button>
+        <button onClick={() => handleSave(cardId)} className="text-white bg-green-600 px-4 py-2 rounded-md">
           Save
         </button>
+        </div>
       ) : (
         <MdEdit
           onClick={() => setEditId(cardId)}
@@ -88,7 +105,7 @@ export default function EcommerceImplementationCard({
         />
       )}
       <FaTimes
-        onClick={handleDelete}
+        onClick={handleDeleteConfirm}
         className="absolute top-2 right-2 text-red-500 hidden group-hover:block cursor-pointer"
         size={24}
       />

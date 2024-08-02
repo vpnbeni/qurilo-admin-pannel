@@ -25,9 +25,9 @@ const DashboardCard = ({ service, pageName, setData }) => {
     <div className="mb-2 p-4 relative group bg-gray-200 cursor-pointer shadow-lg w-[300px] rounded-xl mt-2 flex justify-between items-end gap-2 pr-10">
       <div
         className="font-semibold p-1 px-4 cursor-pointer"
-        onClick={() => router.push(`${pageName}-solutions/${service.slugName}`)}
+        onClick={() => router.push(`${pageName}/${service.slugName}`)}
       >
-        <div className="truncate">{service.servicesName}</div>
+        <div className="">{service.servicesName}...</div>
         <div className="flex justify-start font-normal truncate overflow-hidden">
           {service.slugName}
         </div>
