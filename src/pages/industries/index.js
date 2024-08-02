@@ -33,7 +33,7 @@ const IndustriesPage = ({ initialData }) => {
   const pagePush = useRouter();
 
   
-  const pageName ="industrie"
+  const pageName ="industries"
   const handleAddService = async () => {
     const res = await fetch(`${API_URL}auth/v1/industrie/category`, {
       method: "POST",

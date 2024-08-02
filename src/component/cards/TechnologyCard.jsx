@@ -27,6 +27,11 @@ const TechnologyEditModal = ({ tech, setShowModal, slug, type ,successfullyEdite
     setInputCount(updatedList.length);
   };
   const handleSave = async () => {
+    if(!editImage ){
+      setSuccessfullyEdited(!successfullyEdited);
+      setUpdateLoading(false);
+      setShowModal(false); // Close modal after successful update
+    }
     setUpdateLoading(true);
     const updatedTech = {
       cardTitle: title,
@@ -37,9 +42,8 @@ const TechnologyEditModal = ({ tech, setShowModal, slug, type ,successfullyEdite
     formData.append('cardTitle', title);
     formData.append('cardDescription', JSON.stringify(techList));
     formData.append('slugName', slug);
-    if (editImage) {
-      formData.append('icon', editImage);
-    }
+    formData.append('icon', editImage);
+    
     console.log(techList,"list")
     try {
       const response = await fetch(`${API_URL}auth/v1/${type}/technology-card/${tech._id}`, {
@@ -62,7 +66,7 @@ const TechnologyEditModal = ({ tech, setShowModal, slug, type ,successfullyEdite
     <>
       <div className="fixed inset-0 bg-gray-800 bg-opacity-50 z-40"></div>
       <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-white p-5 w-[34rem] h-[25rem] overflow-y-scroll rounded">
+        <div className="bg-white p-5 w-2/3 h-[25rem] overflow-y-scroll rounded">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl mb-4">Edit Technology</h2>
             <RxCross2 size={28} onClick={() => setShowModal(false)} className="cursor-pointer" />
@@ -96,14 +100,14 @@ const TechnologyEditModal = ({ tech, setShowModal, slug, type ,successfullyEdite
               />
             </div>
           ))}
-          <button onClick={handleAddInput} className="px-4 py-2 bg-blue text-white rounded mb-4">
+          <button onClick={handleAddInput} className="px-4 py-2 bg-green-600 text-white rounded mb-4">
             Add More Item
           </button>
           <div className="flex justify-end gap-2">
             <button onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-300 rounded">
               Cancel
             </button>
-            {updateLoading ? <LoadingButton/> : <button onClick={handleSave} className="px-4 py-2 bg-blue text-white rounded">
+            {updateLoading ? <LoadingButton/> : <button onClick={handleSave} className="px-4 py-2 bg-green-600 text-white rounded">
               Save
             </button>}
           </div>

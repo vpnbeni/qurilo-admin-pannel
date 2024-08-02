@@ -74,7 +74,7 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="mt-1 p-2 border border-gray-300 rounded w-full"
+              className="mt-1 p-2 border border-gray-800 rounded w-full"
             />
           </div>
           <div className="mb-4">
@@ -83,7 +83,7 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
               type="text"
               value={headingValue}
               onChange={(e) => setHeadingValue(e.target.value)}
-              className="mt-1 p-2 border border-gray-300 rounded w-full"
+              className="mt-1 p-2 border border-gray-800 rounded w-full"
             />
           </div>
           <div className="mb-4">
@@ -92,7 +92,7 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
               type="text"
               value={subHeadingValue}
               onChange={(e) => setSubHeadingValue(e.target.value)}
-              className="mt-1 p-2 border border-gray-300 rounded w-full"
+              className="mt-1 p-2 border border-gray-800 rounded w-full"
             />
           </div>
           <div className="mb-4">
@@ -100,7 +100,7 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
             <input
               type="file"
               onChange={(e) => setUpdateImage(e.target.files[0])}
-              className="mt-1 p-2 border border-gray-300 rounded w-full"
+              className="mt-1 p-2 border border-gray-800 rounded w-full"
             />
           </div>
           {techList.map((item, index) => (
@@ -111,7 +111,7 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
                   type="text"
                   value={item}
                   onChange={(e) => handleTechChange(index, e.target.value)}
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
+                  className="mt-1 p-2 border border-gray-800 rounded w-full"
                 />
               </div>
               {index > 0 && (
@@ -123,14 +123,14 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
               )}
             </div>
           ))}
-          <button onClick={handleAddInput} className="px-4 py-2 bg-blue text-white rounded mb-4">
+          <button onClick={handleAddInput} className="px-4 py-2 bg-green-600 text-white rounded mb-4">
             Add More Item
           </button>
           <div className="flex justify-end gap-2">
-            <button onClick={() => setShowAddModal(false)} className="px-4 py-2 bg-gray-300 rounded">
+            <button onClick={() => setShowAddModal(false)} className="px-4 py-2 bg-zinc-500 rounded text-white">
               Cancel
             </button>
-            {addLoading ? <LoadingButton /> : <button onClick={handleSave} className="px-4 py-2 bg-blue text-white rounded">
+            {addLoading ? <LoadingButton /> : <button onClick={handleSave} className="px-4 py-2 bg-green-600 text-white rounded">
               Save
             </button>}
           </div>

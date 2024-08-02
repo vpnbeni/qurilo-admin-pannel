@@ -1,15 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import Button from '../../../component/buttons/ContactButton';
+import Button from '../../buttons/ContactButton';
 import { MdEdit } from 'react-icons/md';
 import { RiLoader4Fill } from "react-icons/ri";
 import { API_URL } from '@/api/commonApi';
-import LoadingButton from '../../buttons/LoadingButton'; 
+import LoadingButton from '../../buttons/LoadingButton';
 
 
 
-const Banner = () => {
+const Banner = ({ id }) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,8 +17,8 @@ const Banner = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [editData, setEditData] = useState({ h1: '', description: '', image: '' });
-const [temp,setTemp]=useState(true);
-const id="fintech-banking-financial-soutions"
+  const [temp, setTemp] = useState(true);
+
   const fetchData = async (id) => {
     try {
       const res = await fetch(`${API_URL}auth/v1/industrie/banner/${id}`);
@@ -44,7 +44,7 @@ const id="fintech-banking-financial-soutions"
     if (id) {
       fetchData(id);
     }
-  }, [id]); 
+  }, [id]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -127,13 +127,13 @@ const id="fintech-banking-financial-soutions"
                       <LoadingButton />
                     ) : (
                       <div>
-                      <button onClick={handleCancelClick}>Cancel</button>
-                      <button onClick={handleSaveClick} className="mx-4">
+                        <button onClick={handleCancelClick}>Cancel</button>
+                        <button onClick={handleSaveClick} className="mx-4">
                           Save
                         </button>
                       </div>
                     )}
-                    
+
                   </div>
                 </div>
               ) : (

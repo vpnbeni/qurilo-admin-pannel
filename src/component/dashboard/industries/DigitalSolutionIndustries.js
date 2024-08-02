@@ -23,7 +23,9 @@ const DigitalSolutionIndustries = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
   const [newCardDescription, setNewCardDescription] = useState('');
+  const [newImage, setNewImage] = useState('');
   const [editingId, setEditingId] = useState(null);
+  const [updateLoading, setUpdateLoading] = useState(false);
 
   const [visibleCards, setVisibleCards] = useState(3);
   const [showAllCards, setShowAllCards] = useState(false);
@@ -79,7 +81,7 @@ const DigitalSolutionIndustries = () => {
   };
 
   const handleSaveNewCard = async () => {
-    
+    setUpdateLoading(!updateLoading)
     const formData = new FormData();
     formData.append("cardTitle",newCardTitle);
     formData.append("cardDescription", newCardDescription);
@@ -223,12 +225,14 @@ const handleHeadingCancel=()=>{
 
       <Modal
         isVisible={isModalVisible}
+        setNewImage={setNewImage}
         onClose={() => setIsModalVisible(false)}
         onSave={handleSaveNewCard}
         title={newCardTitle}
         setTitle={setNewCardTitle}
         description={newCardDescription}
         setDescription={setNewCardDescription}
+        updateLoading={updateLoading}
       />
     </section>
   );

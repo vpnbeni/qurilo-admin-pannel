@@ -22,7 +22,7 @@ const DevelopmentPage = () => {
     <div>
         <DevelopmentBanner  id={id} />
         <DevelopmentServiceCard id={id} />
-        {/* <BuildMind data={buildMindData} type="noImg" id={id} /> */}
+        <BuildMind data={buildMindData} type="noImg" id={id} />
          <Developmentprocess data= {developmentProcessData} id={id} />
         <Technologycard data={technologiesData} id={id} />
         

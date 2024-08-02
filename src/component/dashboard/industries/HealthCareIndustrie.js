@@ -4,8 +4,7 @@
   import { MdModeEdit } from "react-icons/md";
   import { RxCross2 } from "react-icons/rx";
 
-  const HealthCare = () => {
-    const id = "fintech-banking-financial-soutions";
+  const HealthCare = ({id}) => {
     const [implementationData, setImplementationData] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [successfullyEdited, setSuccessfullyEdited] = useState(false);

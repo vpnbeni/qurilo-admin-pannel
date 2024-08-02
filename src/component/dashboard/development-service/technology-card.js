@@ -118,7 +118,7 @@ const Technologycard = ({ id }) => {
             </button>
             </div>
                 )
-              ) : (
+              ) : (     
                 <MdModeEditOutline
                   onClick={handleEdit}
                   className="cursor-pointer absolute -top-10 right-0 "
@@ -130,7 +130,7 @@ const Technologycard = ({ id }) => {
           <div className="relative">
             <button
               onClick={() => setShowAddModal(true)}
-              className="rounded-md hidden group-hover:block absolute  top-10 -right-14 text-white text-lg px-3 py-2 bg-green-700"
+              className="rounded-md hidden group-hover:block absolute  top-0 -right-14 text-white text-lg px-3 py-2 bg-green-700"
             >
               <MdAdd />
             </button>
