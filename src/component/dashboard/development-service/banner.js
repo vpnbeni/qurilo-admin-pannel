@@ -125,11 +125,11 @@ const DevelopmentBanner = ({ id }) => {
                     {isSaving ? (
                       <LoadingButton />
                     ) : (
-                      <div>
+                      <div classname="flex gap-2">
+                        <button onClick={handleCancelClick} className="mr-4">Cancel</button>
                       <button onClick={handleSaveClick} className="mr-4">
                           Save
                         </button>
-                      <button onClick={handleCancelClick}>Cancel</button>
                       </div>
                     )}
                     

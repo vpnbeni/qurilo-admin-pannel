@@ -56,6 +56,12 @@ export default function DevelopmentSubcategoryCard({
       console.error('Error:', error);
     }
   };
+  const handleDeleteClick = (idd) => {
+    const confirmed = window.confirm("Are you sure you want to delete this card?");
+    if (confirmed) {
+      handleDelete(idd);
+    }
+  };
   return (
     <div className="relative p-7 rounded-xl bg-white hover:border-blue border-[1px] shadow-sm group">
       {editId === cardId ? (
@@ -88,7 +94,7 @@ export default function DevelopmentSubcategoryCard({
         />
       )}
       <FaTimes
-        onClick={handleDelete}
+        onClick={handleDeleteClick}
         className="absolute top-2 right-2 text-red-500 hidden group-hover:block cursor-pointer"
         size={24}
       />

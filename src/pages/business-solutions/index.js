@@ -8,7 +8,7 @@ export async function getServerSideProps() {
   let initialData = [];
 
   try {
-    const res = await fetch(`${API_URL}auth/v1/ecommerce/category`);
+    const res = await fetch(`${API_URL}auth/v1/business/category`);
     const data = await res.json();
     if (data && data.data) {
       initialData = data.data;
@@ -30,7 +30,7 @@ const BusinessPage = ({ initialData }) => {
   const pageName = "business";
 
   const handleAddService = async (newServiceName, newSlugName) => {
-    try {
+    try { 
       const res = await fetch(`${API_URL}auth/v1/business/category`, {
         method: "POST",
         headers: {

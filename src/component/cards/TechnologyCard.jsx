@@ -10,6 +10,8 @@ const TechnologyEditModal = ({ tech, setShowModal, slug, type ,successfullyEdite
   const [techList, setTechList] = useState([...tech.cardDescription]);
   const [inputCount, setInputCount] = useState(tech.cardDescription.length);
   const [updateLoading, setUpdateLoading] = useState(false);
+  const [editImage, setEditImage] = useState(tech.icon);
+
   const handleAddInput = () => {
     setInputCount((prev) => prev + 1);
     setTechList((prev) => [...prev, ""]); // Add a blank input for the new item
@@ -31,13 +33,19 @@ const TechnologyEditModal = ({ tech, setShowModal, slug, type ,successfullyEdite
       cardDescription: techList,
       slugName: slug,
     };
+    const formData = new FormData();
+    formData.append('cardTitle', title);
+    formData.append('cardDescription', JSON.stringify(techList));
+    formData.append('slugName', slug);
+    // if (editImage) {
+    //   formData.append('icon', editImage);
+    // }
+    console.log(techList,"list")
     try {
       const response = await fetch(`${API_URL}auth/v1/${type}/technology-card/${tech._id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedTech),
+       
+        body: formData,
       });
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -68,6 +76,8 @@ const TechnologyEditModal = ({ tech, setShowModal, slug, type ,successfullyEdite
               className="mt-1 p-2 border border-gray-300 rounded w-full"
             />
           </div>
+          <input type="file" onChange={(e) => setEditImage(e.target.files[0])} className="mb-2" />
+
           {techList.map((item, index) => (
             <div key={index} className="mb-4 flex items-center">
               <div className="flex-1">
@@ -145,7 +155,7 @@ const TechnologyCard = ({ tech, type, slug, successfullyEdited , setSuccessfully
         />
        <div className="flex justify-between items-center w-full">   <h1 className="text-xl font-[600]">{tech.cardTitle}</h1>   <RxCross2 onClick={() => deleteTechnology(tech._id)} className="text-red-500 hidden group-hover:block cursor-pointer" size={25} /></div>
        
-      </div>``
+      </div>
         <div className="relative  h-[2px] bg-bgColor-100 rounded-md">
           <div className="absolute left-[20%] top-[50%] -translate-y-[50%] inset-0 rounded-full w-[12px] h-[12px] bg-bgColor-100 "> </div>
         </div>
@@ -162,7 +172,7 @@ const TechnologyCard = ({ tech, type, slug, successfullyEdited , setSuccessfully
           </ul>
           ))}
         </div>
-        <div className="hidden absolute bottom-2 -right-5  group-hover:flex justify-end me-5 gap-x-1">
+        <div className="hidden absolute bottom-2 -right-1  group-hover:flex justify-end me-5 gap-x-1">
           <MdModeEditOutline onClick={() => editTechnology()} className="cursor-pointer" size={25} />
         </div>
       </div>

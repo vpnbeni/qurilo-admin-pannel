@@ -28,6 +28,7 @@ const Technologycard = ({ id }) => {
         throw new Error("Failed to fetch technology cards");
       }
       const data = await response.json();
+      // console.log(data,"tech data")
       setTechnologyCards(data.data);
       setHeadingValue(data.data.mainHeading);
       setSubHeadingValue(data.data.description);
@@ -95,22 +96,30 @@ const Technologycard = ({ id }) => {
                 <p>{technologyCards?.description}</p>
               </>
             )}
-            <div className="hidden absolute right-0 bottom-8 group-hover:flex justify-end me-5 gap-x-1">
+            <div className="hidden  absolute right-0 bottom-8 group-hover:flex justify-end me-5 gap-x-1">
               {headingChange ? (
                 headingLoading ? (
                   <LoadingButton />
                 ) : (
+                  <div>
+                    <div
+                    onClick={handleHeading}
+                    className="cursor-pointer border-green-800 text-lg font-normal hover:bg-green-800 hover:text-white text-green-600 border-[1px] rounded-md px-3 py-1"
+                  >
+                    Cancel
+                  </div>
                   <div
                     onClick={handleHeading}
                     className="cursor-pointer border-green-800 text-lg font-normal hover:bg-green-800 hover:text-white text-green-600 border-[1px] rounded-md px-3 py-1"
                   >
                     Save
                   </div>
+                  </div>
                 )
               ) : (
                 <MdModeEditOutline
                   onClick={handleEdit}
-                  className="cursor-pointer"
+                  className="cursor-pointer absolute -top-10 right-0 "
                   size={25}
                 />
               )}
@@ -150,6 +159,10 @@ const Technologycard = ({ id }) => {
       </section>
       {showAddModal && (
         <AddTechnologyModal
+        headingValue={headingValue}
+        setHeadingValue={setHeadingValue}
+        subHeadingValue={subHeadingValue}
+        setSubHeadingValue={setSubHeadingValue}
           setShowAddModal={setShowAddModal}
           successfullyEdited={successfullyEdited}
           setSuccessfullyEdited={setSuccessfullyEdited}

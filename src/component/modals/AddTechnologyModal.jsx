@@ -3,11 +3,12 @@ import { RxCross2 } from "react-icons/rx";
 import { API_URL } from "@/api/commonApi";
 import { MdDeleteForever } from "react-icons/md";
 import LoadingButton from "../buttons/LoadingButton";
-const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug, successfullyEdited }) => {
+const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug, successfullyEdited ,headingValue,setHeadingValue,subHeadingValue,setSubHeadingValue}) => {
   const [title, setTitle] = useState("");
   const [techList, setTechList] = useState([""]);
   const [inputCount, setInputCount] = useState(1);
   const [addLoading , setAddLoading] = useState(false)
+  const [updateImage,setUpdateImage] = useState(null)
   const handleAddInput = () => {
     setInputCount((prev) => prev + 1);
     setTechList((prev) => [...prev, ""]);
@@ -24,18 +25,28 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
   };
   const handleSave = async () => {
     setAddLoading(true)
-    const newTech = {
-      cardTitle: title,
-      cardDescription: techList,
-      slugName: slug,
-    };
+    
+    const formData = new FormData();
+    formData.append('cardTitle', title);
+    formData.append('cardDescription', JSON.stringify(techList));
+    formData.append('slugName', slug);
+    formData.append('mainHeading', headingValue);
+    formData.append('description', subHeadingValue);
+    if (updateImage) {
+      formData.append('icon', updateImage);
+    }
+    console.log(techList, 'formdata')
+    console.log(title, 'title')
+    console.log(techList, 'cardDescription')
+    console.log(slug, 'slug')
+    console.log(subHeadingValue, 'subHeadingValue')
+    console.log(headingValue, 'headingValue')
+    console.log(updateImage, 'updateImage')
     try {
       const response = await fetch(`${API_URL}auth/v1/${type}/technology-card`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTech),
+        
+        body: formData,
       });
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -63,6 +74,32 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Main Heading</label>
+            <input
+              type="text"
+              value={headingValue}
+              onChange={(e) => setHeadingValue(e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Main Description</label>
+            <input
+              type="text"
+              value={subHeadingValue}
+              onChange={(e) => setSubHeadingValue(e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Card Title</label>
+            <input
+              type="file"
+              onChange={(e) => setUpdateImage(e.target.files[0])}
               className="mt-1 p-2 border border-gray-300 rounded w-full"
             />
           </div>
