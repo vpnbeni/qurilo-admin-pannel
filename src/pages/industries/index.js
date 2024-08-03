@@ -13,6 +13,7 @@ export async function getServerSideProps() {
     const data = await res.json();
     if (data && data.data) {
       initialData = data?.data;
+      console.log(data,'the data')
     }
   } catch (error) {
     console.log(error);
@@ -28,32 +29,13 @@ export async function getServerSideProps() {
 const IndustriesPage = ({ initialData }) => {
   const [data, setData] = useState(initialData);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [newServiceName, setNewServiceName] = useState("");
-  const [newSlugName, setNewSlugName] = useState("");
-  const pagePush = useRouter();
+  // const [newServiceName, setNewServiceName] = useState("");
+  // const [newSlugName, setNewSlugName] = useState("");
+  // const pagePush = useRouter();
 
   
   const pageName ="industries"
-  const handleAddService = async () => {
-    const res = await fetch(`${API_URL}auth/v1/industrie/category`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        servicesName: newServiceName,
-        slugName: newSlugName,
-      }),
-    });
-    if (res.status === 200) {
-      setIsAddModalOpen(false);
-      setNewServiceName("");
-      setNewSlugName("");
-      refreshData();
-    } else {
-      console.error("Failed to add service");
-    }
-  };
+ 
 
   return (
     <>

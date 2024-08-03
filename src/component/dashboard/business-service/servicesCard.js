@@ -172,7 +172,12 @@ const ServicesCard = ({ id }) => {
             console.error('Error deleting data:', error);
         }
     };
-
+    const handleDeleteClick = (idd) => {
+        const confirmed = window.confirm("Are you sure you want to delete this card?");
+        if (confirmed) {
+            handleDeleteCard(idd);
+        }
+      };
     return (
         <div className='relative group mt-4 bg-gray-100 px-20'>
             <div className='text-center pt-10 '>
@@ -234,7 +239,7 @@ const ServicesCard = ({ id }) => {
                             <p className="text-base text-bold mt-3 text-zinc-700 flex-grow break-words">{service?.cardDescription}</p>
                         )}
                         <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <button onClick={() => handleDeleteCard(service?._id)}>
+                            <button onClick={() => handleDeleteClick(service?._id)}>
                                 <RxCross2 className="text-red-500" size={20} />
                             </button>
                         </div>

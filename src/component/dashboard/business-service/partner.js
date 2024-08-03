@@ -5,6 +5,7 @@ import { API_URL } from "@/api/commonApi";
 import LoadingButton from "@/component/buttons/LoadingButton";
 import AddBenefitModal from "@/component/modals/AddBenefitModal";
 import { FiPlus } from "react-icons/fi";
+import { Image } from 'next/image';
 
 const Partner = ({ id }) => {
   const [edit, setEdit] = useState(false);
@@ -14,7 +15,7 @@ const Partner = ({ id }) => {
   const [updateLoading, setUpdateLoading] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [editId, setEditId] = useState(null);
-
+  const [img,setImg]=useState(benefitData?.image);
   const fetchBenefits = async () => {
     try {
       const response = await fetch(`${API_URL}auth/v1/business/benefit-card/${id}`);
@@ -23,6 +24,7 @@ const Partner = ({ id }) => {
       }
       const data = await response.json();
       setBenefitData(data.data);
+      console.log(data)
       setEditMainHeading(data.data.mainHeading);
       setEditDescription(data.data.description);
     } catch (error) {
@@ -46,16 +48,19 @@ const Partner = ({ id }) => {
       description: editDescription,
       slugName: id
     };
-
+    const formData= new FormData()
+    formData.append("mainHeading", editMainHeading);
+    formData.append("description", editDescription);
+    formData.append("image", img);
+    
+    formData.append("slugName", id);
     try {
       const response = await fetch(
         `${API_URL}auth/v1/business/benefit-card`,
         {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataSend),
+          
+          body: formData,
         }
       );
       if (!response.ok) {
@@ -70,7 +75,11 @@ const Partner = ({ id }) => {
       setUpdateLoading(false);
     }
   };
-
+  useEffect(() => {
+    if (id) {
+      fetchBenefits();
+    }
+  }, [id]); 
   return (
     <div>
       <section>
@@ -91,6 +100,10 @@ const Partner = ({ id }) => {
                   rows={5}
                   className="w-full text-[18px] font-[400] text-black border-[1px] border-gray-600 text-center lg:text-start p-2"
                 />
+                 <input
+              type="file"
+              onChange={(e) => setImg(e.target.files[0])}
+            />
               </>
             ) : (
               <>
@@ -100,6 +113,13 @@ const Partner = ({ id }) => {
                 <p className="text-center text-[18px] 2xl:text-xl font-[400] mt-2 lg:text-start">
                   {benefitData?.description}
                 </p>
+                <img
+        src={benefitData?.image}
+        width={"100%"}
+        height={"100%"}
+        alt={benefitData?.mainHeading}
+        className=" object-cover aspect-auto"
+      />
               </>
             )}
 

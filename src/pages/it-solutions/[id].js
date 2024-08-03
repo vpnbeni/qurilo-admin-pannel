@@ -31,7 +31,6 @@ const Page = () => {
     {/* it solution page */}
       <Banner id={id} />
       <CloudService  id={id} />
-
       <CloudExpertise midBannerData={midBannerData1} type="img" id={id} />
       <CloudWork data={cloudTechnologeisData} id={id} />
       <UnlockGrowth midBannerData={midBannerData1} type="noImg" id={id} />

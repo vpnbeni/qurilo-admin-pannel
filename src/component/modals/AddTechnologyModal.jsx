@@ -96,7 +96,7 @@ const AddTechnologyModal = ({ setShowAddModal, type, setSuccessfullyEdited, slug
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Card Title</label>
+            <label className="block text-sm font-medium text-gray-700">Icon</label>
             <input
               type="file"
               onChange={(e) => setUpdateImage(e.target.files[0])}

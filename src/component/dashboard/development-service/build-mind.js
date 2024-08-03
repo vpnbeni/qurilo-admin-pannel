@@ -19,6 +19,7 @@ const BuildMind = ({ data, type, id }) => {
       const result = await res.json();
       console.log(result);
       setFetchedData(result?.data);
+      console.log(result,'devdata')
       setMainHeading(result?.data?.project?.cardTitle);
       setMainDes(result?.data?.project?.cardDescription);
       setContactImage(result?.data?.project?.image);

@@ -8,8 +8,8 @@ import LoadingButton from '@/component/buttons/LoadingButton';
 import { HiOutlinePlus } from "react-icons/hi";
 import { servicesData } from '@/component/assets/industries';
 
-const DigitalSolutionIndustries = () => {
-  const id = "fintech-banking-financial-soutions"
+const DigitalSolutionIndustries = ({id}) => {
+  const category='industrie'
 
   const [serviceCardData, setServiceCardData] = useState(null);
   const [successfullyEdited, setSuccessfullyEdited] = useState(false);
@@ -23,7 +23,6 @@ const DigitalSolutionIndustries = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
   const [newCardDescription, setNewCardDescription] = useState('');
-  const [newImage, setNewImage] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [updateLoading, setUpdateLoading] = useState(false);
 
@@ -81,7 +80,7 @@ const DigitalSolutionIndustries = () => {
   };
 
   const handleSaveNewCard = async () => {
-    setUpdateLoading(!updateLoading)
+    setUpdateLoading(true)
     const formData = new FormData();
     formData.append("cardTitle",newCardTitle);
     formData.append("cardDescription", newCardDescription);
@@ -108,6 +107,11 @@ const DigitalSolutionIndustries = () => {
       setNewCardDescription('');
     } catch (error) {
       console.error(error);
+      setUpdateLoading(false)
+
+    }finally{
+      setUpdateLoading(false)
+
     }
   };
 const handleHeadingCancel=()=>{
@@ -205,6 +209,7 @@ const handleHeadingCancel=()=>{
               // name={card.heading}
               // des={card.description}
               des={card.cardDescription}
+              category={category}
               slugName={id}
               setSuccessfullyEdited={setSuccessfullyEdited}
               successfullyEdited={successfullyEdited}
@@ -225,7 +230,6 @@ const handleHeadingCancel=()=>{
 
       <Modal
         isVisible={isModalVisible}
-        setNewImage={setNewImage}
         onClose={() => setIsModalVisible(false)}
         onSave={handleSaveNewCard}
         title={newCardTitle}
@@ -233,6 +237,10 @@ const handleHeadingCancel=()=>{
         description={newCardDescription}
         setDescription={setNewCardDescription}
         updateLoading={updateLoading}
+        editHeading={editHeading}
+        setEditHeading={setEditHeading}
+        editContent={editContent}
+        setEditContent={setEditContent}
       />
     </section>
   );

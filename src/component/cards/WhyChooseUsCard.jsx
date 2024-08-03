@@ -65,7 +65,12 @@ const WhyChooseUsCard = ({ card, editId, id, setEditId, fetchBenefits }) => {
       console.error("Error deleting banner:", error);
     }
   };
-
+  const handleDeleteClick = (idd) => {
+    const confirmed = window.confirm("Are you sure you want to delete this card?");
+    if (confirmed) {
+      deleteCard(idd);
+    }
+  };
   return (
     <div className="flex gap-6">
       <Image
@@ -119,7 +124,7 @@ const WhyChooseUsCard = ({ card, editId, id, setEditId, fetchBenefits }) => {
             <div className="flex w-full justify-between items-center">
               <h3 className="text-lg font-[700]">{card.cardTitle}</h3>
               <RxCross2
-                onClick={() => deleteCard(card?._id)}
+                onClick={() => handleDeleteClick(card?._id)}
                 size={24}
                 className="absolute right-0 text-red-600 my-1 hidden group-hover:block cursor-pointer"
               />

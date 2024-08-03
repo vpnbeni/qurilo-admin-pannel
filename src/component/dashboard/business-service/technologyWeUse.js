@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Heading from "@/component/headings/Heading";
 import TechnologyCard from "@/component/cards/TechnologyCard";
@@ -6,8 +5,7 @@ import AddTechnologyModal from "@/component/modals/AddTechnologyModal";
 import { MdAdd, MdModeEditOutline } from "react-icons/md";
 import { API_URL } from "@/api/commonApi";
 import LoadingButton from "@/component/buttons/LoadingButton";
-
-const TechnologyWeUse = ({ id }) => {
+const Technologycard = ({ id }) => {
   const [technologyCards, setTechnologyCards] = useState(null);
   const [successfullyEdited, setSuccessfullyEdited] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -16,13 +14,11 @@ const TechnologyWeUse = ({ id }) => {
   const [subHeadingValue, setSubHeadingValue] = useState("");
   const [headingLoading, setHeadingLoading] = useState(false);
   const [showAll, setShowAll] = useState(false);
-
   useEffect(() => {
     if (id) {
       fetchTechnologyCards();
     }
   }, [id, successfullyEdited]);
-
   const fetchTechnologyCards = async () => {
     try {
       const response = await fetch(
@@ -32,6 +28,7 @@ const TechnologyWeUse = ({ id }) => {
         throw new Error("Failed to fetch technology cards");
       }
       const data = await response.json();
+      // console.log(data,"tech data")
       setTechnologyCards(data.data);
       setHeadingValue(data.data.mainHeading);
       setSubHeadingValue(data.data.description);
@@ -39,11 +36,9 @@ const TechnologyWeUse = ({ id }) => {
       console.error("Error fetching technology cards:", error);
     }
   };
-
   const handleEdit = () => {
     setHeadingChange(true);
   };
-
   const handleHeading = async () => {
     setHeadingLoading(true);
     const dataSend = {
@@ -70,11 +65,9 @@ const TechnologyWeUse = ({ id }) => {
       console.error(error);
     }
   };
-
   const visibleTechnologyCards = showAll
     ? technologyCards?.technologyCard
     : technologyCards?.technologyCard?.slice(0, 3);
-
   return (
     <div>
       <section>
@@ -84,13 +77,13 @@ const TechnologyWeUse = ({ id }) => {
               <>
                 <input
                   type="text"
-                  className="border-[1px] text-3xl rounded-sm font-medium text-center p-2 border-gray-900 w-3/4"
+                  className="border-2 text-2xl font-medium border-gray-700 rounded-md px-2 py-3 w-2/3"
                   value={headingValue}
                   onChange={(e) => setHeadingValue(e.target.value)}
                 />
                 <textarea
                   type="text"
-                  className="border-[1px] rounded-sm  text-center p-2  border-gray-900 w-3/4"
+                  className="border-2 h-[200px]  border-gray-700 rounded-md px-2 py-3 mt-2 w-2/3"
                   value={subHeadingValue}
                   onChange={(e) => setSubHeadingValue(e.target.value)}
                 />
@@ -103,23 +96,32 @@ const TechnologyWeUse = ({ id }) => {
                 <p>{technologyCards?.description}</p>
               </>
             )}
-
-            <div className="hidden absolute right-0 bottom-8 group-hover:flex justify-end me-5 gap-x-1">
+            <div className="hidden   group-hover:flex justify-end me-5 gap-x-1">
               {headingChange ? (
                 headingLoading ? (
                   <LoadingButton />
                 ) : (
-                  <div
-                    onClick={handleHeading}
-                    className="cursor-pointer border-green-800 text-lg font-normal hover:bg-green-800 hover:text-white text-green-600 border-[1px] rounded-md px-3 py-1"
-                  >
-                    Save
-                  </div>
+                    
+                 
+                  <div className="flex gap-2">
+              <button
+              onClick={() => handleHeading()}
+              className="text-white font-bold bg-red-600 my-4 px-4 py-2 rounded-md"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => handleHeading()}
+              className="text-white font-bold bg-green-600 my-4 px-4 py-2 rounded-md"
+            >
+              Save
+            </button>
+            </div>
                 )
-              ) : (
+              ) : (     
                 <MdModeEditOutline
                   onClick={handleEdit}
-                  className="cursor-pointer"
+                  className="cursor-pointer absolute -top-10 right-0 "
                   size={25}
                 />
               )}
@@ -128,11 +130,10 @@ const TechnologyWeUse = ({ id }) => {
           <div className="relative">
             <button
               onClick={() => setShowAddModal(true)}
-              className="rounded-md hidden group-hover:block absolute  top-10 -right-14 text-white text-lg px-3 py-2 bg-green-700"
+              className="rounded-md hidden group-hover:block absolute  top-0 -right-14 text-white text-lg px-3 py-2 bg-green-700"
             >
               <MdAdd />
             </button>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-14">
               {visibleTechnologyCards?.map((tech, i) => (
                 <TechnologyCard
@@ -145,7 +146,6 @@ const TechnologyWeUse = ({ id }) => {
                 />
               ))}
             </div>
-
             {technologyCards?.technologyCard?.length > 3 && (
               <div className="flex justify-center mt-4">
                 <button
@@ -161,16 +161,18 @@ const TechnologyWeUse = ({ id }) => {
       </section>
       {showAddModal && (
         <AddTechnologyModal
+        headingValue={headingValue}
+        setHeadingValue={setHeadingValue}
+        subHeadingValue={subHeadingValue}
+        setSubHeadingValue={setSubHeadingValue}
           setShowAddModal={setShowAddModal}
+          successfullyEdited={successfullyEdited}
+          setSuccessfullyEdited={setSuccessfullyEdited}
           slug={id}
           type="business"
-          SetSuccessfullyEdited={setSuccessfullyEdited}
-          successfullyEdited={successfullyEdited}
         />
       )}
     </div>
   );
 };
-
-export default TechnologyWeUse;
-
+export default Technologycard;

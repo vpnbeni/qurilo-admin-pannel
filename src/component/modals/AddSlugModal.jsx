@@ -13,6 +13,7 @@ const AddSlugModal = ({setIsAddModalOpen,pageName,setData}) => {
         const res = await fetch(`${API_URL}auth/v1/${pageName}/category`);
         const newData = await res.json();
         setData(newData.data || []);
+        // console.log(newData,"newData")
       };
     const handleAddService = async () => {
         if (!newServiceName || !newSlugName) {

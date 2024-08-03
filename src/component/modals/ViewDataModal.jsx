@@ -10,7 +10,7 @@ const ViewDataModal = ({ service }) => {
       <p className="cursor-pointer" onClick={() => setIsOpen(true)}>
         <AiOutlineEye />
       </p>
-      {isOpen && (
+      {isOpen && ( 
         <div className="fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.66)] flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-md w-1/2 h-auto relative text-start">
             <div className="flex justify-start my-4 font-bold text-lg">Service Details</div>

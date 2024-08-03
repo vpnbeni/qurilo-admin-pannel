@@ -175,7 +175,12 @@ const ManagementService = ({ id }) => {
       console.error("Error deleting card:", error);
     }
   };
-
+  const handleDeleteClick = (idd) => {
+    const confirmed = window.confirm("Are you sure you want to delete this card?");
+    if (confirmed) {
+        handleDeleteCard(idd);
+    }
+  };
   return (
     <div className="mt-4 bg-black relative group h-auto">
       <div className="text-center pt-10 relative">
@@ -222,7 +227,7 @@ const ManagementService = ({ id }) => {
               <p className="text-base flex-grow font-normal break-words">{service.cardDescription}</p>
             )}
             <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <button onClick={() => handleDeleteCard(service._id)} className="text-red-500">
+              <button onClick={() => handleDeleteClick(service._id)} className="text-red-500">
                 <RxCross2 size={32} />
               </button>
             </div>
