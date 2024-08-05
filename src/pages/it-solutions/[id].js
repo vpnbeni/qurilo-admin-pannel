@@ -1,5 +1,7 @@
 import Banner from "@/component/dashboard/it-service/banner";
 import CloudExpertise from "@/component/dashboard/it-service/cloudExpertise";
+import { buildMindData } from '@/component/assets/development'
+import BuildMind from '@/component/dashboard/development-service/build-mind'
 
 
 import CloudService from "@/component/dashboard/it-service/cloudService";
@@ -33,7 +35,9 @@ const Page = () => {
       <CloudService  id={id} />
       <CloudExpertise midBannerData={midBannerData1} type="img" id={id} />
       <CloudWork data={cloudTechnologeisData} id={id} />
-      <UnlockGrowth midBannerData={midBannerData1} type="noImg" id={id} />
+      <BuildMind data={buildMindData} page="it" id={id} />
+
+      {/* <UnlockGrowth midBannerData={midBannerData1} type="noImg" id={id} /> */}
       <Faq faqData={faqData} id={id} />
       <Review Testimaonials={Testimaonials} id={id} />
     </>

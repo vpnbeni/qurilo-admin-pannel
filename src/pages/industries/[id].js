@@ -11,6 +11,8 @@ import BannerIndustries from '@/component/dashboard/industries/BannerIndustries'
 import IndustriesDiscuss from '@/component/dashboard/industries/IndustriesDiscuss'
 import ProjectMindIndustries from '@/component/dashboard/industries/ProjectMindIndustries'
 import DigitalSolutionIndustries from '@/component/dashboard/industries/DigitalSolutionIndustries'
+import { buildMindData } from '@/component/assets/development'
+import BuildMind from '@/component/dashboard/development-service/build-mind'
 
 
 const Industries = () => {
@@ -25,7 +27,9 @@ const Industries = () => {
       <HealthCare id={id} />
       <IndustriesDiscuss id={id} />
       <DigitalSolutionIndustries id={id} />
-      <ProjectMindIndustries id={id} />
+      <BuildMind data={buildMindData} page="industrie" id={id} />
+
+      {/* <ProjectMindIndustries id={id} /> */}
 
     </div>
   )

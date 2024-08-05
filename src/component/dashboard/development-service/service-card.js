@@ -168,8 +168,8 @@ export default function ServicesSection({ id }) {
       </div>
       </div>
       <div className="grid grid-cols-1 gap-8 mt-8 md:mt-6 md:grid-cols-2 lg:grid-cols-3 md:mx-16 mx-8">
-        {serviceCardData?.cardServiceData
-          ?.slice(0, showAllCards ? serviceCardData.cardServiceData.length : 3)
+        {serviceCardData?.cardData
+          ?.slice(0, showAllCards ? serviceCardData.cardData.length : 3)
           .map((data, index) => (
             <DevelopmentSubcategoryCard
               cardId={data._id}
@@ -183,7 +183,7 @@ export default function ServicesSection({ id }) {
             />
           ))}
       </div>
-      {serviceCardData?.cardServiceData?.length > 3 && (
+      {serviceCardData?.cardData?.length > 3 && (
         <div className="flex justify-center mt-6">
           <button
             onClick={() => setShowAllCards(!showAllCards)}

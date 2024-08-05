@@ -10,6 +10,8 @@ import ServicesCard from '@/component/dashboard/business-service/servicesCard'
 import TechnologyWeUse from '@/component/dashboard/business-service/technologyWeUse'
 // import Image from 'next/image'
 import { useRouter } from 'next/router'
+import BuildMind from '@/component/dashboard/development-service/build-mind'
+import { buildMindData } from '@/component/assets/development'
 
 
 export default function Page() {
@@ -26,7 +28,8 @@ export default function Page() {
     <TechnologyWeUse id={id} />
     <Projectbanner id={id} />
     <Partner id={id} /> 
-    <ProjectMind id={id} />
+    <BuildMind data={buildMindData} page="business" id={id} />
+
     {/* <Faq faqData={faqData} id={id} /> */}
     {/* <Review Testimaonials={Testimaonials} id={id} /> */}
     </div>

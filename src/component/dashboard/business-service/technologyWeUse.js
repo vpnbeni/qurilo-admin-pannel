@@ -66,8 +66,8 @@ const Technologycard = ({ id }) => {
     }
   };
   const visibleTechnologyCards = showAll
-    ? technologyCards?.technologyCard
-    : technologyCards?.technologyCard?.slice(0, 3);
+    ? technologyCards?.cardData
+    : technologyCards?.cardData?.slice(0, 3);
   return (
     <div>
       <section>
@@ -146,7 +146,7 @@ const Technologycard = ({ id }) => {
                 />
               ))}
             </div>
-            {technologyCards?.technologyCard?.length > 3 && (
+            {technologyCards?.cardData?.length > 3 && (
               <div className="flex justify-center mt-4">
                 <button
                   onClick={() => setShowAll(!showAll)}

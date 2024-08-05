@@ -5,6 +5,9 @@ import ImplementationService from '@/component/dashboard/e-commerce-service/impl
 import ProjectMind from '@/component/dashboard/e-commerce-service/project-mind'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { buildMindData } from '@/component/assets/development'
+import BuildMind from '@/component/dashboard/development-service/build-mind'
+
 const Ecommerce = () => {
     const router = useRouter()
   const { id } = router.query
@@ -14,7 +17,9 @@ const Ecommerce = () => {
       <ImplementationService id={id} />
       <EcoDiscuss id={id} />
       <ComprehensiveSolution id={id} />
-      <ProjectMind id={id} />
+      <BuildMind data={buildMindData} page="ecommerce" id={id} />
+
+      {/* <ProjectMind id={id} /> */}
     </div>
   )
 }

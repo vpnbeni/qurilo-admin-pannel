@@ -31,7 +31,7 @@ const ManagementService = ({ id }) => {
       const result = await response.json();
 
       if (result.status) {
-        setServices(result.data.managementServiceData);
+        setServices(result.data.cardData);
         setMainHeading(result.data.mainHeading);
         setDescription(result.data.description);
       }

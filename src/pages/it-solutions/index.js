@@ -35,26 +35,7 @@ const ItPage = ({ initialData }) => {
   const pagePush = useRouter();
 
   
-  const handleAddService = async () => {
-    const res = await fetch(`${API_URL}auth/v1/${pageName}/category`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        servicesName: newServiceName,
-        slugName: newSlugName,
-      }),
-    });
-    if (res.status === 200) {
-      setIsAddModalOpen(false);
-      setNewServiceName("");
-      setNewSlugName("");
-      refreshData();
-    } else {
-      console.error("Failed to add service");
-    }
-  };
+ 
 
   return (
     <>

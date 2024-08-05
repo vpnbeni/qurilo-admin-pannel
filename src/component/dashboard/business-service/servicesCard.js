@@ -48,13 +48,13 @@ const ServicesCard = ({ id }) => {
     };
 
     const handleInputChange = (e, id, field) => {
-        const updatedServices = services.cardServiceData.map((service) => {
+        const updatedServices = services.cardData.map((service) => {
             if (service._id === id) {
                 return { ...service, [field]: e.target.value };
             }
             return service;
         });
-        setServices((prev) => ({ ...prev, cardServiceData: updatedServices }));
+        setServices((prev) => ({ ...prev, cardData: updatedServices }));
     };
 
     const inputRef = useRef(null);
@@ -63,7 +63,7 @@ const ServicesCard = ({ id }) => {
         setEditingId(null);
     }
     const handleEditData = async (idd) => {
-        const updatedSingleService = services.cardServiceData.find((service) => service._id === idd);
+        const updatedSingleService = services.cardData.find((service) => service._id === idd);
 
         const formData = new FormData();
         formData.append('cardTitle', updatedSingleService.cardTitle);
@@ -210,7 +210,7 @@ const ServicesCard = ({ id }) => {
                 )}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10 mb-20 my-20">
-                {services?.cardServiceData?.slice(0, showAll ? services.cardServiceData.length : 3).map((service) => (
+                {services?.cardData?.slice(0, showAll ? services.cardData.length : 3).map((service) => (
                     <div key={service?._id} className="group relative flex flex-col py-10 rounded-xl border-2 hover:border-[#558BDC] hover:border-2 p-4 cursor-pointer min-h-full">
                         {editingId === service?._id ? (
                             <div>
@@ -259,7 +259,7 @@ const ServicesCard = ({ id }) => {
                 ))}
             </div>
             <div className='text-center pb-4'>
-                {services?.cardServiceData?.length > 3 && (
+                {services?.cardData?.length > 3 && (
                     <button onClick={() => setShowAll(!showAll)} className='bg-blue text-white py-1 px-4 text-lg rounded-lg'>
                         {showAll ? 'View Less' : 'Load More'}
                     </button>
