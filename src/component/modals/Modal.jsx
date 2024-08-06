@@ -24,20 +24,7 @@ const Modal = ({ isVisible, onClose, onSave,updateLoading, title, setTitle, desc
           className="w-full mb-4 p-2 border rounded-md"
           placeholder="Card Description"
         />
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full mb-4 p-2 border rounded-md"
-          placeholder="Card Title"
-        />
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={4}
-          className="w-full mb-4 p-2 border rounded-md"
-          placeholder="Card Description"
-        />
+      
         {updateLoading && (<input type="file" onChange={(e) => setNewImage(e.target.files[0])} className="mb-2" />)}
         {updateLoading ? (<div className="absolute right-2 hidden group-hover:block bottom-4"> <LoadingButton /></div>):(<div className="flex justify-end gap-2">
           <button onClick={onClose} className="bg-gray-500 text-white px-4 py-2 rounded-md">

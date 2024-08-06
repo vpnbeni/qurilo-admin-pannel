@@ -260,7 +260,7 @@ const ManagementService = ({ id }) => {
       <div className="absolute right-0 top-[9rem] text-center pb-4">
         <button
           onClick={handleAddCardClick}
-          className="bg-blue-400 font-bold group-hover:block hidden bg-white text-black py-1 px-4 text-lg rounded-lg"
+          className="bg-blue-400 font-bold group-hover:block hidden bg-white text-black py-1 px-4 text-lg rounded-lg mr-4"
         >
           <MdAdd />
         </button>

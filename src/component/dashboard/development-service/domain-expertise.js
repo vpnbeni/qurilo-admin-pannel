@@ -15,6 +15,7 @@ const DomainExpertise = ({ id }) => {
       const result = await response.json();
       if (result.status) {
         setData(result.banner);
+        setImageFile(result.banner.image)
         setTempData(result.banner);
       } else {
         console.error('Error fetching data:', result.message);
@@ -52,6 +53,9 @@ const DomainExpertise = ({ id }) => {
     });
     if (imageFile) {
       formData.append('image', imageFile);
+    }else{
+        
+      formData.append('image',data.banner.image)
     }
 
     try {

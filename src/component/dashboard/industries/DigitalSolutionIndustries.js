@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import ServiceCard from '@/component/cards/ServiceCard';
+import IndustryServiceCard from '@/component/cards/IndustryServiceCard';
 import { API_URL } from '@/api/commonApi';
 import { MdModeEditOutline } from "react-icons/md";
 import Modal from '@/component/modals/Modal';
@@ -76,23 +76,24 @@ const DigitalSolutionIndustries = ({id}) => {
 
   const handleToggleCards = () => {
     setShowAllCards(!showAllCards);
-    setVisibleCards(showAllCards ? 3 : serviceCardData?.managementServiceData?.length);
+    setVisibleCards(showAllCards ? 3 : serviceCardData?.cardData?.length);
   };
 
   const handleSaveNewCard = async () => {
     setUpdateLoading(true)
-    const formData = new FormData();
-    formData.append("cardTitle",newCardTitle);
-    formData.append("cardDescription", newCardDescription);
-    formData.append("slugName", id);
-    if (mainImg) {
-      formData.append("image", mainImg);
+   
+    const dataSend = {
+      cardTitle: newCardTitle,
+      cardDescription: newCardDescription,
+      slugName: id
     }
     try {
       const response = await fetch(`${API_URL}auth/v1/industrie/service-card`, {
         method: 'POST',
-        
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataSend)
       });
 
       if (!response.ok) {
@@ -100,7 +101,7 @@ const DigitalSolutionIndustries = ({id}) => {
       }
 
       const data = await response.json();
-      setSuccessfullyEdited( (prev) => !prev);
+      setSuccessfullyEdited(!successfullyEdited);
 
       setIsModalVisible(false);
       setNewCardTitle('');
@@ -150,7 +151,7 @@ const handleHeadingCancel=()=>{
     if (id) {
       fetchServiceCardData();
     }
-  }, [id, successfullyEdited,])
+  }, [id, successfullyEdited])
   return (
     <section className='group'>
       <div className="px-6 lg:px-20 py-16 grid grid-cols-1 gap-8 bg-white text-black">
@@ -198,9 +199,9 @@ const handleHeadingCancel=()=>{
           </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-14">
-          {serviceCardData?.managementServiceData?.slice(0, visibleCards).map((card, i) => (
+          {serviceCardData?.cardData?.slice(0, visibleCards).map((card, i) => (
             // {servicesData.services?.slice(0, visibleCards).map((card, i) => (
-            <ServiceCard
+            <IndustryServiceCard
               type="industries"
               key={i}
               id={card?._id}

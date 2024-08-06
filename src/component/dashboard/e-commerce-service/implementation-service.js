@@ -167,7 +167,7 @@ export default function ServicesSection({ id }) {
           <MdEdit
             size={26}
             onClick={() => setEdit(true)}
-            className="absolute right-2 bottom-0 hidden cursor-pointer my-2 group-hover:block"
+            className="absolute right-2 top-0 hidden cursor-pointer my-2 group-hover:block"
           />
         )}
         <div className="absolute flex justify-end -right-20 -bottom-6">

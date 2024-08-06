@@ -105,7 +105,7 @@ const Banner = ({ id }) => {
             <div className="md:mx-20">
               {isEditing ? (
                 <div>
-                  <input
+                  <textarea
                     type="text"
                     name="h1"
                     value={editData.h1}

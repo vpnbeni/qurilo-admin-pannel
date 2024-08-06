@@ -4,7 +4,7 @@ import { API_URL } from '@/api/commonApi';
 import { MdEdit } from 'react-icons/md';
 import Image from 'next/image';
 
-const  ComprehensiveSolution = ({ id }) => {
+const ComprehensiveSolution = ({ id }) => {
   const [data, setData] = useState(null);
   const [editing, setEditing] = useState(false);
   const [tempData, setTempData] = useState(null);
@@ -15,8 +15,9 @@ const  ComprehensiveSolution = ({ id }) => {
       const response = await fetch(`${API_URL}auth/v1/ecommerce/solution/${id}`);
       const result = await response.json();
       if (result.status === "success") {
-        setData(result.data);
-        setTempData(result.data);
+        const { cardList, mainHeading, cardTitle, image } = result.data;
+        setData({ cardList, mainHeading, cardTitle, image });
+        setTempData({ cardList, mainHeading, cardTitle, image });
       } else {
         console.error('Error fetching data:', result.message);
       }
@@ -35,16 +36,16 @@ const  ComprehensiveSolution = ({ id }) => {
     setEditing(true);
   };
 
-  const handleSave = async (idd) => {
+  const handleSave = async () => {
     const formData = new FormData();
     if (tempData.cardTitle) {
       formData.append('cardTitle', tempData.cardTitle);
     }
-    if (tempData.cardDescription) {
-      formData.append('cardDescription', tempData.cardDescription);
+    if (tempData.mainHeading) {
+      formData.append('mainHeading', tempData.mainHeading);
     }
-    tempData.description && tempData.description.forEach((item, index) => {
-      formData.append(`description[${index}]`, item);
+    tempData.cardList.forEach((item, index) => {
+      formData.append(`cardList[${index}]`, item);
     });
     if (imageFile) {
       formData.append('image', imageFile);
@@ -78,25 +79,25 @@ const  ComprehensiveSolution = ({ id }) => {
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;
-    if (name === "cardTitle" || name === "cardDescription") {
+    if (name === "cardTitle" || name === "mainHeading") {
       setTempData({ ...tempData, [name]: value });
     } else if (name === "image") {
       setImageFile(e.target.files[0]);
     } else {
-      const newDescription = [...tempData.description];
-      newDescription[index] = value;
-      setTempData({ ...tempData, description: newDescription });
+      const newCardList = [...tempData.cardList];
+      newCardList[index] = value;
+      setTempData({ ...tempData, cardList: newCardList });
     }
   };
 
   const handleAddItem = () => {
-    setTempData({ ...tempData, description: [...tempData.description, ""] });
+    setTempData({ ...tempData, cardList: [...tempData.cardList, ""] });
   };
 
   const handleRemoveItem = (index) => {
-    const newDescription = [...tempData.description];
-    newDescription.splice(index, 1);
-    setTempData({ ...tempData, description: newDescription });
+    const newCardList = [...tempData.cardList];
+    newCardList.splice(index, 1);
+    setTempData({ ...tempData, cardList: newCardList });
   };
 
   if (!data) {
@@ -111,32 +112,32 @@ const  ComprehensiveSolution = ({ id }) => {
             {editing ? (
               <input
                 type="text"
-                name="cardTitle"
-                value={tempData.cardTitle}
+                name="mainHeading"
+                value={tempData.mainHeading}
                 onChange={(e) => handleChange(e, null)}
                 className="font-semibold p-2 w-full text-2xl font-sans md:text-3xl text-black mb-4 md:mt-0 mt-8"
               />
             ) : (
               <h2 className="font-semibold text-2xl font-sans md:text-3xl text-black mb-4 md:mt-0 mt-8">
-                {data.cardTitle}
+                {data.mainHeading}
               </h2>
             )}
             {editing ? (
               <textarea
                 type="text"
-                name="cardDescription"
-                value={tempData.cardDescription}
+                name="cardTitle"
+                value={tempData.cardTitle}
                 onChange={(e) => handleChange(e, null)}
                 className="text-base p-4 w-full min-h-[200px] text-desc text-body-color font-sans"
               />
             ) : (
               <p className="text-base text-desc text-body-color font-sans">
-                {data.cardDescription}
+                {data.cardTitle}
               </p>
             )}
           </div>
           <SolPara
-            data={tempData.description}
+            data={tempData.cardList}
             editing={editing}
             handleChange={handleChange}
             handleAddItem={handleAddItem}
@@ -167,7 +168,7 @@ const  ComprehensiveSolution = ({ id }) => {
           <button onClick={handleCancel} className="bg-red-500 text-white p-2 rounded">
             Cancel
           </button>
-          <button onClick={() => handleSave(tempData._id)} className="bg-green-500 text-white p-2 rounded">
+          <button onClick={handleSave} className="bg-green-500 text-white p-2 rounded">
             Save
           </button>
         </div>

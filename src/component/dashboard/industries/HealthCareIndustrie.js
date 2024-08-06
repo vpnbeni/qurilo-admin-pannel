@@ -60,7 +60,7 @@
         image: implementationData?.image,
         slugName: id,
       });
-      setImageFile(null);
+      setImageFile(implementationData?.image);
     };
 
     const handleSave = async () => {
@@ -71,9 +71,9 @@
       updatedFormData.append('description', formData.description);
       updatedFormData.append('slugName', id);
 
-      if (imageFile) {
-        updatedFormData.append('image', imageFile);
-      }
+      updatedFormData.append('image', imageFile);
+
+      
 
       try {
         const response = await fetch(url, {
@@ -138,7 +138,7 @@
                   </div>
                 </div>
                 <div className="lg:w-1/2">
-                  {implementationData && <TravelList data={implementationData?.SolutionData } setSuccessfullyEdited={setSuccessfullyEdited}
+                  {implementationData && <TravelList data={implementationData?.cardData } setSuccessfullyEdited={setSuccessfullyEdited}
               successfullyEdited={successfullyEdited} 
                />}
                
