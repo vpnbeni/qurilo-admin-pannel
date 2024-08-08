@@ -13,16 +13,14 @@ const BuildMind = ({ data, page, id }) => {
   const [contactImage1, setContactImage1] = useState("");
   const [contactImage2, setContactImage2] = useState("");
   const [contactImage3, setContactImage3] = useState("");
-  const [newImage, setNewImage] = useState(null);
+  const [newImages, setNewImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchData = async (id) => {
     try {
       const res = await fetch(`${API_URL}auth/v1/${page}/project-mind/${id}`);
       const result = await res.json();
-      console.log(result);
       setFetchedData(result?.data);
-      console.log(result,'devdata')
       setMainHeading(result?.data?.project?.cardTitle);
       setMainDes(result?.data?.project?.cardDescription);
       setContactImage1(result?.data?.project?.image[0]);
@@ -39,34 +37,32 @@ const BuildMind = ({ data, page, id }) => {
     }
   }, [id]);
 
-  const handleImageChange1 = (e) => {
+  const handleImageChange = (e, index) => {
     const file = e.target.files[0];
-    setNewImage(file);
-    setContactImage1(URL.createObjectURL(file));
+    const updatedImages = [...newImages];
+    updatedImages[index] = file;
+    setNewImages(updatedImages);
+
+    if (index === 0) setContactImage1(URL.createObjectURL(file));
+    if (index === 1) setContactImage2(URL.createObjectURL(file));
+    if (index === 2) setContactImage3(URL.createObjectURL(file));
   };
-  const handleImageChange2 = (e) => {
-    const file = e.target.files[1];
-    setNewImage(file);
-    setContactImage2(URL.createObjectURL(file));
-  };
-  const handleImageChange3 = (e) => {
-    const file = e.target.files[2];
-    setNewImage(file);
-    setContactImage3(URL.createObjectURL(file));
-  };
-  const handleCancel=()=>{
+
+  const handleCancel = () => {
     setEdit(false); // Exit edit mode
-        setNewImage(null); // Reset newImage state
-  }
+    setNewImages([]); // Reset newImage state
+  };
+
   const handleSave = async (idd) => {
     setLoading(true); // Start loading state
     const formData = new FormData();
     formData.append("cardTitle", mainHeading);
     formData.append("cardDescription", mainDes);
     formData.append("slugName", id);
-    if (newImage) {
-      formData.append("image", newImage);
-    }
+
+    newImages.forEach((image) => {
+      if (image) formData.append("image", image);
+    });
 
     try {
       const response = await fetch(`${API_URL}auth/v1/${page}/project-mind/${idd}`, {
@@ -77,7 +73,7 @@ const BuildMind = ({ data, page, id }) => {
       if (response.ok) {
         await fetchData(id); // Refetch data after saving
         setEdit(false); // Exit edit mode
-        setNewImage(null); // Reset newImage state
+        setNewImages([]); // Reset newImage state
       } else {
         console.error("Failed to update the card");
       }
@@ -108,19 +104,19 @@ const BuildMind = ({ data, page, id }) => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange1}
+                onChange={(e) => handleImageChange(e, 0)}
                 className="text-black px-2 py-2 rounded-md border-2 border-gray-700"
               />
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange2}
+                onChange={(e) => handleImageChange(e, 1)}
                 className="text-black px-2 py-2 rounded-md border-2 border-gray-700"
               />
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange3}
+                onChange={(e) => handleImageChange(e, 2)}
                 className="text-black px-2 py-2 rounded-md border-2 border-gray-700"
               />
             </>
@@ -133,42 +129,42 @@ const BuildMind = ({ data, page, id }) => {
           <ContactButton text={data.button} />
         </div>
         <div className="flex items-center flex-wrap md:flex-nowrap gap-x-6 justify-center">
-  <div className="relative my-4 lg:my-0 text-whit e/90">
-    <Image    alt="project completed" width={180} height={180} quality={100} className="animate-spin-slow" src={contactImage1} />
-    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <p className="text-center font-semibold text-lg ">5+</p>
-      <p className="text-center w-[99%] font-medium  text-base"> Country Served</p>
-    </div>
-  </div>
-  <div className="relative my-4 lg:my-0 ">
-    <Image alt="project completed" quality={100} width={180} height={180} className="animate-spin-slow" src={contactImage2} />
-    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <p className="text-center text-lg font-semibold">150+</p>
-      <p className="text-center w-[99%] font-medium  text-base">Projects completed</p>
-    </div>
-  </div>
-  <div className="relative my-4 lg:my-0">
-    <Image   alt="project completed" qualtiy={100} width={180} height={180} className="animate-spin-slow" src={contactImage3} />
-    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <p className="text-center font-semibold text-lg ">70+</p>
-      <p className="text-center w-[99%] font-medium text-base ">Tech Stack Expertise</p>
-    </div>
-  </div>
-</div>
+          <div className="relative my-4 lg:my-0 text-white/90">
+            <Image alt="project completed" width={180} height={180} quality={100} className="animate-spin-slow" src={contactImage1} />
+            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <p className="text-center font-semibold text-lg">5+</p>
+              <p className="text-center w-[99%] font-medium text-base">Country Served</p>
+            </div>
+          </div>
+          <div className="relative my-4 lg:my-0">
+            <Image alt="project completed" quality={100} width={180} height={180} className="animate-spin-slow" src={contactImage2} />
+            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <p className="text-center text-lg font-semibold">150+</p>
+              <p className="text-center w-[99%] font-medium text-base">Projects completed</p>
+            </div>
+          </div>
+          <div className="relative my-4 lg:my-0">
+            <Image alt="project completed" quality={100} width={180} height={180} className="animate-spin-slow" src={contactImage3} />
+            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <p className="text-center font-semibold text-lg">70+</p>
+              <p className="text-center w-[99%] font-medium text-base">Tech Stack Expertise</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="absolute bottom-5 right-5 hidden mt-4 group-hover:flex justify-end">
         {edit ? (
           loading ? (
             <LoadingButton />
           ) : (
-           <div className="flex gap-2">
-             <button onClick={() => handleCancel()} className="text-white font-bold bg-red-600 my-4 px-4 py-2 rounded-md">
-              Cancel
-            </button>
-            <button onClick={() => handleSave(fetchedData?.project?._id)} className="text-white font-bold bg-green-600 my-4 px-4 py-2 rounded-md">
-              Save
-            </button>
-           </div>
+            <div className="flex gap-2">
+              <button onClick={handleCancel} className="text-white font-bold bg-red-600 my-4 px-4 py-2 rounded-md">
+                Cancel
+              </button>
+              <button onClick={() => handleSave(fetchedData?.project?._id)} className="text-white font-bold bg-green-600 my-4 px-4 py-2 rounded-md">
+                Save
+              </button>
+            </div>
           )
         ) : (
           <MdEdit onClick={() => setEdit(true)} size={26} className="text-white cursor-pointer" />

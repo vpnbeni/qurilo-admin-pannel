@@ -20,6 +20,7 @@ const ManagementService = ({ id }) => {
   const [newCard, setNewCard] = useState({
     cardTitle: "",
     cardDescription: "",
+
     icon: null,
   });
 
@@ -100,7 +101,7 @@ const ManagementService = ({ id }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ mainHeading, description }),
+        body: JSON.stringify({ mainHeading, description , slugName:id}),
       });
 
       if (!res.ok) {

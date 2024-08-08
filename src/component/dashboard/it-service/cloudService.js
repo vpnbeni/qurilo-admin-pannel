@@ -100,6 +100,10 @@ export default function ServicesSection({ id }) {
       console.error("Error:", error);
     }
   };
+  const handleCancelClick = () => {
+    fetchCloudWork();
+    setEditingId(null);
+  }
   return (
     <section className="relative group my-10">
       <div className="relative md:mt-10 flex flex-col items-center mt-6 lg:ml-10 mx-8 md:mx-16">
@@ -227,12 +231,16 @@ export default function ServicesSection({ id }) {
               {addLoading ? (
                 <LoadingButton />
               ) : (
-                <button
-                  onClick={handleAddCard}
-                  className="bg-green-600 text-white px-4 py-2 rounded-md"
-                >
-                  Save
-                </button>
+                <div className="">
+                  <button onClick={handleHeadingCancel} className="bg-red-600 text-white px-4 py-2  rounded-md">Cancel</button>
+
+                  <button
+                    onClick={handleAddCard}
+                    className="bg-green-600 text-white px-4 py-2 rounded-md"
+                  >
+                    Save
+                  </button>
+                </div>
               )}
             </div>
           </div>
