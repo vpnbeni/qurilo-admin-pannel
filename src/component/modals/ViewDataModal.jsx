@@ -30,7 +30,7 @@ const ViewDataModal = ({ service }) => {
               <strong>Meta Description:</strong> {service.metaDescription}
             </div>
             <div className="border-2 p-2 w-full mb-4">
-              <strong>Meta Tag:</strong> {service.metaTag}
+              <strong>Meta Tag:</strong> {service.metaTitle}
             </div>
             <div className="border-2 p-2 w-full mb-4">
               <strong>Key Word:</strong> {service.keyWord}

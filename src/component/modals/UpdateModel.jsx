@@ -9,7 +9,7 @@ const UpdateModel = ({ service, refreshData, pageName }) => {
     servicesName: service.servicesName,
     slugName: service.slugName,
     metaDescription: service.metaDescription,
-    metaTag: service.metaTag,
+    metaTitle: service.metaTitle,
     keyWord: service.keyWord,
   });
   console.log(updateData,'updated')
@@ -69,8 +69,8 @@ const UpdateModel = ({ service, refreshData, pageName }) => {
               className="border-2 p-1 w-full mb-4 h-20"
             />
             <textarea
-              value={updateData.metaTag}
-              onChange={(e) => setUpdateData({ ...updateData, metaTag: e.target.value })}
+              value={updateData.metaTitle}
+              onChange={(e) => setUpdateData({ ...updateData, metaTitle: e.target.value })}
               className="border-2 p-1 w-full mb-4 h-20"
             />
             <textarea
