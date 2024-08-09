@@ -36,6 +36,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     }
   };
   const handleCloseSidebar = () => {
+    setIsProjectsOpen(false)
+    setIsMainPageOpen(false)
     setIsOpen(!isOpen); 
   };
   return (
