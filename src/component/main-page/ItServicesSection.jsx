@@ -3,28 +3,42 @@ import ItServicesCard from "@/component/cards/MainItServicesCard";
 import ViewButton from "@/component/buttons/ViewButton";
 import Title2 from "@/component/headings/Title2";
 import Link from "next/link";
+import { MdEdit ,MdAdd} from "react-icons/md";
+import { API_URL } from "@/api/commonApi";
+import MainBusinessAddCardModal from "@/component/modals/MainBusinessAddCardModal"; // Import the AddCardModal component
 
 const ItServicesSection = () => {
   const [data, setData] = useState(null);
+  const [edit, setEdit] = useState(false);
+  const [mainHeading, setMainHeading] =useState(null);
+  const [description, setDescription] =useState(null);
+  const [cardData, setCardData] =useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [successfullyEdited, setSuccessfullyEdited] = useState(false);
+
+
   const [showMore, setShowMore] = useState(false);
   const scrollView = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://ch19jv3t-8000.inc1.devtunnels.ms/auth/v1/home-page/qurilo/it-solutions');
+        const response = await fetch(`${API_URL}auth/v1/home-page/qurilo/it-solutions`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const result = await response.json();
         setData(result.data);
+        setMainHeading(result.data.mainHeading);
+        setDescription(result.data.description);
+        setCardData(result.data.cardData)
       } catch (error) {
         console.error('Error fetching IT services data:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [successfullyEdited]);
 
   const handleViewMore = () => {
     setShowMore(true);
@@ -39,7 +53,47 @@ const ItServicesSection = () => {
 
   return (
     <section className="bg-gradient-to-r from-black to-gray-900 py-10">
-      <div className="flex flex-col items-start lg:flex-row justify-between">
+      {edit ? (
+        <div className="flex flex-col gap-2 w-[50vw] mx-auto">
+          <input
+            type="text"
+            className="p-2 m-2 w-full text-black"
+            name="mainHeading"
+            id="mainHeading"
+            value={mainHeading}
+            onChange={(e) => e.target.value}
+          />
+          <textarea
+            type="text"
+            className="p-2 m-2 w-full text-black"
+            name="description"
+            id="description"
+            onChange={(e) => e.target.value}
+            value={description}
+          />
+          <div className="text-white mx-2 flex gap-2">
+            <div
+              className="cursor-pointer bg-red-600 py-1 px-4 rounded-lg"
+              onClick={() => {
+                setEdit(!edit);
+              }}
+            >
+              {" "}
+              Cancel
+            </div>
+            <div
+              className="cursor-pointer bg-green-600 py-1 px-4 rounded-lg"
+              onClick={() => {
+                handleSave();
+              }}
+            >
+              {" "}
+              Save
+            </div>
+          </div>
+        </div>
+      ) :(
+        <div className="flex flex-col items-start lg:flex-row justify-between relative group">
         <Title2
           heading={data?.mainHeading}
           subheading={data?.description}
@@ -50,11 +104,21 @@ const ItServicesSection = () => {
           View All
           <span className="group-hover:w-full w-0 h-[1px] bg-white rounded-sm transition-all ease-in-out duration-200"></span>
         </Link>
+        <div
+            className={`absolute bottom-5 z-30 right-5 text-white group-hover:block hidden cursor-pointer `}
+            onClick={() => {
+              setEdit(!edit);
+            }}
+          >
+            <MdEdit className="cursor-pointer text-white" size={26} />
+          </div>
       </div>
+      )}
+     
 
       <div
         ref={scrollView}
-        className="flex flex-wrap gap-8 justify-center mt-9"
+        className="flex flex-wrap gap-8 justify-center mt-9 relative"
       >
         {cardsToShow?.map((item) => (
           <ItServicesCard
@@ -64,6 +128,12 @@ const ItServicesSection = () => {
             link={item.slugLink}
           />
         ))}
+        <div
+            className="absolute top-0 right-0 z-30 text-white cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <MdAdd size={26} />
+          </div>
       </div>
 
       <div className="flex justify-center mt-12">
@@ -83,6 +153,14 @@ const ItServicesSection = () => {
           />
         )}
       </div>
+      {/* Modal for adding a new card */}
+      {isModalOpen && (
+          <MainBusinessAddCardModal mainHeading={mainHeading}
+            setIsModalOpen={setIsModalOpen} page={'it-solutions'}
+            setSuccessfullyEdited={setSuccessfullyEdited}
+            successfullyEdited={successfullyEdited}
+          />
+        )}
     </section>
   );
 };
