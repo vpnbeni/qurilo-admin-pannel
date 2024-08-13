@@ -2,10 +2,11 @@ import LearnMoreButton from "@/component/buttons/LearnMoreButton";
 import Link from "next/link";
 import React from "react";
 
-export default function Industry({ data }) {
+export default function Industry({ card }) {
+  console.log
   return (
     <>
-      {data.map((ele) => {
+      {card?.map((ele) => {
         return (
           <div
             key={ele._id}
