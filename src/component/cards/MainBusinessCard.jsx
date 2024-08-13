@@ -60,7 +60,12 @@ const BusinessCard = ({ card, index ,setSuccessfullyEdited,successfullyEdited}) 
       console.error("Error deleting card data:", error);
     }
   };
-
+  const handleDeleteClick = (idd) => {
+    const confirmed = window.confirm("Are you sure you want to delete this card?");
+    if (confirmed) {
+      deleteCard(idd);
+    }
+  };
   return (
     <div className="group relative">
       {editCard ? (
@@ -146,7 +151,7 @@ const BusinessCard = ({ card, index ,setSuccessfullyEdited,successfullyEdited}) 
               className={`absolute  justify-center items-center bottom-6 z-30 right-2 text-red-500 group-hover:flex hidden cursor-pointer `}
               
             >
-              <RxCross2 className="cursor-pointer text-red-500" size={20} onClick={() => deleteCard(card?._id)} />
+              <RxCross2 className="cursor-pointer text-red-500" size={20} onClick={() => handleDeleteClick(card?._id)} />
                 
               <MdEdit className="cursor-pointer text-black" size={20} onClick={() => {
               setEditCard(true);

@@ -10,11 +10,14 @@ import MainBusinessAddCardModal from "@/component/modals/MainBusinessAddCardModa
 const ItServicesSection = () => {
   const [data, setData] = useState(null);
   const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [mainHeading, setMainHeading] =useState(null);
   const [description, setDescription] =useState(null);
   const [cardData, setCardData] =useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successfullyEdited, setSuccessfullyEdited] = useState(false);
+  const [link, setLink] = useState(null);
 
 
   const [showMore, setShowMore] = useState(false);
@@ -31,6 +34,7 @@ const ItServicesSection = () => {
         setData(result.data);
         setMainHeading(result.data.mainHeading);
         setDescription(result.data.description);
+        setLink(result.data.link);
         setCardData(result.data.cardData)
       } catch (error) {
         console.error('Error fetching IT services data:', error);
@@ -48,7 +52,35 @@ const ItServicesSection = () => {
     setShowMore(false);
     scrollView.current.scrollIntoView({ behavior: "smooth" });
   };
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_URL}auth/v1/home-page/qurilo/it-solutions/heading/${data._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mainHeading,
+          description,
+          link
+        }),
+      });
 
+      if (response.ok) {
+        const updatedData = await response.json();
+        setData(updatedData.data);
+        setEdit(false); // Exit edit mode after saving
+        setSuccessfullyEdited(!successfullyEdited)
+      } else {
+        console.error("Failed to update data");
+      }
+    } catch (error) {
+      console.error("Error updating data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const cardsToShow = showMore ? data?.cardData : data?.cardData.slice(0, 4);
 
   return (
@@ -61,14 +93,14 @@ const ItServicesSection = () => {
             name="mainHeading"
             id="mainHeading"
             value={mainHeading}
-            onChange={(e) => e.target.value}
+            onChange={(e) => setMainHeading(e.target.value)}
           />
           <textarea
             type="text"
             className="p-2 m-2 w-full text-black"
             name="description"
             id="description"
-            onChange={(e) => e.target.value}
+            onChange={(e) => setDescription(e.target.value)}
             value={description}
           />
           <div className="text-white mx-2 flex gap-2">
@@ -120,16 +152,15 @@ const ItServicesSection = () => {
         ref={scrollView}
         className="flex flex-wrap gap-8 justify-center mt-9 relative"
       >
-        {cardsToShow?.map((item) => (
+        {cardsToShow?.map((card) => (
           <ItServicesCard
-            key={item._id}
-            title={item.cardTitle}
-            image={item.image}
-            link={item.slugLink}
+            key={card._id}
+            card={card}
+            link={card.slugLink} successfullyEdited={successfullyEdited} setSuccessfullyEdited={setSuccessfullyEdited}
           />
         ))}
         <div
-            className="absolute top-0 right-0 z-30 text-white cursor-pointer"
+            className="absolute top-0 right-2 z-30 text-white cursor-pointer"
             onClick={() => setIsModalOpen(true)}
           >
             <MdAdd size={26} />
