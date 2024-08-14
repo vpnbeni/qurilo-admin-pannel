@@ -8,7 +8,7 @@ import { MdEdit } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io"; // Import the add icon
 import AddCardModal from "@/component/modals/MainPageDevelopmentCardAdd"; // Import the new modal component
 
-const DevelopmentSection = () => {
+const DevelopmentSection = ({alert}) => {
   const [data, setData] = useState(null);
   const [showMore, setShowMore] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -61,6 +61,8 @@ const DevelopmentSection = () => {
       if (response.ok) {
         const updatedData = await response.json();
         setData(updatedData.data);
+        alert('Heading Updated Successfully')
+
         setEdit(false); // Exit edit mode after saving
         setSuccessfullyEdited(!successfullyEdited)
       } else {
@@ -143,7 +145,7 @@ const DevelopmentSection = () => {
 
       <div className="w-full grid grid-cols-1  py-8 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-20 px-12 lg:gap-10 lg:gap-y-16 xl:gap-16 xl:gap-y-20 relative">
         {visibleCards.map((card, i) => (
-                    <DevelopmentCard card={card} key={i} index={i} setSuccessfullyEdited={setSuccessfullyEdited} successfullyEdited={successfullyEdited}/>
+                    <DevelopmentCard card={card} alert={alert} key={i} index={i} setSuccessfullyEdited={setSuccessfullyEdited} successfullyEdited={successfullyEdited}/>
  
         ))}
         <IoMdAdd

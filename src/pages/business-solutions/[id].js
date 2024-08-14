@@ -30,7 +30,7 @@ export default function Page() {
     <Partner id={id} /> 
     <BuildMind data={buildMindData} page="business" id={id} />
 
-    {/* <Faq faqData={faqData} id={id} /> */}
+    <Faq  id={id} />
     {/* <Review Testimaonials={Testimaonials} id={id} /> */}
     </div>
     </>

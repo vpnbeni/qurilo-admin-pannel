@@ -4,7 +4,7 @@ import { API_URL } from "@/api/commonApi";
 import arrowIcon from "../../../public/assets/it-services/home-page/arrowIcon.png";
 import { MdEdit } from "react-icons/md";
 
-const HeroSection = ({ scrollToRef }) => {
+const HeroSection = ({ scrollToRef,alert }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +12,6 @@ const HeroSection = ({ scrollToRef }) => {
   const [h1, setH1] = useState(null);
   const [description, setDescription] = useState(null);
   const [video, setVideo] = useState(null); // State for video
-
   const fetchData = async () => {
     try {
       const res = await fetch(`${API_URL}auth/v1/home-page/qurilo/banner`);
@@ -47,6 +46,7 @@ const HeroSection = ({ scrollToRef }) => {
       }
       fetchData();
       setEdit(!edit);
+      alert('Updated Successfully')
     } catch (error) {
       setError(error.message);
       setEdit(!edit);
@@ -66,6 +66,7 @@ const HeroSection = ({ scrollToRef }) => {
   if (error) return <div>Error: {error}</div>;
 
   return (
+    <>
     <div className="relative group w-full h-screen overflow-hidden">
       <video
         className="absolute inset-0 w-full h-full object-cover"
@@ -85,7 +86,7 @@ const HeroSection = ({ scrollToRef }) => {
                 id="h1"
                 value={h1}
                 onChange={(e) => setH1(e.target.value)}
-              />
+                />
               <textarea
                 type="text"
                 className="p-2 m-2 w-full text-black"
@@ -95,14 +96,13 @@ const HeroSection = ({ scrollToRef }) => {
                 onChange={(e) => setDescription(e.target.value)}
               />
               <input
-                type="text"
+                type="file"
                 className="p-2 m-2 w-full text-black"
                 name="video"
                 id="video"
-                value={video} // Bind video state
-                onChange={(e) => setVideo(e.target.value)}
+                onChange={(e) => setVideo(e.target.files[0])}
                 placeholder="Enter video URL"
-              />
+                />
               <div className="text-white mx-2 flex gap-2">
                 <div
                   className="cursor-pointer bg-red-600 py-1 px-4 rounded-lg"
@@ -146,10 +146,11 @@ const HeroSection = ({ scrollToRef }) => {
         onClick={() => {
           setEdit(!edit);
         }}
-      >
+        >
         <MdEdit className={`${edit ? "hidden" : ""}`} size={26} />
       </div>
     </div>
+        </>
   );
 };
 

@@ -7,7 +7,7 @@ import { API_URL } from "@/api/commonApi";
 import { MdEdit, MdAdd } from "react-icons/md"; // Import the MdAdd icon
 import MainBusinessAddCardModal from "@/component/modals/MainBusinessAddCardModal"; // Import the AddCardModal component
 
-const BusinessSection = () => {
+const BusinessSection = ({alert}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState(null);
   const [showMore, setShowMore] = useState(false);
@@ -55,6 +55,7 @@ const BusinessSection = () => {
         const updatedData = await response.json();
         setData(updatedData.data);
         setEdit(false); // Exit edit mode after saving
+        alert('Heading Updated Successfully')
         setSuccessfullyEdited(!successfullyEdited)
       } else {
         console.error("Failed to update data");

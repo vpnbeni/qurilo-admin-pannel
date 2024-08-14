@@ -83,7 +83,7 @@ const DevelopmentCard = ({ card, index, setSuccessfullyEdited, successfullyEdite
   const handleDeleteClick = (idd) => {
     const confirmed = window.confirm("Are you sure you want to delete this card?");
     if (confirmed) {
-      handlehandleDeleteCard(idd);
+      handleDeleteCard(idd);
     }
   };
   return (
@@ -221,7 +221,7 @@ const DevelopmentCard = ({ card, index, setSuccessfullyEdited, successfullyEdite
               className={`absolute top-5 z-30 right-5 text-red-500 group-hover:block hidden cursor-pointer `}
               
             >
-              <RxCross2 className="cursor-pointer text-red-500" size={26} onClick={() => deleteCardhandleDeleteCard(card?._id)} />
+              <RxCross2 className="cursor-pointer text-red-500" size={26} onClick={() => handleDeleteClick(card?._id)} />
             </div>
             <div
               className={`absolute bottom-5 z-30 right-5 text-black group-hover:block hidden cursor-pointer `}

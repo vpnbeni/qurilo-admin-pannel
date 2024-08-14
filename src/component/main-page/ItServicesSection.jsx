@@ -7,7 +7,7 @@ import { MdEdit ,MdAdd} from "react-icons/md";
 import { API_URL } from "@/api/commonApi";
 import MainBusinessAddCardModal from "@/component/modals/MainBusinessAddCardModal"; // Import the AddCardModal component
 
-const ItServicesSection = () => {
+const ItServicesSection = ({alert}) => {
   const [data, setData] = useState(null);
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -70,6 +70,8 @@ const ItServicesSection = () => {
       if (response.ok) {
         const updatedData = await response.json();
         setData(updatedData.data);
+        alert('Heading Updated Successfully')
+
         setEdit(false); // Exit edit mode after saving
         setSuccessfullyEdited(!successfullyEdited)
       } else {

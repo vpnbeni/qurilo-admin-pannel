@@ -8,7 +8,7 @@ import { MdEdit, MdDelete } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import AddCardModal from "@/component/modals/MainPageDevelopmentCardAdd"; // Import the new modal component
 
-const EcommerceHomeSection = () => {
+const EcommerceHomeSection = ({alert}) => {
   const [data, setData] = useState(null);
   const [showMore, setShowMore] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -71,6 +71,8 @@ const EcommerceHomeSection = () => {
       });
       if (response.ok) {
         fetchData(); // Refresh data after saving
+        alert('Heading Updated Successfully')
+
         setEdit(false);
       } else {
         console.error("Failed to save data");

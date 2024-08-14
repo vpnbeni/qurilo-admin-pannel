@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { API_URL } from "@/api/commonApi";
 
-const AddCardModal = ({ onClose, onSuccess ,setSuccessfullyEdited, successfullyEdited ,mainHeading,icon,page}) => {
+  const AddCardModal = ({ onClose,alert, onSuccess ,setSuccessfullyEdited, successfullyEdited ,mainHeading,icon,page}) => {
+    
   const [cardTitle, setCardTitle] = useState("");
   const [slugLink, setSlugLink] = useState("");
   const [point, setPoint] = useState([""]);
@@ -55,8 +56,8 @@ const AddCardModal = ({ onClose, onSuccess ,setSuccessfullyEdited, successfullyE
       if (response.ok) {
         const newCard = await response.json();
         setSuccessfullyEdited(!successfullyEdited)
-      console.log(successfullyEdited,"successfullyEdited")
-
+      
+      alert('Card Added Successfully')
         onSuccess(newCard.data); // Notify parent component of the new card
         onClose(); // Close the modal after saving
 
@@ -72,6 +73,8 @@ const AddCardModal = ({ onClose, onSuccess ,setSuccessfullyEdited, successfullyE
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    
+
       <div className="bg-white p-6 rounded-lg w-1/2">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">Add New Card</h2>
