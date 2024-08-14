@@ -4,7 +4,9 @@ import { HiMinus } from "react-icons/hi";
 import { MdEdit } from 'react-icons/md';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import { RxCross2 } from "react-icons/rx";
-const Faq = ({ id }) => {
+import { API_URL } from "@/api/commonApi";
+
+const Faq = ({ id ,pageName }) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [data,setData]=useState(null);
   const [faqData, setFaqData] = useState([]);
@@ -25,7 +27,7 @@ const Faq = ({ id }) => {
   })
   const fetchData = async (id) => {
     try {
-      const response = await fetch(`https://ch19jv3t-8000.inc1.devtunnels.ms/auth/v1/business/faq/${id}`);
+      const response = await fetch(`${API_URL}auth/v1/${pageName}/faq/${id}`);
       const result = await response.json();
       if (result.status === "success") {
         setFaqData(result.data.faqData);
@@ -70,7 +72,7 @@ const Faq = ({ id }) => {
         throw new Error('slugName is missing or invalid.');
       }
   
-      const response = await fetch(`https://ch19jv3t-8000.inc1.devtunnels.ms/auth/v1/business/faq/`, {
+      const response = await fetch(`${API_URL}auth/v1/${pageName}/faq/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +113,7 @@ const Faq = ({ id }) => {
 
     }
     try {
-      const response = await fetch(`https://ch19jv3t-8000.inc1.devtunnels.ms/auth/v1/business/faq/${editData._id}`, {
+      const response = await fetch(`${API_URL}auth/v1/${pageName}/faq/${editData._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -143,7 +145,7 @@ const Faq = ({ id }) => {
 
     }
     try {
-      const response = await fetch(`https://ch19jv3t-8000.inc1.devtunnels.ms/auth/v1/business/faq-heading`, {
+      const response = await fetch(`https://ch19jv3t-8000.inc1.devtunnels.ms/auth/v1/${pageName}/faq-heading`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -181,23 +183,24 @@ const Faq = ({ id }) => {
   }
   const deleteFaqData = async (item) => {
     try {
-      const response = await fetch(`https://ch19jv3t-8000.inc1.devtunnels.ms/auth/v1/business/faq/${item._id}`, {
+      const response = await fetch(`${API_URL}auth/v1/${pageName}/faq/${item._id}`, {
         method: 'DELETE',
-        
       });
   
       const result = await response.json();
   
-      if (result.status === "success") {
-        // Update the FAQ data in the local state
+      if (response.ok ) {
+        // Remove the deleted item from the FAQ data in the local state
+        setFaqData((prevData) => prevData.filter(faq => faq._id !== item._id));
+        console.log(faqData,'faqdata')
+  
         setSuccessfullyUpdated(!successfullyUpdated);
-      } else {
-        console.error("Failed to delete item:", result.message);
-      }
+      } 
     } catch (error) {
       console.error("Error deleting item:", error);
     }
   };
+  
   
   const handleSave = () => {
     updateFaqData();

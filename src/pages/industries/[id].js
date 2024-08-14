@@ -13,12 +13,14 @@ import ProjectMindIndustries from '@/component/dashboard/industries/ProjectMindI
 import DigitalSolutionIndustries from '@/component/dashboard/industries/DigitalSolutionIndustries'
 import { buildMindData } from '@/component/assets/development'
 import BuildMind from '@/component/dashboard/development-service/build-mind'
+import Faq from '@/component/common/faq';
 
 
 const Industries = () => {
   const router = useRouter()
   const { id } = router.query
   console.log(id, "inmdusyfdshbk")
+  const pageName='industrie'
   return (
     <div>
 
@@ -28,6 +30,7 @@ const Industries = () => {
       <IndustriesDiscuss id={id} />
       <DigitalSolutionIndustries id={id} />
       <BuildMind data={buildMindData} page="industrie" id={id} />
+      <Faq pageName={pageName} id={id} />
 
       {/* <ProjectMindIndustries id={id} /> */}
 

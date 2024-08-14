@@ -20,8 +20,6 @@ export default function Page() {
   return (
     <>
     <div className='border-2 p-4 mr-4'>
-
-
     <Bannersection id={id} /> 
     <ServicesCard id={id} />
     <ManagementService id={id} />
@@ -30,7 +28,7 @@ export default function Page() {
     <Partner id={id} /> 
     <BuildMind data={buildMindData} page="business" id={id} />
 
-    <Faq  id={id} />
+    <Faq  id={id} pageName={'business'} />
     {/* <Review Testimaonials={Testimaonials} id={id} /> */}
     </div>
     </>

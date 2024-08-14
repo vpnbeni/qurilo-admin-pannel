@@ -18,6 +18,7 @@ import { faqData, Testimaonials } from '@/component/assets/business'
 const DevelopmentPage = () => {
   const router = useRouter()
   const { id } = router.query
+  const pageName ='development'
   return (
     <div>
         <DevelopmentBanner  id={id} />
@@ -27,7 +28,7 @@ const DevelopmentPage = () => {
         <Technologycard data={technologiesData} id={id} />
         <Developmentdiscuss data={buildMindData} type="img" id={id} />
         <DomainExpertise data={domainExpertiseData} id={id} /> 
-        {/* <Faq faqData={faqData} id={id} /> */}
+        <Faq pageName={pageName} id={id} />
       {/* <Review Testimaonials={Testimaonials} id={id} /> */}
 
      

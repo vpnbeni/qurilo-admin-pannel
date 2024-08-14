@@ -25,7 +25,8 @@ import { API_URL } from "@/api/commonApi";
 const Page = () => {
   const router = useRouter();
   var { id } = router.query;
-  console.log(id, "slug name");
+  console.log(id)
+  const pageName='it'
   return (
     <>
 
@@ -38,7 +39,7 @@ const Page = () => {
       <BuildMind data={buildMindData} page="it" id={id} />
 
       {/* <UnlockGrowth midBannerData={midBannerData1} type="noImg" id={id} /> */}
-      <Faq faqData={faqData} id={id} />
+      {/* <Faq pageName={pageName} id={id} /> */}
       <Review Testimaonials={Testimaonials} id={id} />
     </>
   );
