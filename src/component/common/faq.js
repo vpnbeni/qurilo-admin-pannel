@@ -5,7 +5,8 @@ import { MdEdit } from 'react-icons/md';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import { RxCross2 } from "react-icons/rx";
 import { API_URL } from "@/api/commonApi";
-
+import AddFaqModal from '../modals/AddFaqModal';
+import EditFaqModal from '@/component/modals/EditFaqModal'
 const Faq = ({ id ,pageName }) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [data,setData]=useState(null);
@@ -329,8 +330,11 @@ const Faq = ({ id ,pageName }) => {
           </div>
         ))}
       </div>
+
         {/* Add Modal */}
+        <AddFaqModal isOpen={isOpen} onClose={onClose} onSave={onSave} addCard={addCard} setAddCard={setAddCard} addPoint={addPoint} deletePoint={deletePoint}/>
       {isAddModalOpen && (
+        
         <div className="fixed py-20 inset-0 bg-black bg-opacity-50  overflow-y-scroll  min-h-screen flex items-center justify-center z-30">
           <div className="bg-white p-8 rounded-lg w-1/2 mr-4   h-4/5 overflow-hidden overflow-y-scroll">
             <h2 className="text-2xl mb-4">Add FAQ </h2>
